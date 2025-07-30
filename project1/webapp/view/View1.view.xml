@@ -2,5 +2,29 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
     <Page id="page" title="{i18n>title}">
+        <content>
+            <Panel id="panel1" headerText="{i18n>title}" class="sapUiResponsiveMargin">
+                <VBox class="sapUiSmallMargin" id="vbox1" justifyContent="Center" alignItems="Center">
+                    <Label text="{i18n>usernameLabel}" labelFor="usernameInput" id="label1"/>
+                    <Input id="usernameInput" 
+                    placeholder="{i18n>usernamePlaceholder}" 
+                    width="120%"
+                    valueLiveUpdate="false"
+                    />
+                    <Label text="{i18n>passwordLabel}" labelFor="passwordInput" id="label2"/>
+                    <Input id="passwordInput" type="Password" 
+                    width="120%"
+                    valueLiveUpdate="false"
+                    placeholder="{i18n>passwordPlaceholder}" />
+                    <HBox id="hbox1">
+                    <Button text="Login" press=".onLoginPress" id="loginButton" />
+                    <Button text="Register" press=".onRegisterPress" id="registerButton" class="sapUiSmallMarginBegin" />
+                    </HBox>
+                    <HBox justifyContent="Center" id="hbox2">
+                        <Button text="Forgot Password" press="onForgotPasswordPress" id="forgotPasswordButton" class="sapUiSmallMarginTop" />
+                    </HBox>
+                </VBox>
+            </Panel>
+        </content>
     </Page>
 </mvc:View>
