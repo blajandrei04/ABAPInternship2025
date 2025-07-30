@@ -1,0 +1,55 @@
+<mvc:View controllerName="project1.controller.Register"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="registerPage" title="{i18n>registerTitle}">
+        <content>
+            <Panel>
+                <VBox>
+                    <HBox>
+                        <Text text="FirstName: "></Text>
+                        <Input
+                            placeholder="FirstName"
+                            id="FirstNameId"
+                            width="60%"/>
+                    </HBox>
+                    <HBox>
+                        <Text text="LastName: "></Text>
+                        <Input
+                            placeholder="LastName"
+                            id="LastNameId"
+                            width="60%"/>
+                    </HBox>
+                    <HBox>
+                        <Text text="Email: "></Text>
+                        <Input
+                            placeholder="Email"
+                            id="EmailId"
+                            width="80%"/>
+                    </HBox>
+                    <HBox>
+                        <Text text="Phone number: "></Text>
+                        <Input
+                            placeholder="Phone number"
+                            id="PhoneNumberId"
+                            width="80%"/>
+                    </HBox>
+                    <HBox>
+                        <Text text="SU: "></Text>
+                        <Input
+                            placeholder="SU"
+                            id="SUId"
+                            width="60%"/>
+                    </HBox>
+                    <HBox>
+                        <Text text="Career level: "></Text>
+                        <Input
+                            placeholder="Career level"
+                            id="CareerLevelId"
+                            width="60%"/>
+                    </HBox>
+                    <Button text="{i18n>registerButton}" press="onSubmit"/>
+                </VBox>
+            </Panel>
+        </content>
+    </Page>
+</mvc:View>
