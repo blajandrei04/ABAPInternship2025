@@ -5,10 +5,13 @@
          id="forgotPasswordDialog"
          title="{i18n>forgotPasswordTitle}"
          class="sapUiResponsiveContentPadding"
-         stretch="true">
-      <Text text="Send us the Work Email so you can get your Password!" />
+         >
+      <VBox id="vboxForgotPassword" class="sapUiSmallMargin">
+         <Text text="{i18n>forgotPasswordDescription}" id="forgotPasswordText" />
+         <Input id="forgotEmailInput" placeholder="Enter your work email" type="Email" width="90%"/>
+      </VBox>
       <beginButton>
-         <Button text="Close" press="onCloseDialog"/>
+         <Button text="Close" press="onCloseDialog" id="21"/>
       </beginButton>
    </Dialog>
 </core:FragmentDefinition>
