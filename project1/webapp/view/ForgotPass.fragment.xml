@@ -10,6 +10,14 @@
          <Text text="{i18n>forgotPasswordDescription}" id="forgotPasswordText" />
          <Input id="forgotEmailInput" placeholder="Enter your work email" type="Email" width="90%"/>
       </VBox>
+      <VBox id="vboxForgotPassword1" class="sapUiSmallMargin">
+         <Text text="{i18n>forgotPasswordDescription1}" id="forgotPasswordText1" />
+         <Input id="forgotEmailInput1" placeholder="New Password" type="Password" width="90%"/>
+      </VBox>
+      <VBox id="vboxForgotPassword12" class="sapUiSmallMargin">
+         <Text text="{i18n>forgotPasswordDescription2}" id="forgotPasswordText12" />
+         <Input id="forgotEmailInput12" placeholder="Retype New Password" type="Password" width="90%"/>
+      </VBox>
       <beginButton>
          <Button text="Close" press="onCloseDialog" id="21"/>
       </beginButton>
