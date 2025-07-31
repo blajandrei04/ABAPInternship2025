@@ -83,8 +83,8 @@
       ],
       "targets": {
         "TargetView1": {
-          "id": "Register",
-          "name": "Register"
+          "id": "View1",
+          "name": "View1"
         }
       }
     },

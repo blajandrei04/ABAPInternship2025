@@ -6,18 +6,18 @@
             <VBox width="100%" height="100vh" justifyContent="Center" alignItems="Center" id="vbox2" >
                 <Panel id="panel1"
                     class="sapUiResponsiveMargin"
-                    width="450px"
-                    height="600px"
+                    width="700px"
+                    height="550px"
                     
                 >
-                    <HBox justifyContent="Center" class="sapUiSmallMarginBottom">
-                        <Image src="/img/mhp_logo.png" width="220px" height="220px" id="logoImage" class="sapUiSmallMarginBottom"/>
+                    <HBox id="asdadadada" justifyContent="Center" class="sapUiSmallMarginBottom">
+                        <Image src="/img/mhp_logo.png" width="270px" height="220px" id="logoImage" class="sapUiSmallMarginBottom"/>
                     </HBox>
-                    <HBox justifyContent="Center">
-                        <ObjectStatus text="{i18n>fillInCredentials}"  state="Information" />
+                    <HBox id="adsaasdasdas" justifyContent="Center">
+                        <ObjectStatus id="asasasa" text="{i18n>fillInCredentials}"  state="Information" />
                     </HBox>
                     <VBox class="sapUiSmallMargin" 
-                        id="vbox1" 
+                        id="vbox1"
                         width="90%" 
                         justifyContent="Center" 
                         alignItems="Stretch">
