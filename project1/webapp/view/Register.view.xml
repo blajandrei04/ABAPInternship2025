@@ -27,24 +27,17 @@
                             width="80%"/>
                     </HBox>
                     <HBox>
-                        <Text text="Phone number: "></Text>
+                        <Text text="Password: "></Text>
                         <Input
-                            placeholder="Phone number"
-                            id="PhoneNumberId"
+                            placeholder="Password"
+                            id="PasswordId"
                             width="80%"/>
                     </HBox>
                     <HBox>
-                        <Text text="SU: "></Text>
+                        <Text text="Confirmation Password: "></Text>
                         <Input
-                            placeholder="SU"
-                            id="SUId"
-                            width="60%"/>
-                    </HBox>
-                    <HBox>
-                        <Text text="Career level: "></Text>
-                        <Input
-                            placeholder="Career level"
-                            id="CareerLevelId"
+                            placeholder="Password"
+                            id="ConfirmationPasswordId"
                             width="60%"/>
                     </HBox>
                     <Button text="{i18n>registerButton}" press="onSubmit"/>
