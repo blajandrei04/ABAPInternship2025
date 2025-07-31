@@ -14,6 +14,12 @@ sap.ui.define([
         },
         onCloseDialog() {
             this.oDialog.close();
+        },
+        onRegisterPress() {
+            this.getRouter().navTo("RouteRegister");
+        },
+        getRouter() {
+            return sap.ui.core.UIComponent.getRouterFor(this);
         }
     });
 });

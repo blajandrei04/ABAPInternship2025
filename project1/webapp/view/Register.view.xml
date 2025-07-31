@@ -1,7 +1,9 @@
 <mvc:View controllerName="project1.controller.Register"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <Page id="registerPage" title="{i18n>registerTitle}">
+    <Page id="registerPage" title="{i18n>registerTitle}" 
+        showNavButton="true"
+        navButtonPress="onNavBack">
         <content>
             <Panel>
                 <VBox>

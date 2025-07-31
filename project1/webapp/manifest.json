@@ -70,6 +70,7 @@
         "viewType": "XML",
         "path": "project1.view",
         "async": true,
+        "transition":"slide",
         "viewPath": "project1.view"
       },
       "routes": [
@@ -79,13 +80,24 @@
           "target": [
             "TargetView1"
           ]
+        },
+        {
+          "name": "RouteRegister",
+          "pattern": "register",
+          "target": [
+            "TargetView2"
+          ]
         }
       ],
       "targets": {
         "TargetView1": {
           "id": "View1",
           "name": "View1"
-        }
+        },
+        "TargetView2": {
+        "id": "Register",
+        "name": "Register"
+      }
       }
     },
     "rootView": {
