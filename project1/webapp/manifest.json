@@ -87,6 +87,13 @@
           "target": [
             "TargetView2"
           ]
+        },
+        {
+          "name": "RouteHomePage",
+          "pattern": "HomePage",
+          "target": [
+            "HomePage"
+          ]
         }
       ],
       "targets": {
@@ -97,7 +104,11 @@
         "TargetView2": {
         "id": "Register",
         "name": "Register"
-      }
+        },
+        "HomePage": {
+        "id": "HomePage",
+        "name": "HomePage"
+        }
       }
     },
     "rootView": {
