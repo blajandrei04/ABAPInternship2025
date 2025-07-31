@@ -18,6 +18,9 @@ sap.ui.define([
         onRegisterPress() {
             this.getRouter().navTo("RouteRegister");
         },
+        onLoginPress(){
+            this.getRouter().navTo("RouteHomePage");
+        },
         getRouter() {
             return sap.ui.core.UIComponent.getRouterFor(this);
         }

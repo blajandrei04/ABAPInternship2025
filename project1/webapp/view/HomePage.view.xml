@@ -1,0 +1,33 @@
+<mvc:View
+	controllerName="project1.controller.HomePage"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page
+		title="{i18n>ResumeOf} {FirstName} {LastName}"
+		id="employeeResumePage"
+		showNavButton="true"
+		navButtonPress=".onNavBack">
+		<content>
+			<IconTabBar
+				id="iconTabBar"
+				headerBackgroundDesign="Transparent"
+				class="sapUiResponsiveContentPadding"
+				binding="{Resume}"
+                select=".onTabSelect"
+				selectedKey="{view>/selectedTabKey}">
+				<items>
+					<IconTabFilter id="MyTeamTab" text="{i18n>MyTeamTab}" key="Info" icon="sap-icon://hint" iconColor="Neutral">
+						<Text text="{Information}"/>
+					</IconTabFilter>
+					<IconTabFilter id="360tab" text="{i18n>360tab}" key="Projects" icon="sap-icon://form" iconColor="Critical">
+						
+					</IconTabFilter>
+					<IconTabFilter id="pegTab" text="{i18n>pegTab}" key="Hobbies" icon="sap-icon://form" iconColor="Positive">
+						<!-- <Text text="{Hobbies}"/> -->
+                        <!-- place content via lazy loading -->
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</content>
+	</Page>
+</mvc:View>
