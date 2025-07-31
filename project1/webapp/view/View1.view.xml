@@ -3,15 +3,15 @@
     xmlns="sap.m">
     <Page id="page" title="{i18n>title}">
         <content>
-            <VBox width="100%" height="100vh" justifyContent="Center" alignItems="Center" id="vbox2" >
+            <VBox width="100%" height="80vh" justifyContent="Center" alignItems="Center" id="vbox2" >
                 <Panel id="panel1"
                     class="sapUiResponsiveMargin"
                     width="700px"
-                    height="550px"
+                    height="520px"
                     
                 >
                     <HBox id="asdadadada" justifyContent="Center" class="sapUiSmallMarginBottom">
-                        <Image src="/img/mhp_logo.png" width="270px" height="220px" id="logoImage" class="sapUiSmallMarginBottom"/>
+                        <Image src="/img/mhp_logo.png" width="230px" height="180px" id="logoImage" class="sapUiSmallMarginBottom"/>
                     </HBox>
                     <HBox id="adsaasdasdas" justifyContent="Center">
                         <ObjectStatus id="asasasa" text="{i18n>fillInCredentials}"  state="Information" />
