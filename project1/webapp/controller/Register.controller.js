@@ -27,14 +27,13 @@ sap.ui.define([
             const sFirstName = oView.byId("FirstNameId").getValue();
             const sLastName = oView.byId("LastNameId").getValue();
             const sEmail = oView.byId("EmailId").getValue();
-            const sPhone = oView.byId("PhoneNumberId").getValue();
-            const sSU = oView.byId("SUId").getValue();
-            const sCareer = oView.byId("CareerLevelId").getValue();
+            const sPassword = oView.byId("PasswordId").getValue();
+            const sConfirmationPassword = oView.byId("ConfirmationPasswordId").getValue();
 
             const oBundle = this.getView().getModel("i18n").getResourceBundle();
             const eMsg = oBundle.getText("errorMsg");
 
-            if (sFirstName === "" || sLastName === "" || sEmail === "" || sPhone === "" || sSU === "" || sCareer === "") {
+            if (sFirstName === "" || sLastName === "" || sEmail === "" || sPassword === "" || sConfirmationPassword === "") {
                 MessageBox.error(eMsg, {
                     title: "Error",
                 });
