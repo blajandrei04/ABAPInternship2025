@@ -10,14 +10,14 @@
                     height="550px"
                     
                 >
-                    <HBox justifyContent="Center" class="sapUiSmallMarginBottom">
+                    <HBox id="asdadadada" justifyContent="Center" class="sapUiSmallMarginBottom">
                         <Image src="/img/mhp_logo.png" width="270px" height="220px" id="logoImage" class="sapUiSmallMarginBottom"/>
                     </HBox>
-                    <HBox justifyContent="Center">
-                        <ObjectStatus text="{i18n>fillInCredentials}"  state="Information" />
+                    <HBox id="adsaasdasdas" justifyContent="Center">
+                        <ObjectStatus id="asasasa" text="{i18n>fillInCredentials}"  state="Information" />
                     </HBox>
                     <VBox class="sapUiSmallMargin" 
-                        id="vbox1" 
+                        id="vbox1"
                         width="90%" 
                         justifyContent="Center" 
                         alignItems="Stretch">
