@@ -1,0 +1,15 @@
+<mvc:View controllerName="project1.controller.360Fb"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="360FbPage" title="{i18n>360FbTitle}" 
+        showNavButton="true"
+        navButtonPress="onNavBack">
+        <content>
+            <Panel>
+                <content>
+                    <Text text="Hello, UI5!" />
+                </content>
+            </Panel>
+        </content>
+    </Page>
+</mvc:View>

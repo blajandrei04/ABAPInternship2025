@@ -19,8 +19,8 @@
 					<IconTabFilter id="MyTeamTab" text="{i18n>MyTeamTab}" key="Info" icon="sap-icon://hint" iconColor="Neutral">
 						<Text text="{Information}"/>
 					</IconTabFilter>
-					<IconTabFilter id="360tab" text="{i18n>360tab}" key="Projects" icon="sap-icon://form" iconColor="Critical">
-						
+					<IconTabFilter id="360tab" text="{i18n>360tab}" key="Projects" icon="sap-icon://form" iconColor="Critical" >
+						<Button text="{i18n>360FbView}" press="onGiveFeedback"/>
 					</IconTabFilter>
 					<IconTabFilter id="pegTab" text="{i18n>pegTab}" key="Hobbies" icon="sap-icon://form" iconColor="Positive">
 						<!-- <Text text="{Hobbies}"/> -->

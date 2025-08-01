@@ -25,6 +25,9 @@ sap.ui.define([
             } else {
                 this.getRouter().navTo("RouteView1", {}, true /*no history*/);
             }
+        },
+        onGiveFeedback(){
+            this.getRouter().navTo("Route360FbPage");
         }
     });
 });
