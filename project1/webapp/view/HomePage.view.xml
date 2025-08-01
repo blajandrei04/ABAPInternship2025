@@ -26,6 +26,26 @@
 						<!-- <Text text="{Hobbies}"/> -->
                         <!-- place content via lazy loading -->
 					</IconTabFilter>
+					<IconTabFilter id="MyProfileTab" text="{i18n>MyProfileTab}" key="MyProfile" icon="sap-icon://person-placeholder" iconColor="Good">
+						<VBox>
+							<HBox>
+								<Text text="{i18n>FirstName}:"/>
+							</HBox>
+							<HBox>
+								<Text text="{i18n>LastName}:"/>
+							</HBox>
+							<HBox>
+								<Text text="{i18n>Email}:"/>
+							</HBox>
+							<HBox>
+								<Text text="{i18n>careerLevel}:"/>	
+							</HBox>
+							<HBox>
+								<Text text="{i18n>Department}:"/>
+							</HBox>
+						</VBox>
+					
+					</IconTabFilter>
 				</items>
 			</IconTabBar>
 		</content>
