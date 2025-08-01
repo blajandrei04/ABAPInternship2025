@@ -25,6 +25,30 @@ sap.ui.define([
             } else {
                 this.getRouter().navTo("RouteView1", {}, true /*no history*/);
             }
+        },
+        onLogoutPress() {
+            MessageBox.confirm("Are you sure you want to log out?", {
+                title: "Confirm Logout",
+                onClose: (oAction) => {
+                    if (oAction === MessageBox.Action.OK) {
+                        this.getRouter().navTo("RouteView1");
+                        MessageToast.show("Logged out successfully");
+                    }
+                }
+            });
+        },
+        onChangePasswordPress() {
+            this.oDialog ??= sap.ui.xmlfragment("project1.view.ChangePass", this);
+            this.getView().addDependent(this.oDialog);
+            this.oDialog.open();
+        },
+        onCloseDialog() {
+            if (this.oDialog) {
+                this.oDialog.close();
+            }
+        },
+        onConfirmChangePassword() {
+            this.onCloseDialog();
         }
     });
 });

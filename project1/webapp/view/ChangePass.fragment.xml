@@ -1,0 +1,30 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core">
+   <Dialog
+         id="changePasswordDialog"
+         title="{i18n>forgotPasswordTitle}"
+         class="sapUiResponsiveContentPadding"
+         >
+      <VBox id="vboxchangePassword1" class="sapUiSmallMargin">
+         <Text text="{i18n>forgotPasswordDescription1}" id="changePasswordText1" />
+         <Input id="changeEmailInput1" placeholder="New Password" type="Password" width="90%"/>
+      </VBox>
+      <VBox id="vboxchangePassword12" class="sapUiSmallMargin">
+         <Text text="{i18n>forgotPasswordDescription2}" id="changePasswordText12" />
+         <Input id="changeEmailInput12" placeholder="Retype New Password" type="Password" width="90%"/>
+      </VBox>
+      <beginButton>
+         <Button text="{i18n>Confirm}" press="onConfirmChangePassword" id="confirmChangePasswordButton" icon="sap-icon://accept"/>
+      </beginButton>
+      <endButton>
+        <Button
+            id="cancelChangePasswordButton"
+            text="{i18n>dialogCancelButtonText}"
+            press="onCloseDialog"
+            class="sapUiSmallMarginEnd"
+            type="Reject"
+            />
+      </endButton>
+   </Dialog>
+</core:FragmentDefinition>
