@@ -21,6 +21,9 @@ sap.ui.define([
         onLoginPress(){
             this.getRouter().navTo("RouteHomePage");
         },
+        onConfirmForgotPassword() {
+            this.onCloseDialog();
+        },
         getRouter() {
             return sap.ui.core.UIComponent.getRouterFor(this);
         }

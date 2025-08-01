@@ -19,7 +19,16 @@
          <Input id="forgotEmailInput12" placeholder="Retype New Password" type="Password" width="90%"/>
       </VBox>
       <beginButton>
-         <Button text="Close" press="onCloseDialog" id="21"/>
+         <Button text="{i18n>Confirm}" press="onConfirmForgotPassword" id="confirmForgotPasswordButton"/>
       </beginButton>
+      <endButton>
+        <Button
+            id="cancelForgotPasswordButton"
+            text="{i18n>dialogCancelButtonText}"
+            press="onCloseDialog"
+            class="sapUiSmallMarginEnd"
+            type="Reject"
+            />
+      </endButton>
    </Dialog>
 </core:FragmentDefinition>
