@@ -1,0 +1,55 @@
+<mvc:View
+    controllerName="your.namespace.controller.360FB"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+
+    <Page title="360 Feedback Page">
+        <customHeader>
+            <Bar>
+                <contentMiddle>
+                    <Title text="360 Feedback Page"/>
+                </contentMiddle>
+                <contentRight>
+                    <Button icon="sap-icon://email"
+                            text="Send Feedback 360"
+                            press=".onSendFeedback"/>
+                    <Button icon="sap-icon://log"
+                            text="Exit"
+                            press=".onExit"/>
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <HBox alignItems="Center" justifyContent="SpaceBetween">
+                    <Label text="Fill out new Feedback 360"/>
+                    <HBox>
+                        <ComboBox placeholder="Search the user" width="200px" items="{/Users}">
+                            <core:Item key="{ID}" text="{Name}" />
+                        </ComboBox>
+                        <CheckBox text="Anonymous" selected="{/anonymous}" />
+                    </HBox>
+                </HBox>
+
+                <Toolbar design="Transparent"/>
+
+                <HBox justifyContent="SpaceAround" class="sapUiSmallMarginTop">
+                    <VBox>
+                        <CheckBox text="Technical Skills"/>
+                        <Button type="Transparent" icon="sap-icon://navigation-right-arrow"/>
+                    </VBox>
+                    <VBox>
+                        <CheckBox text="Soft Skills"/>
+                        <Button type="Transparent" icon="sap-icon://navigation-right-arrow"/>
+                    </VBox>
+                    <VBox>
+                        <CheckBox text="Other Skills"/>
+                        <Button type="Transparent" icon="sap-icon://navigation-right-arrow"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

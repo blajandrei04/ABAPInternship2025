@@ -30,7 +30,17 @@
 					<IconTabFilter id="MyTeamTab" text="{i18n>MyTeamTab}" key="Info" icon="sap-icon://hint" iconColor="Neutral">
 						<Text text="{Information}"/>
 					</IconTabFilter>
-					<IconTabFilter id="360tab" text="{i18n>360tab}" key="Projects" icon="sap-icon://form" iconColor="Critical">
+					<IconTabFilter id="360tab" text="{i18n>360tab}" key="Projects" icon="sap-icon://form" iconColor="Critical" press="on360TabPress">
+						<VBox>
+							<HBox justifyContent="SpaceBetween" alignItems="Center">
+								<Text text="{i18n>360Feedback}"/>
+								<Button text="{i18n>sendFeedbackButton}" icon="sap-icon://email" press=".onSendFeedbackPress"/>
+							</HBox>
+							<HBox justifyContent="SpaceBetween" alignItems="Center">
+								<Text text="{i18n>feedbackHistory}"/>
+								<Button text="{i18n>viewHistoryButton}" icon="sap-icon://history" press=".onViewHistoryPress"/>
+							</HBox>
+						</VBox>
 						
 					</IconTabFilter>
 					<IconTabFilter id="pegTab" text="{i18n>pegTab}" key="Hobbies" icon="sap-icon://form" iconColor="Positive">

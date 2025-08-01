@@ -49,6 +49,9 @@ sap.ui.define([
         },
         onConfirmChangePassword() {
             this.onCloseDialog();
+        },
+        onSendFeedbackPress() {
+            this.getRouter().navTo("Route360FB");
         }
     });
 });
