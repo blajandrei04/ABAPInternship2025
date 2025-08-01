@@ -19,7 +19,7 @@
          <Input id="forgotEmailInput12" placeholder="Retype New Password" type="Password" width="90%"/>
       </VBox>
       <beginButton>
-         <Button text="{i18n>Confirm}" press="onConfirmForgotPassword" id="confirmForgotPasswordButton"/>
+         <Button text="{i18n>Confirm}" press="onConfirmForgotPassword" id="confirmForgotPasswordButton" icon="sap-icon://accept"/>
       </beginButton>
       <endButton>
         <Button

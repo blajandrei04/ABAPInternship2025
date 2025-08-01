@@ -8,6 +8,17 @@
 		showNavButton="true"
 		navButtonPress=".onNavBack">
 		<content>
+			  <HBox justifyContent="End" alignItems="Center" renderType="Bare">
+					<Button text="{i18n>changePasswordButton}"
+							press="onChangePasswordPress"
+							id="changePasswordButton"
+							icon="sap-icon://BusinessSuiteInAppSymbols/icon-cell-lock"
+							class="sapUiTinyMarginEnd" />
+					<Button text="{i18n>logoutButton}"
+							press=".onLogoutPress"
+							icon ="sap-icon://undo"
+							id="logoutButton" />
+				</HBox>
 			<IconTabBar
 				id="iconTabBar"
 				headerBackgroundDesign="Transparent"
