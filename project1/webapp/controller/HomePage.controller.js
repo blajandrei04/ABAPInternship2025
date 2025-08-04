@@ -9,7 +9,40 @@ sap.ui.define([
 
     return Controller.extend("project1.controller.HomePage", {
         onInit() {
-            console.log("Home page initialized");
+
+            const oMockData = {
+                Resume: [
+                    {
+                        Name: "Ina",
+                        Surname: "Dan",
+                        CareerLevel: "INTERN"
+                    },
+                    {
+                        Name: "Stefania",
+                        Surname: "Maracine",
+                        CareerLevel: "INTERN"
+                    },
+                    {
+                        Name: "Darius",
+                        Surname: "Borza",
+                        CareerLevel: "INTERN"
+                    },
+                    {
+                        Name: "Dorian",
+                        Surname: "Hornea",
+                        CareerLevel: "SENIOR CONSULTANT"
+                    },
+                    {
+                        Name: "Diana",
+                        Surname: "Zaha",
+                        CareerLevel: "INTERN"
+                    }
+                ]
+            };
+
+            const oModel = new JSONModel(oMockData);
+            this.getView().setModel(oModel);
+            
         },
         getRouter() {
             return sap.ui.core.UIComponent.getRouterFor(this);
