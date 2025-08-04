@@ -25,6 +25,7 @@
 					<IconTabFilter id="pegTab" text="{i18n>pegTab}" key="Hobbies" icon="sap-icon://form" iconColor="Positive">
 						<!-- <Text text="{Hobbies}"/> -->
                         <!-- place content via lazy loading -->
+						<Button text="{i18n>PegButton}" press="onRequestPeg"/>
 					</IconTabFilter>
 					<IconTabFilter id="MyProfileTab" text="{i18n>MyProfileTab}" key="MyProfile" icon="sap-icon://person-placeholder" iconColor="Good">
 						<VBox>
