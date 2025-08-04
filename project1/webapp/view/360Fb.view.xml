@@ -3,9 +3,9 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns="sap.m">
-    
+   
     <Page id="360FbPage" title="{i18n>360FbTitle}" showNavButton="true" navButtonPress="onNavBack">
-        
+       
         <content>
             <VBox class="sapUiSmallMargin">
                 <HBox justifyContent="SpaceBetween" alignItems="Center">
@@ -14,11 +14,12 @@
                         <ComboBox placeholder="{i18n>searchUser}" width="200px" items="{/Users}">
                             <core:Item key="{ID}" text="{Name}" />
                         </ComboBox>
+                        
                         <CheckBox text="{i18n>anonymous}" selected="{/anonymous}" class="sapUiSmallMarginBegin" />
                     </HBox>
                 </HBox>
                 <Toolbar design="Transparent"/>
-
+ 
                 <HBox justifyContent="SpaceAround" class="sapUiSmallMarginTop">
                     <VBox>
                         <CheckBox text="{i18n>technicalSkills}" />
@@ -33,7 +34,7 @@
                         <Button icon="sap-icon://navigation-right-arrow" type="Transparent" />
                     </VBox>
                 </HBox>
-
+ 
             </VBox>
         </content>
     </Page>
