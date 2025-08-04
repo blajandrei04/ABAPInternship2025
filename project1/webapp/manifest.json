@@ -101,6 +101,13 @@
           "target": [
             "360Fb"
           ]
+        },
+        {
+          "name": "RoutePegPage",
+          "pattern": "Peg",
+          "target": [
+            "Peg"
+          ]
         }
       ],
       "targets": {
@@ -119,6 +126,10 @@
         "360Fb": {
         "id": "360Fb",
         "name": "360Fb"
+        },
+        "Peg": {
+        "id": "Peg",
+        "name": "Peg"
         }
       }
     },

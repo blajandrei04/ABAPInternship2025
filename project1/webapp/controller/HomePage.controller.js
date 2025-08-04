@@ -28,6 +28,9 @@ sap.ui.define([
         },
         onGiveFeedback(){
             this.getRouter().navTo("Route360FbPage");
+        },
+        onRequestPeg(){
+            this.getRouter().navTo("RoutePegPage");
         }
     });
 });
