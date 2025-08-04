@@ -46,7 +46,7 @@ sap.ui.define([
             this.onCloseDialog();
         },
         onLogoutPress() {
-            MessageBox.confirm("Are you sure you want to log out?", {
+            MessageBox.confirm("Are you sure you want to log out", {
                 onClose: (oAction) => {
                     if (oAction === MessageBox.Action.OK) {
                         this.getRouter().navTo("RouteView1");
