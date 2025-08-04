@@ -44,7 +44,6 @@
 								<Text text="{i18n>Department}:"/>
 							</HBox>
 						</VBox>
-					
 					</IconTabFilter>
 				</items>
 			</IconTabBar>
