@@ -31,6 +31,28 @@ sap.ui.define([
         },
         onRequestPeg(){
             this.getRouter().navTo("RoutePegPage");
+        },
+         async onChangePasswordPress(){
+            this.oDialog ??= await this.loadFragment({
+                name: "project1.view.ChangePass",
+        }),
+            this.oDialog.open();
+        },
+        onCloseDialog() {
+            this.oDialog.close();
+        },
+        onConfirmChangePassword() {
+            MessageToast.show("Password changed successfully!");
+            this.onCloseDialog();
+        },
+        onLogoutPress() {
+            MessageBox.confirm("Are you sure you want to log out", {
+                onClose: (oAction) => {
+                    if (oAction === MessageBox.Action.OK) {
+                        this.getRouter().navTo("RouteView1");
+                    }
+                }
+            });
         }
     });
 });

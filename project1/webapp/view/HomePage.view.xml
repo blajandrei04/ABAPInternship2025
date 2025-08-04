@@ -8,6 +8,17 @@
 		showNavButton="true"
 		navButtonPress=".onNavBack">
 		<content>
+			<HBox justifyContent="End" alignItems="Center" renderType="Bare">
+					<Button text="{i18n>changePasswordButton}"
+							press="onChangePasswordPress"
+							id="changePasswordButton"
+							icon="sap-icon://BusinessSuiteInAppSymbols/icon-cell-lock"
+							class="sapUiTinyMarginEnd" />
+					<Button text="{i18n>logoutButton}"
+							press=".onLogoutPress"
+							icon ="sap-icon://undo"
+							id="logoutButton" />
+				</HBox>
 			<IconTabBar
 				id="iconTabBar"
 				headerBackgroundDesign="Transparent"
@@ -17,7 +28,28 @@
 				selectedKey="{view>/selectedTabKey}">
 				<items>
 					<IconTabFilter id="MyTeamTab" text="{i18n>MyTeamTab}" key="Info" icon="sap-icon://hint" iconColor="Neutral">
-						<Text text="{Information}"/>
+						<Table id="myTeamTable" inset="false">
+							<columns>
+								<Column>
+								<Text text="Name"/>
+								</Column>
+								<Column>
+								<Text text="Surname"/>
+								</Column>
+								<Column>
+								<Text text="Career level"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+								<cells>
+									<Text text="{Name}"/>
+									<Text text="{Surname}"/>
+									<Text text="{CareerLevel}"/>
+								</cells>
+								</ColumnListItem>
+							</items>
+							</Table>
 					</IconTabFilter>
 					<IconTabFilter id="360tab" text="{i18n>360tab}" key="Projects" icon="sap-icon://form" iconColor="Critical" >
 						<Button text="{i18n>360FbView}" press="onGiveFeedback"/>
