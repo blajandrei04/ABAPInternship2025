@@ -6,17 +6,6 @@
     
     <Page id="360FbPage" title="{i18n>360FbTitle}" showNavButton="true" navButtonPress="onNavBack">
         
-        <customHeader>
-            <Bar>
-                <contentMiddle>
-                    <Title text="{i18n>360FbTitle}" />
-                </contentMiddle>
-                <contentRight>
-                    <Button text="{i18n>sendFeedbackButton}" icon="sap-icon://email" press="onSendFeedback" />
-                    <Button text="{i18n>exitButton}" icon="sap-icon://log" press="onExit" />
-                </contentRight>
-            </Bar>
-        </customHeader>
         <content>
             <VBox class="sapUiSmallMargin">
                 <HBox justifyContent="SpaceBetween" alignItems="Center">
