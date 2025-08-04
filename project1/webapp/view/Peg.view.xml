@@ -7,6 +7,22 @@
     <Page id="PegPage" title="{i18n>PegTitle}" showNavButton="true" navButtonPress="onNavBack">
         
         <content>
+            <VBox>
+                <ComboBox placeholder="{i18n>SearchProject}" width="220px" items="{/Users}">
+                    <core:Item key="{ID}" text="{Name}" />
+                </ComboBox>
+                <Label text="Project Manager: " />
+                <ComboBox placeholder="{i18n>SelectTeammate}" width="220px" items="{/Users}">
+                    <core:Item key="{ID}" text="{Name}" />
+                </ComboBox>
+                <ComboBox placeholder="{i18n>SelectNumberOfDays}" width="220px" items="{/Users}">
+                    <core:Item key="{ID}" text="{Name}" />
+                </ComboBox>
+                <HBox>
+                    <Button icon="sap-icon://request" text="Reguest PEG" type="Transparent" />
+                    <Button icon="sap-icon://decline" text="Close" type="Transparent" />
+                </HBox>
+            </VBox>
             
         </content>
     </Page>
