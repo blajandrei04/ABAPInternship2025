@@ -1,50 +1,65 @@
 <mvc:View controllerName="project1.controller.Register"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <Page id="registerPage" title="{i18n>registerTitle}" 
+
+    <Page id="registerPage"
+        title="{i18n>registerTitle}"
         showNavButton="true"
         navButtonPress="onNavBack">
+
         <content>
-            <Panel>
-                <VBox>
-                    <HBox>
-                        <Text text="FirstName: "></Text>
+
+            <VBox justifyContent="Center" alignItems="Center" class="sapUiResponsiveMargin" height="90%">
+
+                <Panel width="400px" class="sapUiResponsiveMargin sapUiContentPadding" backgroundDesign="Translucent">
+                    <VBox alignItems="Stretch" class="sapUiSmallMargin">
+
+                        <Label text="First Name:" labelFor="FirstNameId"/>
                         <Input
-                            placeholder="FirstName"
+                            placeholder="First Name"
                             id="FirstNameId"
-                            width="60%"/>
-                    </HBox>
-                    <HBox>
-                        <Text text="LastName: "></Text>
+                            width="100%"
+                            class="sapUiSmallMarginBottom"/>
+
+                        <Label text="Last Name:" labelFor="LastNameId"/>
                         <Input
-                            placeholder="LastName"
+                            placeholder="Last Name"
                             id="LastNameId"
-                            width="60%"/>
-                    </HBox>
-                    <HBox>
-                        <Text text="Email: "></Text>
+                            width="100%"
+                            class="sapUiSmallMarginBottom"/>
+
+                        <Label text="Email:" labelFor="EmailId"/>
                         <Input
                             placeholder="Email"
                             id="EmailId"
-                            width="80%"/>
-                    </HBox>
-                    <HBox>
-                        <Text text="Password: "></Text>
+                            width="100%"
+                            class="sapUiSmallMarginBottom"/>
+
+                        <Label text="Password:" labelFor="PasswordId"/>
                         <Input
                             placeholder="Password"
                             id="PasswordId"
-                            width="80%"/>
-                    </HBox>
-                    <HBox>
-                        <Text text="Confirmation Password: "></Text>
+                            type="Password"
+                            width="100%"
+                            class="sapUiSmallMarginBottom"/>
+
+                        <Label text="Confirm Password:" labelFor="ConfirmationPasswordId"/>
                         <Input
-                            placeholder="Password"
+                            placeholder="Confirm Password"
                             id="ConfirmationPasswordId"
-                            width="60%"/>
-                    </HBox>
-                    <Button text="{i18n>registerButton}" press="onSubmit"/>
-                </VBox>
-            </Panel>
+                            type="Password"
+                            width="100%"
+                            class="sapUiSmallMarginBottom"/>
+
+                        <HBox justifyContent="Center">
+                            <Button text="{i18n>registerButton}" press="onSubmit"/>
+                        </HBox>
+
+                    </VBox>
+                </Panel>
+
+            </VBox>
+
         </content>
     </Page>
 </mvc:View>
