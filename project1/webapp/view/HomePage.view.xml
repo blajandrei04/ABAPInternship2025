@@ -1,4 +1,4 @@
-<mvc:View
+<mvc:View xmlns:form="sap.ui.layout.form"
 	controllerName="project1.controller.HomePage"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
@@ -126,24 +126,37 @@
 						</Table>
 					</IconTabFilter>
 					<IconTabFilter id="MyProfileTab" text="{i18n>MyProfileTab}" key="MyProfile" icon="sap-icon://person-placeholder" iconColor="Good">
-						<VBox>
-							<HBox>
-								<Text text="{i18n>FirstName}:"/>
-							</HBox>
-							<HBox>
-								<Text text="{i18n>LastName}:"/>
-							</HBox>
-							<HBox>
-								<Text text="{i18n>Email}:"/>
-							</HBox>
-							<HBox>
-								<Text text="{i18n>careerLevel}:"/>	
-							</HBox>
-							<HBox>
-								<Text text="{i18n>Department}:"/>
-							</HBox>
-						</VBox>
-					</IconTabFilter>
+						<VBox class="sapUiSmallMargin sapUiResponsiveMargin" height="110%"  alignItems="Start" width="500px">
+							<Panel width="150%"
+								headerText="{i18n>MyProfileTab}"
+								class="sapUiNoContentPadding sapUiResponsiveMargin">
+								
+								<form:SimpleForm  
+									layout="ResponsiveGridLayout"
+									editable="false"
+									class="sapUiResponsiveMargin"
+									width="60%">
+									
+									<Label text="{i18n>FirstName}" width="90%" />
+									<Text text="{/FirstName}" />
+
+									<Label text="{i18n>LastName}" width="90%"/>
+									<Text text="{/LastName}" />
+
+									<Label text="{i18n>Email}" width="90%"/>
+									<Text text="{/Email}" />
+
+									<Label text="{i18n>careerLevel}" width="90%"/>
+									<Text text="{/CareerLevel}" />
+
+									<Label text="{i18n>Department}" width="90%"/>
+									<Text text="{/Department}" />
+								</form:SimpleForm>
+        </Panel>
+    </VBox>
+</IconTabFilter>
+
+					
 				</items>
 			</IconTabBar>
 		</content>
