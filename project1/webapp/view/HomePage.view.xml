@@ -1,164 +1,269 @@
-<mvc:View xmlns:form="sap.ui.layout.form"
-	controllerName="project1.controller.HomePage"
-	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core">
-	<Page
-		title="{i18n>Title} {FirstName} {LastName}"
-		id="employeeResumePage"
-		showNavButton="true"
-		navButtonPress=".onNavBack">
-		<content>
-			<HBox justifyContent="End" alignItems="Center" renderType="Bare">
-					<Button text="{i18n>changePasswordButton}"
-							press="onChangePasswordPress"
-							id="changePasswordButton"
-							icon="sap-icon://BusinessSuiteInAppSymbols/icon-cell-lock"
-							class="sapUiTinyMarginEnd" />
-					<Button text="{i18n>logoutButton}"
-							press=".onLogoutPress"
-							icon ="sap-icon://undo"
-							id="logoutButton" />
-				</HBox>
-			<IconTabBar
-				id="iconTabBar"
-				headerBackgroundDesign="Transparent"
-				class="sapUiResponsiveContentPadding"
-				binding="{Resume}"
+<mvc:View
+    xmlns:form="sap.ui.layout.form"
+    controllerName="project1.controller.HomePage"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+>
+    <Page
+        title="{i18n>Title} {FirstName} {LastName}"
+        id="employeeResumePage"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+    >
+        <content>
+            <HBox
+                justifyContent="End"
+                alignItems="Center"
+                renderType="Bare"
+            >
+                <Button
+                    text="{i18n>changePasswordButton}"
+                    press="onChangePasswordPress"
+                    id="changePasswordButton"
+                    icon="sap-icon://BusinessSuiteInAppSymbols/icon-cell-lock"
+                    class="sapUiTinyMarginEnd"
+                />
+                <Button
+                    text="{i18n>logoutButton}"
+                    press=".onLogoutPress"
+                    icon="sap-icon://undo"
+                    id="logoutButton"
+                />
+            </HBox>
+            <IconTabBar
+                id="iconTabBar"
+                headerBackgroundDesign="Transparent"
+                class="sapUiResponsiveContentPadding"
+                binding="{Resume}"
                 select=".onTabSelect"
-				selectedKey="{view>/selectedTabKey}">
-				<items>
-					<IconTabFilter id="MyTeamTab" text="{i18n>MyTeamTab}" key="Info" icon="sap-icon://hint" iconColor="Neutral">
-						<VBox class="sapUiSmallMargin">
-							<Table id="myTeamTable" items="{/Resume}">
-								<columns>
-									<Column>
-									<Text text="Name"/>
-									</Column>
-									<Column>
-									<Text text="Surname"/>
-									</Column>
-									<Column>
-									<Text text="Career level"/>
-									</Column>
-								</columns>
-								<items>
-									<ColumnListItem>
-									<cells>
-										<Text text="{Name}"/>
-										<Text text="{Surname}"/>
-										<Text text="{CareerLevel}"/>
-									</cells>
-									</ColumnListItem>	
-								</items>
-								</Table>
-							</VBox>
-					</IconTabFilter>
-					<IconTabFilter id="360tab" text="{i18n>360tab}" key="Projects" icon="sap-icon://form" iconColor="Critical" >
-						<content>
-            <VBox class="sapUiSmallMargin">
-                <HBox justifyContent="SpaceBetween" alignItems="Center">
-                    <Label text="{i18n>fillOutFeedback360}" design="Bold"/>
-                    <HBox>
-                        <ComboBox placeholder="{i18n>searchUser}" width="200px" items="{/Users}">
-                            <core:Item key="{ID}" text="{Name}" />
-                        </ComboBox>
-                        
-                        <CheckBox text="{i18n>anonymous}" selected="{/anonymous}" class="sapUiSmallMarginBegin" />
-                    </HBox>
-                </HBox>
-                <Toolbar design="Transparent"/>
- 
-                <HBox justifyContent="SpaceAround" class="sapUiSmallMarginTop">
-                    <VBox>
-                        <CheckBox text="{i18n>technicalSkills}" />
-                        <Button icon="sap-icon://navigation-right-arrow" type="Transparent" />
-                    </VBox>
-                    <VBox>
-                        <CheckBox text="{i18n>softSkills}" />
-                        <Button icon="sap-icon://navigation-right-arrow" type="Transparent" />
-                    </VBox>
-                    <VBox>
-                        <CheckBox text="{i18n>otherSkills}" />
-                        <Button icon="sap-icon://navigation-right-arrow" type="Transparent" />
-                    </VBox>
-                </HBox>
- 
-            </VBox>
+                selectedKey="{view>/selectedTabKey}"
+            >
+                <items>
+                    <IconTabFilter
+                        id="MyTeamTab"
+                        text="{i18n>MyTeamTab}"
+                        key="Info"
+                        icon="sap-icon://hint"
+                        iconColor="Neutral"
+                    >
+                        <VBox class="sapUiSmallMargin">
+                            <Table
+                                id="myTeamTable"
+                                items="{/Resume}"
+                            >
+                                <columns>
+                                    <Column>
+                                        <Text text="Name" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="Surname" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="Career level" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{Name}" />
+                                            <Text text="{Surname}" />
+                                            <Text text="{CareerLevel}" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </VBox>
+                    </IconTabFilter>
+                    <IconTabFilter
+                        id="360tab"
+                        text="{i18n>360tab}"
+                        key="Projects"
+                        icon="sap-icon://form"
+                        iconColor="Critical"
+                    >
+                        <content>
+                            <VBox class="sapUiSmallMargin">
+                                <HBox
+                                    justifyContent="SpaceBetween"
+                                    alignItems="Center"
+                                >
+                                    <Label
+                                        text="{i18n>fillOutFeedback360}"
+                                        design="Bold"
+                                    />
+                                    <HBox>
+                                        <ComboBox
+                                            placeholder="{i18n>searchUser}"
+                                            width="200px"
+                                            items="{/Users}"
+                                        >
+                                            <core:Item
+                                                key="{ID}"
+                                                text="{Name}"
+                                            />
+                                        </ComboBox>
+
+                                        <CheckBox
+                                            text="{i18n>anonymous}"
+                                            selected="{/anonymous}"
+                                            class="sapUiSmallMarginBegin"
+                                        />
+                                    </HBox>
+                                </HBox>
+                                <Toolbar design="Transparent" />
+
+                                <HBox
+                                    justifyContent="SpaceAround"
+                                    class="sapUiSmallMarginTop"
+                                >
+                                    <VBox>
+                                        <CheckBox
+                                            text="{i18n>technicalSkills}"
+                                        />
+                                        <Button
+                                            icon="sap-icon://navigation-right-arrow"
+                                            type="Transparent"
+                                        />
+                                    </VBox>
+                                    <VBox>
+                                        <CheckBox text="{i18n>softSkills}" />
+                                        <Button
+                                            icon="sap-icon://navigation-right-arrow"
+                                            type="Transparent"
+                                        />
+                                    </VBox>
+                                    <VBox>
+                                        <CheckBox text="{i18n>otherSkills}" />
+                                        <Button
+                                            icon="sap-icon://navigation-right-arrow"
+                                            type="Transparent"
+                                        />
+                                    </VBox>
+                                </HBox>
+                            </VBox>
+                        </content>
+                    </IconTabFilter>
+                    <IconTabFilter
+                        id="pegTab"
+                        text="{i18n>pegTab}"
+                        key="Hobbies"
+                        icon="sap-icon://form"
+                        iconColor="Positive"
+                    >
+                        <HBox justifyContent="End">
+                            <ComboBox
+								id="combobox1"
+                                placeholder="{i18n>SelectStatus}"
+                                width="170px"
+                                items="{/Status}"
+								selectionChange=".onStatusFilterChange"
+                            >
+                                <core:Item
+                                    key="{key}"
+                                    text="{text}"
+                                />
+                            </ComboBox>
+                            <Button
+                                icon="sap-icon://request"
+                                text="Reguest PEG"
+                                type="Transparent"
+                                press="onRequestPeg"
+                            />
+                        </HBox>
+                        <Table
+                            id="pegTable"
+                            items="{/PegData}"
+                        >
+                            <columns>
+                                <Column>
+                                    <Text text="Project Name" />
+                                </Column>
+                                <Column>
+                                    <Text text="Username" />
+                                </Column>
+                                <Column>
+                                    <Text text="Rating" />
+                                </Column>
+                                <Column>
+                                    <Text text="Date" />
+                                </Column>
+                                <Column>
+                                    <Text text="Status" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <Text text="{ProjectName}" />
+                                        <Text text="{Username}" />
+                                        <Text text="{Rating}" />
+                                        <Text text="{Date}" />
+                                        <Text text="{Status}" />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </IconTabFilter>
+                    <IconTabFilter
+                        id="MyProfileTab"
+                        text="{i18n>MyProfileTab}"
+                        key="MyProfile"
+                        icon="sap-icon://person-placeholder"
+                        iconColor="Good"
+                    >
+                        <VBox
+                            class="sapUiSmallMargin sapUiResponsiveMargin"
+                            height="110%"
+                            alignItems="Start"
+                            width="500px"
+                        >
+                            <Panel
+                                width="150%"
+                                headerText="{i18n>MyProfileTab}"
+                                class="sapUiNoContentPadding sapUiResponsiveMargin"
+                            >
+                                <form:SimpleForm
+                                    layout="ResponsiveGridLayout"
+                                    editable="false"
+                                    class="sapUiResponsiveMargin"
+                                    width="60%"
+                                >
+                                    <Label
+                                        text="{i18n>FirstName}"
+                                        width="90%"
+                                    />
+                                    <Text text="{/FirstName}" />
+
+                                    <Label
+                                        text="{i18n>LastName}"
+                                        width="90%"
+                                    />
+                                    <Text text="{/LastName}" />
+
+                                    <Label
+                                        text="{i18n>Email}"
+                                        width="90%"
+                                    />
+                                    <Text text="{/Email}" />
+
+                                    <Label
+                                        text="{i18n>careerLevel}"
+                                        width="90%"
+                                    />
+                                    <Text text="{/CareerLevel}" />
+
+                                    <Label
+                                        text="{i18n>Department}"
+                                        width="90%"
+                                    />
+                                    <Text text="{/Department}" />
+                                </form:SimpleForm>
+                            </Panel>
+                        </VBox>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
         </content>
-					</IconTabFilter>
-					<IconTabFilter id="pegTab" text="{i18n>pegTab}" key="Hobbies" icon="sap-icon://form" iconColor="Positive">
-						<HBox justifyContent="End">
-							<ComboBox placeholder="{i18n>SearchProject}" width="170px" items="{/Users}">
-								<core:Item key="{ID}" text="{Name}" />
-							</ComboBox>
-							<Button icon="sap-icon://request" text="Reguest PEG" type="Transparent"  press="onRequestPeg" />
-						</HBox>
-						<Table id="pegTable" items="{/PegData}">
-							<columns>
-								<Column>
-									<Text text="Project Name" />
-								</Column>
-								<Column>
-									<Text text="Username" />
-								</Column>
-								<Column>
-									<Text text="Rating" />
-								</Column>
-								<Column>
-									<Text text="Date" />
-								</Column>
-								<Column>
-									<Text text="Status" />
-								</Column>
-							</columns>
-							<items>
-								<ColumnListItem>
-									<cells>
-										<Text text="{ProjectName}" />
-										<Text text="{Username}" />
-										<Text text="{Rating}" />
-										<Text text="{Date}" />
-										<Text text="{Status}" />
-									</cells>
-								</ColumnListItem>
-							</items>
-						</Table>
-					</IconTabFilter>
-					<IconTabFilter id="MyProfileTab" text="{i18n>MyProfileTab}" key="MyProfile" icon="sap-icon://person-placeholder" iconColor="Good">
-						<VBox class="sapUiSmallMargin sapUiResponsiveMargin" height="110%"  alignItems="Start" width="500px">
-							<Panel width="150%"
-								headerText="{i18n>MyProfileTab}"
-								class="sapUiNoContentPadding sapUiResponsiveMargin">
-								
-								<form:SimpleForm  
-									layout="ResponsiveGridLayout"
-									editable="false"
-									class="sapUiResponsiveMargin"
-									width="60%">
-									
-									<Label text="{i18n>FirstName}" width="90%" />
-									<Text text="{/FirstName}" />
-
-									<Label text="{i18n>LastName}" width="90%"/>
-									<Text text="{/LastName}" />
-
-									<Label text="{i18n>Email}" width="90%"/>
-									<Text text="{/Email}" />
-
-									<Label text="{i18n>careerLevel}" width="90%"/>
-									<Text text="{/CareerLevel}" />
-
-									<Label text="{i18n>Department}" width="90%"/>
-									<Text text="{/Department}" />
-								</form:SimpleForm>
-        </Panel>
-    </VBox>
-</IconTabFilter>
-
-					
-				</items>
-			</IconTabBar>
-		</content>
-	</Page>
+    </Page>
 </mvc:View>
