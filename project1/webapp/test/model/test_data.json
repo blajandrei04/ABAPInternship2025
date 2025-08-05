@@ -24,6 +24,18 @@
             "Name": "Diana",
             "Surname": "Zaha",
             "CareerLevel": "INTERN"
+        },
+        {
+            "Name": "Ionica",
+            "Surname": "Pop",
+            "CareerLevel": "INTERN",
+            "Email": "blajandrei04@gmail.com",
+            "Password": "123456"
+        },
+        {
+            "Name": "Andrei",
+            "Surname": "Blaj",
+            "CareerLevel": "INTERN"
         }
     ],
     "PegData": [

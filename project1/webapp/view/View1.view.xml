@@ -47,6 +47,7 @@
 
                             <HBox justifyContent="Center">
                                 <Button text="Forgot Password" press="onForgotPasswordPress" id="forgotPasswordButton"/>
+                                <Button text="Request PEG" press="onRequestPegPress" id="requestPegButton" class="sapUiSmallMarginBegin"/>
                             </HBox>
 
                         </VBox>
