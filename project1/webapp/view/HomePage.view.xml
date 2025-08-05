@@ -1,7 +1,8 @@
 <mvc:View
 	controllerName="project1.controller.HomePage"
 	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc">
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core">
 	<Page
 		title="{i18n>Title} {FirstName} {LastName}"
 		id="employeeResumePage"
@@ -28,36 +29,71 @@
 				selectedKey="{view>/selectedTabKey}">
 				<items>
 					<IconTabFilter id="MyTeamTab" text="{i18n>MyTeamTab}" key="Info" icon="sap-icon://hint" iconColor="Neutral">
-						<Table id="myTeamTable" items="{/Resume}">
-							<columns>
-								<Column>
-								<Text text="Name"/>
-								</Column>
-								<Column>
-								<Text text="Surname"/>
-								</Column>
-								<Column>
-								<Text text="Career level"/>
-								</Column>
-							</columns>
-							<items>
-								<ColumnListItem>
-								<cells>
-									<Text text="{Name}"/>
-									<Text text="{Surname}"/>
-									<Text text="{CareerLevel}"/>
-								</cells>
-								</ColumnListItem>
-							</items>
-							</Table>
+						<VBox class="sapUiSmallMargin">
+							<Table id="myTeamTable" items="{/Resume}">
+								<columns>
+									<Column>
+									<Text text="Name"/>
+									</Column>
+									<Column>
+									<Text text="Surname"/>
+									</Column>
+									<Column>
+									<Text text="Career level"/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem>
+									<cells>
+										<Text text="{Name}"/>
+										<Text text="{Surname}"/>
+										<Text text="{CareerLevel}"/>
+									</cells>
+									</ColumnListItem>	
+								</items>
+								</Table>
+							</VBox>
 					</IconTabFilter>
 					<IconTabFilter id="360tab" text="{i18n>360tab}" key="Projects" icon="sap-icon://form" iconColor="Critical" >
 						<Button text="{i18n>360FbView}" press="onGiveFeedback"/>
 					</IconTabFilter>
 					<IconTabFilter id="pegTab" text="{i18n>pegTab}" key="Hobbies" icon="sap-icon://form" iconColor="Positive">
-						<!-- <Text text="{Hobbies}"/> -->
-                        <!-- place content via lazy loading -->
-						<Button text="{i18n>PegButton}" press="onRequestPeg"/>
+						<HBox justifyContent="End">
+							<ComboBox placeholder="{i18n>SearchProject}" width="170px" items="{/Users}">
+								<core:Item key="{ID}" text="{Name}" />
+							</ComboBox>
+							<Button icon="sap-icon://request" text="Reguest PEG" type="Transparent"  press="onRequestPeg" />
+						</HBox>
+						<Table id="pegTable" items="{/PegData}">
+							<columns>
+								<Column>
+									<Text text="Project Name" />
+								</Column>
+								<Column>
+									<Text text="Username" />
+								</Column>
+								<Column>
+									<Text text="Rating" />
+								</Column>
+								<Column>
+									<Text text="Date" />
+								</Column>
+								<Column>
+									<Text text="Status" />
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{ProjectName}" />
+										<Text text="{Username}" />
+										<Text text="{Rating}" />
+										<Text text="{Date}" />
+										<Text text="{Status}" />
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
 					</IconTabFilter>
 					<IconTabFilter id="MyProfileTab" text="{i18n>MyProfileTab}" key="MyProfile" icon="sap-icon://person-placeholder" iconColor="Good">
 						<VBox>

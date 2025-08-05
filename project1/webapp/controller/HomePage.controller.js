@@ -37,6 +37,22 @@ sap.ui.define([
                         Surname: "Zaha",
                         CareerLevel: "INTERN"
                     }
+                ],
+                PegData:[
+                    {
+                        ProjectName: "COFFEE SHOP MANAGEMENT",
+                        Username: "DORIAN HORNEA",
+                        Rating: 5.50,
+                        Date: "28.08.2023",
+                        Status: "COMPLETED"
+                    },
+                    {
+                        ProjectName: "COFFEE SHOP MANAGEMENT",
+                        Username: "IONICA POP",
+                        Rating: 6.00,
+                        Date:  "2023.08.28",
+                        Status: "COMPLETED"
+                    }
                 ]
             };
 
