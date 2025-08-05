@@ -13,16 +13,16 @@ sap.ui.define([
             var oModel = new sap.ui.model.json.JSONModel();
             oModel.loadData("./model/test_data.json", null, true);  // parametrul 3 = async true
 
-            oModel.attachRequestCompleted(function() {
+            oModel.attachRequestCompleted(function () {
                 console.log("Datele au fost încărcate:", oModel.getData());
             });
 
-            oModel.attachRequestFailed(function() {
+            oModel.attachRequestFailed(function () {
                 console.error("Eroare la încărcarea datelor.");
-});
+            });
 
-this.getView().setModel(oModel);
-            
+            this.getView().setModel(oModel);
+
         },
         getRouter() {
             return sap.ui.core.UIComponent.getRouterFor(this);
@@ -39,17 +39,17 @@ this.getView().setModel(oModel);
                 this.getRouter().navTo("RouteView1", {}, true /*no history*/);
             }
         },
-        onGiveFeedback(){
+        onGiveFeedback() {
             this.getRouter().navTo("Route360FbPage");
         },
-        onRequestPeg(){
+        onRequestPeg() {
             this.getRouter().navTo("RoutePegPage");
         },
-         async onChangePasswordPress(){
+        async onChangePasswordPress() {
             this.oDialog ??= await this.loadFragment({
                 name: "project1.view.ChangePass",
-        }),
-            this.oDialog.open();
+            }),
+                this.oDialog.open();
         },
         onCloseDialog() {
             this.oDialog.close();
@@ -66,6 +66,25 @@ this.getView().setModel(oModel);
                     }
                 }
             });
+        },
+        onStatusFilterChange: function (oEvent) {
+            var oComboBox = oEvent.getSource();
+            var sSelectedKey = oComboBox.getSelectedKey();
+
+            var oTable = this.byId("pegTable"); // sau id-ul tabelului tău
+            var oBinding = oTable.getBinding("items");
+
+            if (sSelectedKey) {
+                // Creează un filtru pentru câmpul Status
+                var oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.EQ, sSelectedKey);
+                oBinding.filter([oFilter]);
+            } else {
+                // Dacă nu e nimic selectat, elimină filtrul
+                oBinding.filter([]);
+            }
         }
+
+
+
     });
 });
