@@ -10,54 +10,18 @@ sap.ui.define([
     return Controller.extend("project1.controller.HomePage", {
         onInit() {
 
-            const oMockData = {
-                Resume: [
-                    {
-                        Name: "Ina",
-                        Surname: "Dan",
-                        CareerLevel: "INTERN"
-                    },
-                    {
-                        Name: "Stefania",
-                        Surname: "Maracine",
-                        CareerLevel: "INTERN"
-                    },
-                    {
-                        Name: "Darius",
-                        Surname: "Borza",
-                        CareerLevel: "INTERN"
-                    },
-                    {
-                        Name: "Dorian",
-                        Surname: "Hornea",
-                        CareerLevel: "SENIOR CONSULTANT"
-                    },
-                    {
-                        Name: "Diana",
-                        Surname: "Zaha",
-                        CareerLevel: "INTERN"
-                    }
-                ],
-                PegData:[
-                    {
-                        ProjectName: "COFFEE SHOP MANAGEMENT",
-                        Username: "DORIAN HORNEA",
-                        Rating: 5.50,
-                        Date: "28.08.2023",
-                        Status: "COMPLETED"
-                    },
-                    {
-                        ProjectName: "COFFEE SHOP MANAGEMENT",
-                        Username: "IONICA POP",
-                        Rating: 6.00,
-                        Date:  "2023.08.28",
-                        Status: "COMPLETED"
-                    }
-                ]
-            };
+            var oModel = new sap.ui.model.json.JSONModel();
+            oModel.loadData("./model/test_data.json", null, true);  // parametrul 3 = async true
 
-            const oModel = new JSONModel(oMockData);
-            this.getView().setModel(oModel);
+            oModel.attachRequestCompleted(function() {
+                console.log("Datele au fost încărcate:", oModel.getData());
+            });
+
+            oModel.attachRequestFailed(function() {
+                console.error("Eroare la încărcarea datelor.");
+});
+
+this.getView().setModel(oModel);
             
         },
         getRouter() {
