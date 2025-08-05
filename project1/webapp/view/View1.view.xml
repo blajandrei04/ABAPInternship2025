@@ -27,8 +27,7 @@
 
                         <HBox justifyContent="Center" class="sapUiSmallMarginBottom">
                             <ObjectStatus text="{i18n>fillInCredentials}" state="Information"/>
-                        </HBox>
-                        
+                        </HBox>                       
                         <VBox alignItems="Center" justifyContent="Center" class="sapUiSmallMargin">
 
                             <VBox width="100%" class="sapUiSmallMarginBottom" alignItems="Stretch">
