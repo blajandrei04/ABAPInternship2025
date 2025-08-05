@@ -152,7 +152,7 @@
 									<Label text="{i18n>Department}" width="90%"/>
 									<Text text="{/Department}" />
 								</form:SimpleForm>
-        </Panel>
+        </Panel> 
     </VBox>
 </IconTabFilter>
 

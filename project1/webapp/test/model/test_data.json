@@ -1,45 +1,55 @@
 {
-    "Resume": [
-        {
-            "Name": "Ina",
-            "Surname": "Dan",
-            "CareerLevel": "INTERN"
-        },
-        {
-            "Name": "Stefania",
-            "Surname": "Maracine",
-            "CareerLevel": "INTERN"
-        },
-        {
-            "Name": "Darius",
-            "Surname": "Borza",
-            "CareerLevel": "INTERN"
-        },
-        {
-            "Name": "Dorian",
-            "Surname": "Hornea",
-            "CareerLevel": "SENIOR CONSULTANT"
-        },
-        {
-            "Name": "Diana",
-            "Surname": "Zaha",
-            "CareerLevel": "INTERN"
-        }
-    ],
-    "PegData": [
-        {
-            "ProjectName": "COFFEE SHOP MANAGEMENT",
-            "Username": "DORIAN HORNEA",
-            "Rating": 5.50,
-            "Date": "28.08.2023",
-            "Status": "COMPLETED"
-        },
-        {
-            "ProjectName": "COFFEE SHOP MANAGEMENT",
-            "Username": "IONICA POP",
-            "Rating": 6.00,
-            "Date": "2023.08.28",
-            "Status": "COMPLETED"
-        }
-    ]
+  "Resume": [
+    {
+      "Name": "Ina",
+      "Surname": "Dan",
+      "CareerLevel": "INTERN",
+      "Email": "ina.dan@example.com",
+      "Password": "InaDan123"
+    },
+    {
+      "Name": "Stefania",
+      "Surname": "Maracine",
+      "CareerLevel": "INTERN",
+      "Email": "stefania.maracine@example.com",
+      "Password": "Stefi2023!"
+    },
+    {
+      "Name": "Darius",
+      "Surname": "Borza",
+      "CareerLevel": "INTERN",
+      "Email": "darius.borza@example.com",
+      "Password": "Darius!23"
+    },
+    {
+      "Name": "Dorian",
+      "Surname": "Hornea",
+      "CareerLevel": "SENIOR CONSULTANT",
+      "Email": "dorian.hornea@example.com",
+      "Password": "Coffee123"
+    },
+    {
+      "Name": "Diana",
+      "Surname": "Zaha",
+      "CareerLevel": "INTERN",
+      "Email": "diana.zaha@example.com",
+      "Password": "ZahaIntern1"
+    }
+  ],
+  "PegData": [
+    {
+      "ProjectName": "COFFEE SHOP MANAGEMENT",
+      "Username": "DORIAN HORNEA",
+      "Rating": 5.50,
+      "Date": "28.08.2023",
+      "Status": "COMPLETED"
+    },
+    {
+      "ProjectName": "COFFEE SHOP MANAGEMENT",
+      "Username": "IONICA POP",
+      "Rating": 6.00,
+      "Date": "2023.08.28",
+      "Status": "COMPLETED"
+    }
+  ]
 }

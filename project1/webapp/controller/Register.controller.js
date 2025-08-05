@@ -57,6 +57,7 @@ sap.ui.define([
             } else {
                 this.getRouter().navTo("RouteView1", {}, true /*no history*/);
             }
-        }
+        },
+        
     });
 });
