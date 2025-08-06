@@ -9,9 +9,10 @@ sap.ui.define([
 
     return BaseController.extend("project1.controller.Manager", {
         onInit() {
+            console.log("Manager Controller initialized");
 
             var oModel = new sap.ui.model.json.JSONModel();
-            oModel.loadData("./model/test_data.json", null, true);  // parametrul 3 = async true
+            oModel.loadData("./model/test_data.json");  // parametrul 3 = async true
 
             oModel.attachRequestCompleted(function () {
                 console.log("Datele au fost încărcate:", oModel.getData());
@@ -50,6 +51,11 @@ sap.ui.define([
                 // Dacă nu e nimic selectat, elimină filtrul
                 oBinding.filter([]);
             }
+        },
+        onItemPressed: function() {
+            console.log("Item press triggered");
+
+            this.getRouter().navTo("RouteRatePegPage");
         }
     });
 });

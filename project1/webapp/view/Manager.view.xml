@@ -25,7 +25,11 @@
                 />
             </HBox>
             <VBox>
-                <HBox justifyContent="SpaceBetween" alignItems="Center" width="100%">
+                <HBox
+                    justifyContent="SpaceBetween"
+                    alignItems="Center"
+                    width="100%"
+                >
                     <Title
                         text="Table of PEGs"
                         level="H4"
@@ -36,7 +40,6 @@
                         width="170px"
                         items="{/Status}"
                         selectionChange=".onManagerStatusFilterChange"
-                        
                     >
                         <core:Item
                             key="{key}"
@@ -48,7 +51,6 @@
                 <Table
                     id="ManagerPegsTable"
                     items="{/ManagerPeg}"
-                    itemPress=".onItemPress"
                 >
                     <columns>
                         <Column>
@@ -68,7 +70,10 @@
                         </Column>
                     </columns>
                     <items>
-                        <ColumnListItem>
+                        <ColumnListItem
+                            type="Active"
+                            press="onItemPressed"
+                        >
                             <cells>
                                 <Text text="{ProjectName}" />
                                 <Text text="{Username}" />
