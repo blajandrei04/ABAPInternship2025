@@ -59,6 +59,29 @@
             "Status": "PENDING"
         }
     ],
+    "ManagerPeg":[
+        {
+            "ProjectName": "COFFEE SHOP MANAGEMENT",
+            "Username": "STEFANIA MARACINE",
+            "Rating": 0,         
+            "Date": "28.08.2023",
+            "Status": "PENDING"
+        },
+        {
+            "ProjectName": "COFFEE SHOP MANAGEMENT",
+            "Username": "INA DAN",
+            "Rating": 0,         
+            "Date": "28.08.2023",
+            "Status": "PENDING"
+        },
+        {
+            "ProjectName": "COFFEE SHOP MANAGEMENT",
+            "Username": "DIANA ZAHA",
+            "Rating": 0,         
+            "Date": "28.08.2023",
+            "Status": "PENDING"
+        }
+    ],
     "Status": [
     { "key": "COMPLETED", "text": "Completed" },
     { "key": "IN_PROGRESS", "text": "In Progress" },

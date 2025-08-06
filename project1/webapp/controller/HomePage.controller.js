@@ -42,6 +42,9 @@ sap.ui.define([
         onGiveFeedback() {
             this.getRouter().navTo("Route360FbPage");
         },
+        onOpenManager(){
+            this.getRouter().navTo("RouteManagerPage");
+        },
         async onRequestPeg() {
             this._oPegDialog ??= await this.loadFragment({
                 name: "project1.view.PegDialog",

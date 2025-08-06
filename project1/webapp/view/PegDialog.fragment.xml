@@ -42,7 +42,8 @@
             <HBox>
                 <Button
                     icon="sap-icon://request"
-                    text="Reguest PEG"
+                    text="Request PEG"
+                    press="onOpenManager"
                     type="Transparent"
                 />
                 <Button
