@@ -48,6 +48,7 @@
                 <Button
                     icon="sap-icon://decline"
                     text="Close"
+                    press="onClosePegDialog"
                     type="Transparent"
                 />
             </HBox>
