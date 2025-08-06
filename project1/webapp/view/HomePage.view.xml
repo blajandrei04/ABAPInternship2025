@@ -24,7 +24,7 @@
                     icon="sap-icon://BusinessSuiteInAppSymbols/icon-cell-lock"
                     class="sapUiTinyMarginEnd"
                 />
-                <Button text="RatePEG"
+                <Button text="{i18n>ratePegButton}"
                     press=".onRatePegPress"
                     icon="sap-icon://hint"
                     class="sapUiTinyMarginEnd"
@@ -185,19 +185,19 @@
                         >
                             <columns>
                                 <Column>
-                                    <Text text="Project Name" />
+                                    <Text text="{i18n>projectName}" />
                                 </Column>
                                 <Column>
-                                    <Text text="Username" />
+                                    <Text text="{i18n>username}" />
                                 </Column>
                                 <Column>
-                                    <Text text="Rating" />
+                                    <Text text="{i18n>rating}" />
                                 </Column>
                                 <Column>
-                                    <Text text="Date" />
+                                    <Text text="{i18n>date}" />
                                 </Column>
                                 <Column>
-                                    <Text text="Status" />
+                                    <Text text="{i18n>status}" />
                                 </Column>
                             </columns>
                             <items>
