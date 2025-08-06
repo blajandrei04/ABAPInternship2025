@@ -25,9 +25,12 @@ sap.ui.define([
 
         async onForgotPasswordPress() {
             this.oDialog ??= await this.loadFragment({
-                name: "project1.view.ForgotPasswordDialog" // You must replace with your actual fragment path
+                name: "project1.view.ForgotPass" // You must replace with your actual fragment path
             });
             this.oDialog.open();
+        },
+        onCloseDialog() {
+            this.oDialog.close();
         },
 
         onRegisterPress() {
@@ -47,24 +50,24 @@ sap.ui.define([
             const sEmail = oView.byId("usernameInput").getValue().toLowerCase();
             const sPassword = oView.byId("passwordInput").getValue();
 
-            // if (!sEmail || !sPassword) {
-            //     MessageBox.error("Please fill in both fields.");
-            //     return;
-            // }
+            if (!sEmail || !sPassword) {
+                MessageBox.error("Please fill in both fields.");
+                return;
+            }
 
-            // const aUsers = oView.getModel("resume")?.getProperty("/Resume") || [];
+            const aUsers = oView.getModel("resume")?.getProperty("/Resume") || [];
 
-            // const oUser = aUsers.find(u =>
-            //     u.Email?.toLowerCase() === sEmail &&
-            //     u.Password === sPassword
-            // );
+            const oUser = aUsers.find(u =>
+                u.Email?.toLowerCase() === sEmail &&
+                u.Password === sPassword
+            );
 
-            // if (oUser) {
-            //MessageToast.show("Login successful: " + oUser.Name + " " + oUser.Surname);
+            if (oUser) {
+            MessageToast.show("Login successful: " + oUser.Name + " " + oUser.Surname);
             this.getRouter().navTo("RouteHomePage");
-            // } else {
-            //     MessageBox.error("Invalid email or password.");
-            // }
+            } else {
+                MessageBox.error("Invalid email or password.");
+            }
         }
     });
 });

@@ -46,7 +46,7 @@
                             </HBox>
 
                             <HBox justifyContent="Center">
-                                <Button text="Forgot Password:" press="onForgotPasswordPress" id="forgotPasswordButton"/>
+                                <Button text="Forgot Password" press="onForgotPasswordPress" id="forgotPasswordButton"/>
                             </HBox>
 
                         </VBox>
