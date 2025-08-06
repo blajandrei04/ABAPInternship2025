@@ -174,7 +174,7 @@
                             </ComboBox>
                             <Button
                                 icon="sap-icon://request"
-                                text="Reguest PEG"
+                                text="Request PEG"
                                 type="Transparent"
                                 press="onRequestPeg"
                             />

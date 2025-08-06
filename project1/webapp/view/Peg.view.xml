@@ -19,7 +19,7 @@
                     <core:Item key="{ID}" text="{Name}" />
                 </ComboBox>
                 <HBox>
-                    <Button icon="sap-icon://request" text="Reguest PEG" type="Transparent" />
+                    <Button icon="sap-icon://request" text="Request PEG" type="Transparent" />
                     <Button icon="sap-icon://decline" text="Close" type="Transparent" />
                 </HBox>
             </VBox>
