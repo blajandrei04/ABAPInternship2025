@@ -3,27 +3,37 @@
         {
             "Name": "Ina",
             "Surname": "Dan",
-            "CareerLevel": "INTERN"
+            "CareerLevel": "INTERN",
+            "Email": "inadan@gmail.com",
+            "Password": "12345"
         },
         {
             "Name": "Stefania",
             "Surname": "Maracine",
-            "CareerLevel": "INTERN"
+            "CareerLevel": "INTERN",
+            "Email": "stefaniamaracine@gmail.com",
+            "Password": "12345"
         },
         {
             "Name": "Darius",
             "Surname": "Borza",
-            "CareerLevel": "INTERN"
+            "CareerLevel": "INTERN",
+            "Email": "dariusborza@gmail.com",
+            "Password": "12345"
         },
         {
             "Name": "Dorian",
             "Surname": "Hornea",
-            "CareerLevel": "SENIOR CONSULTANT"
+            "CareerLevel": "SENIOR CONSULTANT",
+            "Email": "dorianhornea@gmail.com",
+            "Password": "12345"
         },
         {
             "Name": "Diana",
             "Surname": "Zaha",
-            "CareerLevel": "INTERN"
+            "CareerLevel": "INTERN",
+            "Email": "dianazaha@gmail.com",
+            "Password": "12345"
         }
     ],
     "PegData": [

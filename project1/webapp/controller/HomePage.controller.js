@@ -43,20 +43,24 @@ sap.ui.define([
             this.getRouter().navTo("Route360FbPage");
         },
         async onRequestPeg() {
-            this.oDialog ??= await this.loadFragment({
+            this._oPegDialog ??= await this.loadFragment({
                 name: "project1.view.PegDialog",
             }),
-                this.oDialog.open();
+                this._oPegDialog.open();
         },
         async onChangePasswordPress() {
-            this.oDialog ??= await this.loadFragment({
+            this._oChangePassDialog ??= await this.loadFragment({
                 name: "project1.view.ChangePass",
             }),
-                this.oDialog.open();
+                this._oChangePassDialog.open();
         },
         onCloseDialog() {
-            this.oDialog.close();
+            this._oChangePassDialog.close();
         },
+        onClosePegDialog() {
+            this._oPegDialog.close();
+        },
+
         onConfirmChangePassword() {
             MessageToast.show("Password changed successfully!");
             this.onCloseDialog();
