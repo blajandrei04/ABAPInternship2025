@@ -14,38 +14,38 @@
                 <Panel width="400px" class="sapUiResponsiveMargin sapUiContentPadding" backgroundDesign="Translucent">
                     <VBox alignItems="Stretch" class="sapUiSmallMargin">
 
-                        <Label text="First Name:" labelFor="FirstNameId"/>
+                        <Label text="{i18n>firstName}" labelFor="FirstNameId"/>
                         <Input
-                            placeholder="First Name"
+                            placeholder="{i18n>firstName}"
                             id="FirstNameId"
                             width="100%"
                             class="sapUiSmallMarginBottom"/>
 
-                        <Label text="Last Name:" labelFor="LastNameId"/>
+                        <Label text="{i18n>lastName}" labelFor="LastNameId"/>
                         <Input
-                            placeholder="Last Name"
+                            placeholder="{i18n>lastName}"
                             id="LastNameId"
                             width="100%"
                             class="sapUiSmallMarginBottom"/>
 
                         <Label text="Email:" labelFor="EmailId"/>
                         <Input
-                            placeholder="Email"
+                            placeholder="{i18n>email}"
                             id="EmailId"
                             width="100%"
                             class="sapUiSmallMarginBottom"/>
 
-                        <Label text="Password:" labelFor="PasswordId"/>
+                        <Label text="{i18n>password}" labelFor="PasswordId"/>
                         <Input
-                            placeholder="Password"
+                            placeholder="{i18n>password}"
                             id="PasswordId"
                             type="Password"
                             width="100%"
                             class="sapUiSmallMarginBottom"/>
 
-                        <Label text="Confirm Password:" labelFor="ConfirmationPasswordId"/>
+                        <Label text="{i18n>confirmPassword}" labelFor="ConfirmationPasswordId"/>
                         <Input
-                            placeholder="Confirm Password"
+                            placeholder="{i18n>confirmPassword}"
                             id="ConfirmationPasswordId"
                             type="Password"
                             width="100%"
