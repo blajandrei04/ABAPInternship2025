@@ -24,6 +24,14 @@
                     icon="sap-icon://BusinessSuiteInAppSymbols/icon-cell-lock"
                     class="sapUiTinyMarginEnd"
                 />
+                <Button text="RatePEG"
+                    press=".onRatePegPress"
+                    icon="sap-icon://hint"
+                    class="sapUiTinyMarginEnd"
+                    id="ratePegButton"
+                >
+                
+                </Button>
                 <Button
                     text="{i18n>logoutButton}"
                     press=".onLogoutPress"

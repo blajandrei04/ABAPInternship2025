@@ -1,0 +1,121 @@
+<mvc:View xmlns:commons="sap.suite.ui.commons"
+    controllerName="project1.controller.RatePeg"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    
+    <Page 
+     id="PegPage2" 
+     title="{i18n>PegTitle}" 
+     showNavButton="true" 
+     navButtonPress="onNavBack">
+            <Toolbar>
+                <ToolbarSpacer />
+                <Button
+                    text="Save Changes"
+                    type="Emphasized"
+                    icon="sap-icon://save"
+                    press=".onSaveChanges"
+                    id="saveChangesButton"
+                />
+                <Button
+                    text="Rate PEG"
+                    type="Default"
+                    icon="sap-icon://rating-indicator"
+                    press=".onRatePEG"
+                    id="ratePegButton1"
+                    class="sapUiTinyMarginBegin"
+                />
+            </Toolbar>
+        <content>
+        <VBox class="sapUiMediumMargin">
+                <Panel
+                    id="expertisePanel"
+                    headerText="Expertise and Working Results"
+                    expandable="true"
+                    expanded="true"
+                    class="sapUiMediumMarginBottom"
+                >
+                <content>
+                    <VBox>
+                       <VBox>
+                         <Label text="Description" class="sapUiSmallMarginBottom" design="Bold"/>
+                         <Text text="Our project's successes depend on the solution we deliver ...">
+                            </Text>
+                       </VBox> 
+                          <VBox>
+                             <Label text="Rating:" class="sapUiSmallMarginBottom" design="Bold"/>
+                                 <ComboBox
+                                        id="expertiseRating"
+                                        placeholder="Rate this field"
+                                        width="200px"
+                                        selectedKey="{/ExpertiseRating}"
+                                    >
+                                        <core:Item key="5" text="Excellent (5)" id="rating5"/>
+                                        <core:Item key="4" text="Good (4)" id="rating4"/>
+                                        <core:Item key="3" text="Average (3)" id="rating3"/>
+                                        <core:Item key="2" text="Fair (2)" id="rating2"/>
+                                        <core:Item key="1" text="Poor (1)" id="rating1"/>
+                                    </ComboBox>
+                                </VBox>
+                                <VBox width="50%">
+                                    <Label text="Comment:" class="sapUiSmallMarginBottom" design="Bold"/>
+                                    <TextArea
+                                        id="expertiseComment"
+                                        placeholder="Add your comment here"
+                                        rows="4"
+                                        cols="50"
+                                        value="{/ExpertiseComment}"
+                                    />
+                                    </VBox>
+                    </VBox>
+                </content>
+                </Panel>
+                </VBox>
+                <VBox class="sapUiMediumMargin">
+                <Panel
+                    id="NetworkingPanel"
+                    headerText="Networking and Entrepreneurship"
+                    expandable="true"
+                    expanded="true"
+                    class="sapUiMediumMarginBottom"
+                >
+                <content>
+                    <VBox>
+                       <VBox>
+                         <Label text="Description" class="sapUiSmallMarginBottom" design="Bold"/>
+                         <Text text="Our project's successes depend on the solution we deliver ...">
+                            </Text>
+                       </VBox> 
+                          <VBox>
+                             <Label text="Rating:" class="sapUiSmallMarginBottom" design="Bold"/>
+                                 <ComboBox
+                                        id="expertiseRating1"
+                                        placeholder="Rate this field"
+                                        width="200px"
+                                        selectedKey="{/ExpertiseRating}"
+                                    >
+                                        <core:Item key="5" text="Excellent (5)" id="rating7"/>
+                                        <core:Item key="4" text="Good (4)" id="rating6"/>
+                                        <core:Item key="3" text="Average (3)" id="rating8"/>
+                                        <core:Item key="2" text="Fair (2)" id="rating9"/>
+                                        <core:Item key="1" text="Poor (1)" id="rating10"/>
+                                    </ComboBox>
+                                </VBox>
+                                <VBox width="50%">
+                                    <Label text="Comment:" class="sapUiSmallMarginBottom" design="Bold"/>
+                                    <TextArea
+                                        id="expertiseComment1"
+                                        placeholder="Add your comment here"
+                                        rows="4"
+                                        cols="50"
+                                        value="{/ExpertiseComment}"
+                                    />
+                                    </VBox>
+                    </VBox>
+                </content>
+                </Panel>
+                </VBox>
+        </content>
+    </Page>
+</mvc:View>

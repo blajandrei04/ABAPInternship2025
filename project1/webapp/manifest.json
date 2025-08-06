@@ -108,7 +108,15 @@
           "target": [
             "Peg"
           ]
-        }      
+        },
+        {
+          "name": "RouteRatePegPage",
+          "pattern": "ratePeg",
+          "target": [
+            "RatePeg"
+          ]
+        }
+
       ],
       "targets": {
         "TargetView1": {
@@ -130,6 +138,10 @@
         "Peg": {
         "id": "Peg",
         "name": "Peg"
+        },
+        "RatePeg": {
+          "id": "RatePeg",
+          "name": "RatePeg"
         }
       }
     },

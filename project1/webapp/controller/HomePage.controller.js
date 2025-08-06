@@ -89,6 +89,9 @@ sap.ui.define([
                 // Dacă nu e nimic selectat, elimină filtrul
                 oBinding.filter([]);
             }
+        },
+        onRatePegPress: function () {
+            this.getRouter().navTo("RouteRatePegPage");
         }
 
 
