@@ -25,7 +25,7 @@
         <Button
             id="cancelForgotPasswordButton"
             text="{i18n>dialogCancelButtonText}"
-            press="onClosePassDialog"
+            press="onCloseDialog"
             class="sapUiSmallMarginEnd"
             type="Reject"
             />

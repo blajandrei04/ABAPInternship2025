@@ -70,7 +70,7 @@
         "viewType": "XML",
         "path": "project1.view",
         "async": true,
-        "transition":"slide",
+        "transition": "slide",
         "viewPath": "project1.view"
       },
       "routes": [
@@ -115,8 +115,14 @@
           "target": [
             "RatePeg"
           ]
+        },
+        {
+          "name": "RouteManagerPage",
+          "pattern": "Manager",
+          "target": [
+            "Manager"
+          ]
         }
-
       ],
       "targets": {
         "TargetView1": {
@@ -124,24 +130,28 @@
           "name": "View1"
         },
         "TargetView2": {
-        "id": "Register",
-        "name": "Register"
+          "id": "Register",
+          "name": "Register"
         },
         "HomePage": {
-        "id": "HomePage",
-        "name": "HomePage"
+          "id": "HomePage",
+          "name": "HomePage"
         },
         "360Fb": {
-        "id": "360Fb",
-        "name": "360Fb"
+          "id": "360Fb",
+          "name": "360Fb"
         },
         "Peg": {
-        "id": "Peg",
-        "name": "Peg"
+          "id": "Peg",
+          "name": "Peg"
         },
         "RatePeg": {
           "id": "RatePeg",
           "name": "RatePeg"
+        },
+        "Manager": {
+          "id": "Manager",
+          "name": "Manager"
         }
       }
     },

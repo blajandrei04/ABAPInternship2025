@@ -57,9 +57,7 @@ sap.ui.define([
             }),
                 this._oChangePassDialog.open();
         },
-        onCloseDialog() {
-            this._oChangePassDialog.close();
-        },
+
         onClosePegDialog() {
             this._oPegDialog.close();
         },
@@ -68,6 +66,11 @@ sap.ui.define([
             MessageToast.show("Password changed successfully!");
             this.onCloseDialog();
         },
+
+        onCloseDialog() {
+            this._oChangePassDialog.close();
+        },
+        
         onLogoutPress() {
             MessageBox.confirm("Are you sure you want to log out", {
                 onClose: (oAction) => {
