@@ -4,10 +4,10 @@ sap.ui.define([
     "sap/m/MessageBox",
     "sap/ui/core/routing/History",
     "sap/ui/model/json/JSONModel"
-], (Controller, MessageToast, MessageBox, History, JSONModel) => {
+], (BaseController, MessageToast, MessageBox, History, JSONModel) => {
     "use strict";
 
-    return Controller.extend("project1.controller.HomePage", {
+    return BaseController.extend("project1.controller.Manager", {
         onInit() {
 
             var oModel = new sap.ui.model.json.JSONModel();
@@ -27,44 +27,6 @@ sap.ui.define([
         getRouter() {
             return sap.ui.core.UIComponent.getRouterFor(this);
         },
-        onNavBack: function () {
-            var oHistory, sPreviousHash;
-
-            oHistory = History.getInstance();
-            sPreviousHash = oHistory.getPreviousHash();
-
-            if (sPreviousHash !== undefined) {
-                window.history.go(-1);
-            } else {
-                this.getRouter().navTo("RouteView1", {}, true /*no history*/);
-            }
-        },
-        onGiveFeedback() {
-            this.getRouter().navTo("Route360FbPage");
-        },
-        async onRequestPeg() {
-            this._oPegDialog ??= await this.loadFragment({
-                name: "project1.view.PegDialog",
-            }),
-                this._oPegDialog.open();
-        },
-        async onChangePasswordPress() {
-            this._oChangePassDialog ??= await this.loadFragment({
-                name: "project1.view.ChangePass",
-            }),
-                this._oChangePassDialog.open();
-        },
-        onClosePassDialog() {
-            this._oChangePassDialog.close();
-        },
-        onClosePegDialog() {
-            this._oPegDialog.close();
-        },
-
-        onConfirmChangePassword() {
-            MessageToast.show("Password changed successfully!");
-            this.onCloseDialog();
-        },
         onLogoutPress() {
             MessageBox.confirm("Are you sure you want to log out?", {
                 onClose: (oAction) => {
@@ -73,12 +35,11 @@ sap.ui.define([
                     }
                 }
             });
-        },
-        onStatusFilterChange: function (oEvent) {
+        }, onManagerStatusFilterChange: function (oEvent) {
             var oComboBox = oEvent.getSource();
             var sSelectedKey = oComboBox.getSelectedKey();
 
-            var oTable = this.byId("pegTable"); 
+            var oTable = this.byId("ManagerPegsTable");
             var oBinding = oTable.getBinding("items");
 
             if (sSelectedKey) {
@@ -90,8 +51,5 @@ sap.ui.define([
                 oBinding.filter([]);
             }
         }
-
-
-
     });
 });

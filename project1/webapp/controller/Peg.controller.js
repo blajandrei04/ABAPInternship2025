@@ -10,7 +10,7 @@ sap.ui.define([
       },
       getRouter() {
             return sap.ui.core.UIComponent.getRouterFor(this);
-        },
+      },
       onNavBack: function () {
             var oHistory, sPreviousHash;
 

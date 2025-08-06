@@ -31,7 +31,7 @@ sap.ui.define([
         },
 
         onRegisterPress() {
-            this.getRouter().navTo("RouteRegister");
+            this.getRouter().navTo("RouteManagerPage");
         },
 
         onConfirmForgotPassword() {
@@ -61,7 +61,7 @@ sap.ui.define([
 
             if (oUser) {
                 MessageToast.show("Login successful: " + oUser.Name + " " + oUser.Surname);
-                this.getRouter().navTo("RouteHomePage");
+                this.getRouter().navTo("RouteManagerPage");
             } else {
                 MessageBox.error("Invalid email or password.");
             }

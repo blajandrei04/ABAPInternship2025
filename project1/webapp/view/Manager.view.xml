@@ -1,0 +1,85 @@
+<mvc:View
+    xmlns:form="sap.ui.layout.form"
+    controllerName="project1.controller.Manager"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+>
+    <Page
+        title="{i18n>TitleManager}"
+        id="ManagerPage"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+    >
+        <content>
+            <HBox
+                justifyContent="End"
+                alignItems="Center"
+                renderType="Bare"
+            >
+                <Button
+                    text="{i18n>logoutButton}"
+                    press=".onLogoutPress"
+                    icon="sap-icon://undo"
+                    id="logoutMButton"
+                />
+            </HBox>
+            <VBox>
+                <HBox justifyContent="SpaceBetween" alignItems="Center" width="100%">
+                    <Title
+                        text="Table of PEGs"
+                        level="H4"
+                    />
+                    <ComboBox
+                        id="combobox2"
+                        placeholder="{i18n>SelectStatus}"
+                        width="170px"
+                        items="{/Status}"
+                        selectionChange=".onManagerStatusFilterChange"
+                        
+                    >
+                        <core:Item
+                            key="{key}"
+                            text="{text}"
+                        />
+                    </ComboBox>
+                </HBox>
+                <!-- titlul tabelului -->
+                <Table
+                    id="ManagerPegsTable"
+                    items="{/ManagerPeg}"
+                    itemPress=".onItemPress"
+                >
+                    <columns>
+                        <Column>
+                            <Text text="Project Name" />
+                        </Column>
+                        <Column>
+                            <Text text="Username" />
+                        </Column>
+                        <Column>
+                            <Text text="Rating" />
+                        </Column>
+                        <Column>
+                            <Text text="Date" />
+                        </Column>
+                        <Column>
+                            <Text text="Status" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{ProjectName}" />
+                                <Text text="{Username}" />
+                                <Text text="{Rating}" />
+                                <Text text="{Date}" />
+                                <Text text="{Status}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
