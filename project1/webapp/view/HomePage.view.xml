@@ -62,13 +62,13 @@
                             >
                                 <columns>
                                     <Column>
-                                        <Text text="Name" />
+                                        <Text text="Name:" />
                                     </Column>
                                     <Column>
-                                        <Text text="Surname" />
+                                        <Text text="Surname:" />
                                     </Column>
                                     <Column>
-                                        <Text text="Career level" />
+                                        <Text text="Career level:" />
                                     </Column>
                                 </columns>
                                 <items>
