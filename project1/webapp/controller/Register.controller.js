@@ -38,12 +38,24 @@ sap.ui.define([
         });
         return;
     }
+    if (sPassword !== sConfirmationPassword) {
+        MessageBox.error("Passwords do not match.", {
+            title: "Error",
+        });
+        return;
+    }
 
     const nameRegex = /^[A-Za-z]+$/;
 
     if (!nameRegex.test(sFirstName) || !nameRegex.test(sLastName)) {
         MessageBox.error("First Name and Last Name must contain only letters.", {
             title: "Invalid Name",
+        });
+        return;
+    }
+    if (!sEmail.includes("@gmail.com") || !sEmail.includes(".")) {
+        MessageBox.error("Please enter a valid email address.", {
+            title: "Invalid Email",
         });
         return;
     }
@@ -65,6 +77,6 @@ sap.ui.define([
             } else {
                 this.getRouter().navTo("RouteView1", {}, true /*no history*/);
             }
-        }
+        },
     });
 });
