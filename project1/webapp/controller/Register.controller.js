@@ -21,28 +21,48 @@ sap.ui.define([
             this.getView().setModel(oModel);
         },
         onSubmit() {
+    const oView = this.getView();
 
-            const oView = this.getView();
+    const sFirstName = oView.byId("FirstNameId").getValue();
+    const sLastName = oView.byId("LastNameId").getValue();
+    const sEmail = oView.byId("EmailId").getValue();
+    const sPassword = oView.byId("PasswordId").getValue();
+    const sConfirmationPassword = oView.byId("ConfirmationPasswordId").getValue();
 
-            const sFirstName = oView.byId("FirstNameId").getValue();
-            const sLastName = oView.byId("LastNameId").getValue();
-            const sEmail = oView.byId("EmailId").getValue();
-            const sPassword = oView.byId("PasswordId").getValue();
-            const sConfirmationPassword = oView.byId("ConfirmationPasswordId").getValue();
+    const oBundle = this.getView().getModel("i18n").getResourceBundle();
+    const eMsg = oBundle.getText("errorMsg");
 
-            const oBundle = this.getView().getModel("i18n").getResourceBundle();
-            const eMsg = oBundle.getText("errorMsg");
+    if (sFirstName === "" || sLastName === "" || sEmail === "" || sPassword === "" || sConfirmationPassword === "") {
+        MessageBox.error(eMsg, {
+            title: "Error",
+        });
+        return;
+    }
+    if (sPassword !== sConfirmationPassword) {
+        MessageBox.error("Passwords do not match.", {
+            title: "Error",
+        });
+        return;
+    }
 
-            if (sFirstName === "" || sLastName === "" || sEmail === "" || sPassword === "" || sConfirmationPassword === "") {
-                MessageBox.error(eMsg, {
-                    title: "Error",
-                });
-            } else {
-                const sMsg = oBundle.getText("showMsg", [sFirstName, sLastName, sEmail, sPhone, sCareer]);
+    const nameRegex = /^[A-Za-z]+$/;
 
-                MessageToast.show(sMsg);
-            }
-        },
+    if (!nameRegex.test(sFirstName) || !nameRegex.test(sLastName)) {
+        MessageBox.error("First Name and Last Name must contain only letters.", {
+            title: "Invalid Name",
+        });
+        return;
+    }
+    if (!sEmail.includes("@gmail.com") || !sEmail.includes(".")) {
+        MessageBox.error("Please enter a valid email address.", {
+            title: "Invalid Email",
+        });
+        return;
+    }
+    const sMsg = oBundle.getText("showMsg", [sFirstName, sLastName, sEmail]);
+    MessageToast.show(sMsg);
+}
+,
         getRouter() {
             return sap.ui.core.UIComponent.getRouterFor(this);
         },
@@ -57,6 +77,6 @@ sap.ui.define([
             } else {
                 this.getRouter().navTo("RouteView1", {}, true /*no history*/);
             }
-        }
+        },
     });
 });
