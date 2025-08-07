@@ -244,30 +244,31 @@
                                     editable="false"
                                     class="sapUiResponsiveMargin"
                                     width="60%"
+                                    items="{/Resume}"
                                 >
                                     <Label
                                         text="{i18n>FirstName}"
                                         width="90%"
                                     />
-                                    <Text text="{/FirstName}" />
+                                    <Text text="{Name}" />
 
                                     <Label
                                         text="{i18n>LastName}"
                                         width="90%"
                                     />
-                                    <Text text="{/LastName}" />
+                                    <Text text="{Surname}" />
 
                                     <Label
                                         text="{i18n>Email}"
                                         width="90%"
                                     />
-                                    <Text text="{/Email}" />
+                                    <Text text="{Email}" />
 
                                     <Label
                                         text="{i18n>careerLevel}"
                                         width="90%"
                                     />
-                                    <Text text="{/CareerLevel}" />
+                                    <Text text="{CareerLevel}" />
 
                                     <Label
                                         text="{i18n>Department}"
