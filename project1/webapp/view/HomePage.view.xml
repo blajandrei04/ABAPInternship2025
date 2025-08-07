@@ -6,7 +6,7 @@
     xmlns:core="sap.ui.core"
 >
     <Page
-        title="{i18n>Title} {FirstName} {LastName}"
+        title="{i18n>UserTitle} {FirstName} {LastName}"
         id="employeeResumePage"
         showNavButton="true"
         navButtonPress=".onNavBack"
@@ -24,14 +24,6 @@
                     icon="sap-icon://BusinessSuiteInAppSymbols/icon-cell-lock"
                     class="sapUiTinyMarginEnd"
                 />
-                <Button text="{i18n>ratePegButton}"
-                    press=".onRatePegPress"
-                    icon="sap-icon://hint"
-                    class="sapUiTinyMarginEnd"
-                    id="ratePegButton"
-                >
-                
-                </Button>
                 <Button
                     text="{i18n>logoutButton}"
                     press=".onLogoutPress"
@@ -96,18 +88,21 @@
                                     justifyContent="SpaceBetween"
                                     alignItems="Center"
                                 >
-                              
-                                 <VBox width="50%">
-                                    <Label text="{i18n>sendFeedback}" class="sapUiSmallMarginBottom" design="Bold"/>
-                                    <TextArea
-                                        id="expertiseComment2"
-                                        placeholder="{i18n>expertiseFeedback}"
-                                        rows="4"
-                                        cols="50"
-                                        value="{/ExpertiseComment}"
-                                    />
+                                    <VBox width="50%">
+                                        <Label
+                                            text="{i18n>sendFeedback}"
+                                            class="sapUiSmallMarginBottom"
+                                            design="Bold"
+                                        />
+                                        <TextArea
+                                            id="expertiseComment2"
+                                            placeholder="{i18n>expertiseFeedback}"
+                                            rows="4"
+                                            cols="50"
+                                            value="{/ExpertiseComment}"
+                                        />
                                     </VBox>
-                                   
+
                                     <HBox>
                                         <ComboBox
                                             placeholder="{i18n>searchUser}"
@@ -168,12 +163,19 @@
                         iconColor="Positive"
                     >
                         <HBox justifyContent="End">
+                            <DatePicker
+                                id="DP1"
+                                placeholder="Enter Date"
+                                change="onDateChange"
+                                class="sapUiSmallMarginBottom"
+                                width="140px"
+                            />
                             <ComboBox
-								id="combobox1"
+                                id="combobox1"
                                 placeholder="{i18n>SelectStatus}"
                                 width="170px"
                                 items="{/Status}"
-								selectionChange=".onStatusFilterChange"
+                                selectionChange=".onStatusFilterChange"
                             >
                                 <core:Item
                                     key="{key}"

@@ -42,7 +42,7 @@ sap.ui.define([
         onGiveFeedback() {
             this.getRouter().navTo("Route360FbPage");
         },
-        onOpenManager(){
+        onOpenManager() {
             this.getRouter().navTo("RouteManagerPage");
         },
         async onRequestPeg() {
@@ -70,7 +70,7 @@ sap.ui.define([
         onCloseDialog() {
             this._oChangePassDialog.close();
         },
-        
+
         onLogoutPress() {
             MessageBox.confirm("Are you sure you want to log out", {
                 onClose: (oAction) => {
@@ -96,9 +96,27 @@ sap.ui.define([
                 oBinding.filter([]);
             }
         },
-        onRatePegPress: function () {
-            this.getRouter().navTo("RouteRatePegPage");
+        onDateChange: function (oEvent) {
+            const oDatePicker = oEvent.getSource();
+            const oDate = oDatePicker.getDateValue(); // valoare nativa Date
+            if (!oDate) {
+                // daca s-a sters data -> reseteaza filtrul
+                this.byId("pegTable").getBinding("items").filter([]);
+                return;
+            }
+
+            // formatam data la formatul JSON: "28.08.2023"
+            const oFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "dd.MM.yyyy" });
+            const sFormattedDate = oFormat.format(oDate);
+
+            // aplicam filtrul
+            const oFilter = new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, sFormattedDate);
+            const oTable = this.byId("pegTable");
+            const oBinding = oTable.getBinding("items");
+            oBinding.filter([oFilter]);
+            this.byId("combobox1").setSelectedKey("");
         }
+
 
 
 
