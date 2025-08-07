@@ -96,14 +96,22 @@
                                     justifyContent="SpaceBetween"
                                     alignItems="Center"
                                 >
-                                    <Label
-                                        text="{i18n>fillOutFeedback360}"
-                                        design="Bold"
+                              
+                                 <VBox width="50%">
+                                    <Label text="{i18n>sendFeedback}" class="sapUiSmallMarginBottom" design="Bold"/>
+                                    <TextArea
+                                        id="expertiseComment2"
+                                        placeholder="{i18n>expertiseFeedback}"
+                                        rows="4"
+                                        cols="50"
+                                        value="{/ExpertiseComment}"
                                     />
+                                    </VBox>
+                                   
                                     <HBox>
                                         <ComboBox
                                             placeholder="{i18n>searchUser}"
-                                            width="200px"
+                                            width="250px"
                                             items="{/Users}"
                                         >
                                             <core:Item
