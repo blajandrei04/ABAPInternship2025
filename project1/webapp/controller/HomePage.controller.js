@@ -63,6 +63,15 @@ sap.ui.define([
         },
 
         onConfirmChangePassword() {
+            const oView = this.getView();
+            const sOldPassword = oView.byId("changeEmailInput1").getValue();
+            const sNewPassword = oView.byId("changeEmailInput12").getValue();
+            if (sOldPassword !== sNewPassword) {
+                MessageBox.error("Passwords do not match.", {
+                    title: "Error",
+                });
+                return;
+            }
             MessageToast.show("Password changed successfully!");
             this.onCloseDialog();
         },

@@ -12,7 +12,7 @@
       </VBox>
       <VBox id="vboxchangePassword12" class="sapUiSmallMargin">
          <Text text="{i18n>forgotPasswordDescription2}" id="changePasswordText12" />
-         <Input id="changeEmazilInput12" placeholder="Retype New Password" type="Password" width="90%"/>
+         <Input id="changeEmailInput12" placeholder="Retype New Password" type="Password" width="90%"/>
       </VBox>
       <beginButton>
          <Button text="{i18n>Confirm}" press="onConfirmChangePassword" id="confirmChangePasswordButton" icon="sap-icon://accept"/>
