@@ -7,6 +7,16 @@
     "applicationVersion": {
       "version": "0.0.1"
     },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZPROJECT_INTERNSHIP2025_ODATA_SRV/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0",
+          "localUri": "localService/metadata.xml"
+        }
+      }
+    },
     "title": "{{appTitle}}",
     "description": "{{appDescription}}",
     "resources": "resources.json",
@@ -46,6 +56,19 @@
       "cozy": true
     },
     "models": {
+      "": {
+        "dataSource": "mainService",
+        "settings": {
+          "json": true,
+          "useBatch": true,
+          "disableHeadRequestForToken": true,
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "defaultOperationMode": "Server"
+        },
+        "preload": true
+      },
+
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
