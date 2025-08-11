@@ -1,0 +1,52 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+<edmx:DataServices m:DataServiceVersion="2.0">
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZPROJECT_INTERNSHIP2025_ODATA_SRV" xml:lang="en" sap:schema-version="1">
+<EntityType Name="PEG" sap:content-version="1">
+<Key>
+<PropertyRef Name="FB_ID"/>
+</Key>
+<Property Name="FB_ID" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Feedback ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="SENDER_ID" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="receiver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="RECEIVER_ID" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="receiver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="PROJECT_ID" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Project ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="FB_ANOYMITY" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Anonymity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="FB_DATE" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Feedback Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="FB_TYPE" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="fb type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="FB_STATUS" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="status of peg" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+</EntityType>
+<EntityType Name="USER" sap:content-version="1">
+<Key>
+<PropertyRef Name="USER_ID"/>
+</Key>
+<Property Name="USER_ID" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="receiver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="USER_EMAIL" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Email" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="USER_PASSWORD" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Employee Password" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="USER_PASSWORD1" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Employee Password" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="USER_NAME" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Full Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+</EntityType>
+<EntityType Name="EMPLOYEE" sap:content-version="1">
+<Key>
+<PropertyRef Name="EMP_ID"/>
+</Key>
+<Property Name="EMP_ID" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="receiver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="FIRST_NAME" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="First name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="LAST_NAME" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Last Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="EMAIL" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Email" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="PERSONAL_NUMBERR" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Pers Numb" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="SU" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="SU" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="CAREER_LEVEL" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Career Level" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="TEAM_ID" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Team ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="FISCAL_YEAR" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Fiscal Year" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="FULL_NAME" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Full Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+</EntityType>
+<EntityContainer Name="ZPROJECT_INTERNSHIP2025_ODATA_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+<EntitySet Name="PEGSet" EntityType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.PEG" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+<EntitySet Name="UserSet" EntityType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.USER" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+<EntitySet Name="EMPLOYEESet" EntityType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.EMPLOYEE" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+</EntityContainer>
+<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://ITSAPL0411.mymhp.net:50000/sap/opu/odata/sap/ZPROJECT_INTERNSHIP2025_ODATA_SRV/$metadata"/>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://ITSAPL0411.mymhp.net:50000/sap/opu/odata/sap/ZPROJECT_INTERNSHIP2025_ODATA_SRV/$metadata"/>
+</Schema>
+</edmx:DataServices>
+</edmx:Edmx>
