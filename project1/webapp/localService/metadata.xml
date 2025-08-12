@@ -43,6 +43,16 @@
 <EntitySet Name="PEGSet" EntityType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.PEG" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
 <EntitySet Name="UserSet" EntityType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.USER" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
 <EntitySet Name="EMPLOYEESet" EntityType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.EMPLOYEE" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+<FunctionImport
+    Name="CheckUserLogin"
+    ReturnType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.LoginResult"
+    EntitySet="LoginResultSet"
+    m:HttpMethod="GET"
+    sap:action-for="ZPROJECT_INTERNSHIP2025_ODATA_SRV.LoginResult">
+  <Parameter Name="Email" Type="Edm.String" Mode="In"/>
+  <Parameter Name="Password" Type="Edm.String" Mode="In"/>
+  <Parameter Name="SU" Type="Edm.String" Mode="In" DefaultValue="false"/>
+</FunctionImport>
 </EntityContainer>
 <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
 <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://ITSAPL0411.mymhp.net:50000/sap/opu/odata/sap/ZPROJECT_INTERNSHIP2025_ODATA_SRV/$metadata"/>
