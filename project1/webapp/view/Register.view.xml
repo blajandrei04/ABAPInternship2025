@@ -1,6 +1,8 @@
 <mvc:View
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    controllerName="project1.controller.Register">
 
     <Page
         id="registerPage"
