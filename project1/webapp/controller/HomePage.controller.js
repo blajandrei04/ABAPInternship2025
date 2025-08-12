@@ -89,7 +89,7 @@ sap.ui.define([
                 }
             });
         },
-        onStatusFilterChange: function (oEvent) {
+        onPegStatusFilterChange: function (oEvent) {
             var oComboBox = oEvent.getSource();
             var sSelectedKey = oComboBox.getSelectedKey();
 
@@ -124,6 +124,45 @@ sap.ui.define([
             const oBinding = oTable.getBinding("items");
             oBinding.filter([oFilter]);
             this.byId("combobox1").setSelectedKey("");
+        },
+        onNewFeedback: function () {
+            this.getRouter().navTo("RouteFeedbackPage");
+        },
+        onFbStatusFilterChange: function (oEvent) {
+            var oComboBox = oEvent.getSource();
+            var sSelectedKey = oComboBox.getSelectedKey();
+
+            var oTable = this.byId("FbTable"); // sau id-ul tabelului tău
+            var oBinding = oTable.getBinding("items");
+
+            if (sSelectedKey) {
+                // Creează un filtru pentru câmpul Status
+                var oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.EQ, sSelectedKey);
+                oBinding.filter([oFilter]);
+            } else {
+                // Dacă nu e nimic selectat, elimină filtrul
+                oBinding.filter([]);
+            }
+        },
+        onFbDateChange: function (oEvent) {
+            const oDatePicker = oEvent.getSource();
+            const oDate = oDatePicker.getDateValue(); // valoare nativa Date
+            if (!oDate) {
+                // daca s-a sters data -> reseteaza filtrul
+                this.byId("FbTable").getBinding("items").filter([]);
+                return;
+            }
+
+            // formatam data la formatul JSON: "28.08.2023"
+            const oFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "dd.MM.yyyy" });
+            const sFormattedDate = oFormat.format(oDate);
+
+            // aplicam filtrul
+            const oFilter = new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, sFormattedDate);
+            const oTable = this.byId("FbTable");
+            const oBinding = oTable.getBinding("items");
+            oBinding.filter([oFilter]);
+            this.byId("combobox3").setSelectedKey("");
         }
 
 
