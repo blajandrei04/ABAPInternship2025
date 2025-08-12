@@ -145,6 +145,13 @@
           "target": [
             "Manager"
           ]
+        },
+        {
+          "name": "RouteFeedbackPage",
+          "pattern": "Feedback",
+          "target": [
+            "Feedback"
+          ]
         }
       ],
       "targets": {
@@ -175,6 +182,10 @@
         "Manager": {
           "id": "Manager",
           "name": "Manager"
+        },
+        "Feedback": {
+          "id": "Feedback",
+          "name": "Feedback"
         }
       }
     },

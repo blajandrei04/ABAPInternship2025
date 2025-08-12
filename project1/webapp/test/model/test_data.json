@@ -69,32 +69,70 @@
             "Status": "PENDING"
         }
     ],
-    "ManagerPeg":[
+    "ManagerPeg": [
         {
             "ProjectName": "COFFEE SHOP MANAGEMENT",
             "Username": "STEFANIA MARACINE",
-            "Rating": 0,         
+            "Rating": 0,
             "Date": "28.08.2023",
             "Status": "PENDING"
         },
         {
             "ProjectName": "COFFEE SHOP MANAGEMENT",
             "Username": "INA DAN",
-            "Rating": 0,         
+            "Rating": 0,
             "Date": "28.08.2023",
             "Status": "PENDING"
         },
         {
             "ProjectName": "COFFEE SHOP MANAGEMENT",
             "Username": "DIANA ZAHA",
-            "Rating": 0,         
+            "Rating": 0,
             "Date": "28.08.2023",
             "Status": "PENDING"
         }
     ],
-    "Status": [
-    { "key": "COMPLETED", "text": "Completed" },
-    { "key": "IN_PROGRESS", "text": "In Progress" },
-    { "key": "PENDING", "text": "Pending" }
-  ]
+    "FbData": [
+        {
+            "Sender": "SIM ROBERT",
+            "Receiver": "BLAJ ANDREI",
+            "Rating": 5.50,
+            "Date": "27.07.2025",
+            "Status": "SENT"
+        },
+        {
+            "Sender": "IOANA PETRE",
+            "Receiver": "SIM ROBERT",
+            "Rating": 6.00,
+            "Date": "29.07.2025",
+            "Status": "RECEIVED"
+        },
+        {
+            "Sender": "SIM ROBERT",
+            "Receiver": "DORIAN HORNEA",
+            "Rating": 7.00,
+            "Date": "28.06.2025",
+            "Status": "SENT"
+        }
+    ],
+    "PegStatus": [
+        {
+            "key": "COMPLETED",
+            "text": "Completed"
+        },
+        {
+            "key": "PENDING",
+            "text": "Pending"
+        }
+    ],
+    "FbStatus": [
+        {
+            "key": "SENT",
+            "text": "Sent"
+        },
+        {
+            "key": "RECEIVED",
+            "text": "Received"
+        }
+    ]
 }

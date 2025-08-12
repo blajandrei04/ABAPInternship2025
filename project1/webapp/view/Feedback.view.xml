@@ -1,0 +1,85 @@
+<mvc:View
+    xmlns:form="sap.ui.layout.form"
+    controllerName="project1.controller.Feedback"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+>
+    <Page
+        title="{i18n>FeedbackTitle}"
+        id="FeedbackPage"
+        showNavButton="true"
+        navButtonPress=".onNavBack"
+    >
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <HBox
+                    justifyContent="SpaceBetween"
+                    alignItems="Center"
+                >
+                    <VBox width="50%">
+                        <Label
+                            text="{i18n>sendFeedback}"
+                            class="sapUiSmallMarginBottom"
+                            design="Bold"
+                        />
+                        <TextArea
+                            id="expertiseComment2"
+                            placeholder="{i18n>expertiseFeedback}"
+                            rows="4"
+                            cols="50"
+                            value="{/ExpertiseComment}"
+                        />
+                    </VBox>
+
+                    <HBox>
+                        <ComboBox
+                            placeholder="{i18n>searchUser}"
+                            width="250px"
+                            items="{/Users}"
+                        >
+                            <core:Item
+                                key="{ID}"
+                                text="{Name}"
+                            />
+                        </ComboBox>
+
+                        <CheckBox
+                            text="{i18n>anonymous}"
+                            selected="{/anonymous}"
+                            class="sapUiSmallMarginBegin"
+                        />
+                    </HBox>
+                </HBox>
+                <Toolbar design="Transparent" />
+
+                <HBox
+                    justifyContent="SpaceAround"
+                    class="sapUiSmallMarginTop"
+                >
+                    <VBox>
+                        <CheckBox text="{i18n>technicalSkills}" />
+                        <Button
+                            icon="sap-icon://navigation-right-arrow"
+                            type="Transparent"
+                        />
+                    </VBox>
+                    <VBox>
+                        <CheckBox text="{i18n>softSkills}" />
+                        <Button
+                            icon="sap-icon://navigation-right-arrow"
+                            type="Transparent"
+                        />
+                    </VBox>
+                    <VBox>
+                        <CheckBox text="{i18n>otherSkills}" />
+                        <Button
+                            icon="sap-icon://navigation-right-arrow"
+                            type="Transparent"
+                        />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

@@ -83,76 +83,64 @@
                         iconColor="Critical"
                     >
                         <content>
-                            <VBox class="sapUiSmallMargin">
-                                <HBox
-                                    justifyContent="SpaceBetween"
-                                    alignItems="Center"
+                            <HBox justifyContent="End">
+                                <DatePicker
+                                    id="DP2"
+                                    placeholder="Enter Date"
+                                    change="onFbDateChange"
+                                    class="sapUiSmallMarginBottom"
+                                    width="140px"
+                                />
+                                <ComboBox
+                                    id="combobox3"
+                                    placeholder="{i18n>SelectStatus}"
+                                    width="170px"
+                                    items="{/FbStatus}"
+                                    selectionChange="onFbStatusFilterChange"
                                 >
-                                    <VBox width="50%">
-                                        <Label
-                                            text="{i18n>sendFeedback}"
-                                            class="sapUiSmallMarginBottom"
-                                            design="Bold"
-                                        />
-                                        <TextArea
-                                            id="expertiseComment2"
-                                            placeholder="{i18n>expertiseFeedback}"
-                                            rows="4"
-                                            cols="50"
-                                            value="{/ExpertiseComment}"
-                                        />
-                                    </VBox>
-
-                                    <HBox>
-                                        <ComboBox
-                                            placeholder="{i18n>searchUser}"
-                                            width="250px"
-                                            items="{/Users}"
-                                        >
-                                            <core:Item
-                                                key="{ID}"
-                                                text="{Name}"
-                                            />
-                                        </ComboBox>
-
-                                        <CheckBox
-                                            text="{i18n>anonymous}"
-                                            selected="{/anonymous}"
-                                            class="sapUiSmallMarginBegin"
-                                        />
-                                    </HBox>
-                                </HBox>
-                                <Toolbar design="Transparent" />
-
-                                <HBox
-                                    justifyContent="SpaceAround"
-                                    class="sapUiSmallMarginTop"
-                                >
-                                    <VBox>
-                                        <CheckBox
-                                            text="{i18n>technicalSkills}"
-                                        />
-                                        <Button
-                                            icon="sap-icon://navigation-right-arrow"
-                                            type="Transparent"
-                                        />
-                                    </VBox>
-                                    <VBox>
-                                        <CheckBox text="{i18n>softSkills}" />
-                                        <Button
-                                            icon="sap-icon://navigation-right-arrow"
-                                            type="Transparent"
-                                        />
-                                    </VBox>
-                                    <VBox>
-                                        <CheckBox text="{i18n>otherSkills}" />
-                                        <Button
-                                            icon="sap-icon://navigation-right-arrow"
-                                            type="Transparent"
-                                        />
-                                    </VBox>
-                                </HBox>
-                            </VBox>
+                                    <core:Item
+                                        key="{key}"
+                                        text="{text}"
+                                    />
+                                </ComboBox>
+                                <Button
+                                    text="New feedback"
+                                    press="onNewFeedback"
+                                />
+                            </HBox>
+                            <Table
+                                id="FbTable"
+                                items="{/FbData}"
+                            >
+                                <columns>
+                                    <Column>
+                                        <Text text="{i18n>senderColumn}" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>receiverColumn}" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>rating}" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>date}" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>status}" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="{Sender}" />
+                                            <Text text="{Receiver}" />
+                                            <Text text="{Rating}" />
+                                            <Text text="{Date}" />
+                                            <Text text="{Status}" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
                         </content>
                     </IconTabFilter>
                     <IconTabFilter
@@ -174,8 +162,8 @@
                                 id="combobox1"
                                 placeholder="{i18n>SelectStatus}"
                                 width="170px"
-                                items="{/Status}"
-                                selectionChange=".onStatusFilterChange"
+                                items="{/PegStatus}"
+                                selectionChange=".onPegStatusFilterChange"
                             >
                                 <core:Item
                                     key="{key}"
