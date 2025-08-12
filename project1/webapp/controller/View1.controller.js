@@ -71,16 +71,17 @@ sap.ui.define([
                 urlParameters: {
                     EMAIL: sEmail,
                     PASSWORD: sPassword,
-                    SU: "X"
+                    SU: false
                 },
                 success: (oData) => {
-                    if (oData && oData.EMAIL && oData.PASSWORD) {
+                    if (oData && oData.EMAIL) {
                         const oUserModel = new JSONModel({
                             userEmail: oData.EMAIL,
                             userPassword: oData.PASSWORD,
+                            SU: oData.SU || "X",
                             isLoggedIn: true
                         });
-                        this.getOwnerComponent().setModel(oUserModel, "currentUser");
+                        this.getView().setModel(oUserModel, "user");
  
                         MessageToast.show("Welcome " + oData.USER_NAME);
  
