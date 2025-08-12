@@ -13,21 +13,6 @@
 
                 <Panel width="400px" class="sapUiResponsiveMargin sapUiContentPadding" backgroundDesign="Translucent">
                     <VBox alignItems="Stretch" class="sapUiSmallMargin">
-
-                        <Label text="{i18n>firstName}" labelFor="FirstNameId"/>
-                        <Input
-                            placeholder="{i18n>firstName}"
-                            id="FirstNameId"
-                            width="100%"
-                            class="sapUiSmallMarginBottom"/>
-
-                        <Label text="{i18n>lastName}" labelFor="LastNameId"/>
-                        <Input
-                            placeholder="{i18n>lastName}"
-                            id="LastNameId"
-                            width="100%"
-                            class="sapUiSmallMarginBottom"/>
-
                         <Label text="Email:" labelFor="EmailId"/>
                         <Input
                             placeholder="{i18n>email}"
