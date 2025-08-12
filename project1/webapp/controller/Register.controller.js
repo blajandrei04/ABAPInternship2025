@@ -23,8 +23,6 @@ sap.ui.define([
         onSubmit() {
             const oView = this.getView();
 
-            const sFirstName = oView.byId("FirstNameId").getValue();
-            const sLastName = oView.byId("LastNameId").getValue();
             const sEmail = oView.byId("EmailId").getValue();
             const sPassword = oView.byId("PasswordId").getValue();
             const sConfirmationPassword = oView.byId("ConfirmationPasswordId").getValue();
@@ -32,7 +30,7 @@ sap.ui.define([
             const oBundle = this.getView().getModel("i18n").getResourceBundle();
             const eMsg = oBundle.getText("errorMsg");
 
-            if (sFirstName === "" || sLastName === "" || sEmail === "" || sPassword === "" || sConfirmationPassword === "") {
+            if ( sEmail === "" || sPassword === "" || sConfirmationPassword === "") {
                 MessageBox.error(eMsg, {
                     title: "Error",
                 });
@@ -45,14 +43,7 @@ sap.ui.define([
                 return;
             }
 
-            const nameRegex = /^[A-Za-z]+$/;
-
-            if (!nameRegex.test(sFirstName) || !nameRegex.test(sLastName)) {
-                MessageBox.error("First Name and Last Name must contain only letters.", {
-                    title: "Invalid Name",
-                });
-                return;
-            }
+           
             if (!sEmail.includes("@gmail.com") || !sEmail.includes(".")) {
                 MessageBox.error("Please enter a valid email address.", {
                     title: "Invalid Email",
