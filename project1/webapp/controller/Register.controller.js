@@ -19,6 +19,10 @@ sap.ui.define([
 
             const oModel = new JSONModel(oData);
             this.getView().setModel(oModel);
+           // sadmklasdnmsalasndasldnsa
+            this.getView().setModel(new JSONModel(), "i18n");
+            this.getView().getModel("i18n").loadData("./i18n/i18n.properties");
+            
         },
         onSubmit() {
             const oView = this.getView();
