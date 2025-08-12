@@ -1,8 +1,9 @@
-<mvc:View controllerName="project1.controller.Register"
+<mvc:View
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
 
-    <Page id="registerPage"
+    <Page
+        id="registerPage"
         title="{i18n>registerTitle}"
         showNavButton="true"
         navButtonPress="onNavBack">
@@ -13,6 +14,7 @@
 
                 <Panel width="400px" class="sapUiResponsiveMargin sapUiContentPadding" backgroundDesign="Translucent">
                     <VBox alignItems="Stretch" class="sapUiSmallMargin">
+
                         <Label text="Email:" labelFor="EmailId"/>
                         <Input
                             placeholder="{i18n>email}"
