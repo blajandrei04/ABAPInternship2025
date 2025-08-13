@@ -9,20 +9,55 @@ sap.ui.define([
 
     return Controller.extend("project1.controller.HomePage", {
         onInit() {
+            // Get the OData model from the component
+            const oODataModel = this.getOwnerComponent().getModel();
+            
+            // Assuming the logged-in user's email is stored in a JSONModel named "user"
+            const oUserModel = this.getOwnerComponent().getModel("user");
+            if (oUserModel) {
+                const sLoggedInUserEmail = oUserModel.getProperty("/userEmail");
 
-            var oModel = new sap.ui.model.json.JSONModel();
-            oModel.loadData("./model/test_data.json", null, true);  // parametrul 3 = async true
+                if (sLoggedInUserEmail) {
+                    oODataModel.callFunction("/ViewTeamFI", {
+                        method: "GET",
+                        urlParameters: {
+                            Email: sLoggedInUserEmail
+                        },
+                        success: (oData) => {
+                            // The backend returns a list of team members, including the user
+                            const aTeamMembers = oData.results;
 
-            oModel.attachRequestCompleted(function () {
-                console.log("Datele au fost încărcate:", oModel.getData());
-            });
+                            // Filter out the logged-in user from the team list
+                            const aColleagues = aTeamMembers.filter(member => member.EMAIL !== sLoggedInUserEmail);
+                            
+                            // Create a new JSON Model with the filtered data and set it to the view
+                            const oTeamModel = new JSONModel({ MyTeam: aColleagues });
+                            this.getView().setModel(oTeamModel, "team");
 
-            oModel.attachRequestFailed(function () {
-                console.error("Eroare la încărcarea datelor.");
-            });
-
-            this.getView().setModel(oModel);
-
+                            // Re-bind the table items to the new model
+                            const oTable = this.byId("myTeamTable");
+                            oTable.bindItems({
+                                path: "team>/MyTeam",
+                                template: new sap.m.ColumnListItem({
+                                    cells: [
+                                        new sap.m.Text({ text: "{team>FIRST_NAME}" }),
+                                        new sap.m.Text({ text: "{team>LAST_NAME}" }),
+                                        new sap.m.Text({ text: "{team>CAREER_LEVEL}" })
+                                    ]
+                                })
+                            });
+                        },
+                        error: (oError) => {
+                            console.error("Error fetching team data:", oError);
+                            MessageBox.error("Failed to load team data. Please try again.");
+                        }
+                    });
+                } else {
+                    console.error("No logged-in user email found.");
+                }
+            } else {
+                console.error("User model not found.");
+            }
         },
         getRouter() {
             return sap.ui.core.UIComponent.getRouterFor(this);
@@ -36,7 +71,7 @@ sap.ui.define([
             if (sPreviousHash !== undefined) {
                 window.history.go(-1);
             } else {
-                this.getRouter().navTo("RouteView1", {}, true /*no history*/);
+                this.getRouter().navTo("RouteView1", {}, true);
             }
         },
         onGiveFeedback() {
@@ -93,32 +128,27 @@ sap.ui.define([
             var oComboBox = oEvent.getSource();
             var sSelectedKey = oComboBox.getSelectedKey();
 
-            var oTable = this.byId("pegTable"); // sau id-ul tabelului tău
+            var oTable = this.byId("pegTable");
             var oBinding = oTable.getBinding("items");
 
             if (sSelectedKey) {
-                // Creează un filtru pentru câmpul Status
                 var oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.EQ, sSelectedKey);
                 oBinding.filter([oFilter]);
             } else {
-                // Dacă nu e nimic selectat, elimină filtrul
                 oBinding.filter([]);
             }
         },
         onDateChange: function (oEvent) {
             const oDatePicker = oEvent.getSource();
-            const oDate = oDatePicker.getDateValue(); // valoare nativa Date
+            const oDate = oDatePicker.getDateValue();
             if (!oDate) {
-                // daca s-a sters data -> reseteaza filtrul
                 this.byId("pegTable").getBinding("items").filter([]);
                 return;
             }
 
-            // formatam data la formatul JSON: "28.08.2023"
             const oFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "dd.MM.yyyy" });
             const sFormattedDate = oFormat.format(oDate);
 
-            // aplicam filtrul
             const oFilter = new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, sFormattedDate);
             const oTable = this.byId("pegTable");
             const oBinding = oTable.getBinding("items");
@@ -132,41 +162,32 @@ sap.ui.define([
             var oComboBox = oEvent.getSource();
             var sSelectedKey = oComboBox.getSelectedKey();
 
-            var oTable = this.byId("FbTable"); // sau id-ul tabelului tău
+            var oTable = this.byId("FbTable");
             var oBinding = oTable.getBinding("items");
 
             if (sSelectedKey) {
-                // Creează un filtru pentru câmpul Status
                 var oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.EQ, sSelectedKey);
                 oBinding.filter([oFilter]);
             } else {
-                // Dacă nu e nimic selectat, elimină filtrul
                 oBinding.filter([]);
             }
         },
         onFbDateChange: function (oEvent) {
             const oDatePicker = oEvent.getSource();
-            const oDate = oDatePicker.getDateValue(); // valoare nativa Date
+            const oDate = oDatePicker.getDateValue();
             if (!oDate) {
-                // daca s-a sters data -> reseteaza filtrul
                 this.byId("FbTable").getBinding("items").filter([]);
                 return;
             }
 
-            // formatam data la formatul JSON: "28.08.2023"
             const oFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "dd.MM.yyyy" });
             const sFormattedDate = oFormat.format(oDate);
 
-            // aplicam filtrul
             const oFilter = new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, sFormattedDate);
             const oTable = this.byId("FbTable");
             const oBinding = oTable.getBinding("items");
             oBinding.filter([oFilter]);
             this.byId("combobox3").setSelectedKey("");
         }
-
-
-
-
     });
 });

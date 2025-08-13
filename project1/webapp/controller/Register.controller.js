@@ -1,85 +1,79 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast",
+    "sap/m/MessageBox",
+    "sap/ui/core/routing/History",
+    "sap/m/MessageBox",
+    "sap/ui/core/routing/History",
     "sap/m/MessageBox",
     "sap/ui/core/routing/History",
     "sap/ui/model/json/JSONModel"
 ], (Controller, MessageToast, MessageBox, History, JSONModel) => {
     "use strict";
-
-    return Controller.extend("project1.controller.Register", {
-        onInit() {
-            console.log("Register Controller initialized");
-
-            const oData = {
-                recipient: {
-                    name: "Robert"
-                }
-            };
-            const oModel = new JSONModel(oData);
-            this.getView().setModel(oModel, "local"); // Giving a name to the local JSON model
-            
-            // The i18n model is already configured in the manifest.json
+            const oViewModel = new JSONModel({
+                email: "",
+                password: "",
+                confirmPassword: ""
+            });
+            this.getView().setModel(oViewModel, "registerModel");
         },
         onSubmit() {
             const oView = this.getView();
-            const sEmail = oView.byId("EmailId").getValue().trim();
-            const sPassword = oView.byId("PasswordId").getValue().trim();
-            const sConfirmationPassword = oView.byId("ConfirmationPasswordId").getValue().trim();
-
+            const oViewModel = oView.getModel("registerModel");
+            const oRegisterData = oViewModel.getData();
+            const oRouter = this.getRouter();
             const oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            const eMsg = oBundle.getText("errorMsg");
+            const oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
 
-            if (!sEmail || !sPassword || !sConfirmationPassword) {
-                MessageBox.error(eMsg, {
-                    title: "Error",
-                });
+            // 1. --- Client-Side Validation ---
+            if (!oRegisterData.email || !oRegisterData.password || !oRegisterData.confirmPassword) {
+                MessageBox.error(oBundle.getText("errorMsg")); // "Please fill all fields"
                 return;
             }
 
-            if (sPassword !== sConfirmationPassword) {
-                MessageBox.error("Passwords do not match.", {
-                    title: "Error",
-                });
+            if (oRegisterData.password !== oRegisterData.confirmPassword) {
+                MessageBox.error(oBundle.getText("passwordMismatchError")); // "Passwords do not match."
                 return;
             }
 
-            if (!sEmail.includes("@") || !sEmail.includes(".")) {
-                MessageBox.error("Please enter a valid email address.", {
-                    title: "Invalid Email",
-                });
+            // A simple regex for email validation
+            const oEmailRegex = /^\S+@\S+\.\S+$/;
+            if (!oEmailRegex.test(oRegisterData.email)) {
+                MessageBox.error(oBundle.getText("invalidEmailError")); // "Please enter a valid email address."
                 return;
             }
 
-            // Get the OData model, which is the default unnamed model
-            const oODataModel = this.getView().getModel();
+            // 2. --- Backend Call ---
+            const oODataModel = this.getOwnerComponent().getModel();
+            oView.setBusy(true);
 
-            oODataModel.callFunction("/Register", {
+            // NOTE: Based on your service metadata, the function is 'RegisterUser'
+            // and the parameters are 'Email', 'Password', and 'ConfirmPassword'.
+            oODataModel.callFunction("/RegisterUser", {
                 method: "POST",
                 urlParameters: {
-                    EMAIL: sEmail,
-                    PASSWORD: sPassword,
-                    PASSWORD1: sConfirmationPassword
+                    Email: oRegisterData.email,
+                    Password: oRegisterData.password,
+                    ConfirmPassword: oRegisterData.confirmPassword
                 },
-                success: (oData) => {
-                    if (oData) {
-                        MessageToast.show("Registration successful! You can now log in.");
-                        this.getRouter().navTo("RouteView1");
-                    } else {
-                        MessageBox.error("Registration failed. Please try again.");
-                    }
+                success: () => {
+                    oView.setBusy(false);
+                    MessageBox.success(oBundle.getText("registerSuccess"), {
+                        onClose: () => {
+                            oViewModel.setData({ email: "", password: "", confirmPassword: "" }); // Clear form
+                            oRouter.navTo("RouteView1");
+                        }
+                    });
                 },
                 error: (oError) => {
-                    console.error("Registration failed:", oError);
-                    MessageBox.error("Registration failed. Please try again.");
-                }
-            });
-        },
-        getRouter() {
-            return sap.ui.core.UIComponent.getRouterFor(this);
-        },
-        onNavBack: function () {
-            const oHistory = History.getInstance();
+                    oView.setBusy(false);
+                    let sErrorMessage = oBundle.getText("registerGenericError"); // "Registration failed. Please try again."
+                    try {
+                        const oErrorResponse = JSON.parse(oError.responseText);
+                        sErrorMessage = oErrorResponse?.error?.message?.value || sErrorMessage;
+                    } catch (e) {
+                        // Ignore parsing error
+                    }
+                    MessageBox.error(sErrorMessage);
             const sPreviousHash = oHistory.getPreviousHash();
 
             if (sPreviousHash !== undefined) {

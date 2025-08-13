@@ -20,6 +20,7 @@
                         <Label text="Email:" labelFor="EmailId"/>
                         <Input
                             placeholder="{i18n>email}"
+                            value="{registerModel>/email}"
                             id="EmailId"
                             width="100%"
                             class="sapUiSmallMarginBottom"/>
@@ -27,6 +28,7 @@
                         <Label text="{i18n>password}" labelFor="PasswordId"/>
                         <Input
                             placeholder="{i18n>password}"
+                            value="{registerModel>/password}"
                             id="PasswordId"
                             type="Password"
                             width="100%"
@@ -35,6 +37,7 @@
                         <Label text="{i18n>confirmPassword}" labelFor="ConfirmationPasswordId"/>
                         <Input
                             placeholder="{i18n>confirmPassword}"
+                            value="{registerModel>/confirmPassword}"
                             id="ConfirmationPasswordId"
                             type="Password"
                             width="100%"
