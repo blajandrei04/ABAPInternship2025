@@ -64,7 +64,7 @@ sap.ui.define([
                 return;
             }
  
-            const oODataModel = this.getView().getModel();
+            const oODataModel = this.getOwnerComponent().getModel();
  
             oODataModel.callFunction("/CheckUserLogin", {
                 method: "GET",
@@ -101,36 +101,41 @@ sap.ui.define([
         },
  
         onConfirmForgotPassword: function () {
-            const oView = this.getView();
-            const sEmail = oView.byId("forgotEmailInput").getValue().trim();
+            const sEmail = this.byId("forgotEmailInput").getValue().trim();
+            const sPassword = this.byId("forgotEmailInput1").getValue().trim();
+            const sConfirmationPassword = this.byId("forgotEmailInput12").getValue().trim();
  
-            if (!sEmail) {
-                MessageBox.error("Please enter your email.");
+            if (!sEmail || !sPassword || !sConfirmationPassword) {
+                MessageBox.error("Please fill in all fields.");
+                return;
+            }
+            if (sPassword !== sConfirmationPassword) {
+                MessageBox.error("Passwords do not match.");
                 return;
             }
             if (!sEmail.includes("@") || !sEmail.includes(".")) {
                 MessageBox.error("Please enter a valid email address.");
                 return;
             }
-           
+ 
             const oODataModel = this.getOwnerComponent().getModel();
  
             oODataModel.callFunction("/ForgotPassword", {
-                method: "GET",
+                method: "POST",
                 urlParameters: {
-                    Email: sEmail
+                    EMAIL: sEmail,
+                    PASSWORD: sPassword,
+                    PASSWORD1: sConfirmationPassword
                 },
                 success: (oData) => {
-                    MessageToast.show("Password reset instructions sent to " + sEmail);
+                    MessageToast.show("Password changed successfully!");
                     this.onCloseDialog();
                 },
                 error: (oError) => {
                     console.error("Forgot Password failed:", oError);
-                    MessageBox.error("Failed to send reset instructions. Please try again.");
+                    MessageBox.error("Failed to change password. Please try again.");
                 }
             });
         }
- 
     });
 });
- 
