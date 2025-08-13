@@ -7,7 +7,7 @@ sap.ui.define([
 ], function (Controller, MessageToast, MessageBox, History, JSONModel) {
     "use strict";
  
-    return Controller.extend("project1.controller.View1", {
+    return Controller.extend("project2.controller.View1", {
  
         onInit: function () {
             var oModel = new JSONModel();
@@ -30,7 +30,7 @@ sap.ui.define([
             var that = this;
             if (!this.oDialog) {
                 this.loadFragment({
-                    name: "project1.view.ForgotPass"
+                    name: "project2.view.ForgotPass"
                 }).then(function (oDialog) {
                     that.oDialog = oDialog;
                     that.oDialog.open();
@@ -133,4 +133,3 @@ sap.ui.define([
  
     });
 });
- 

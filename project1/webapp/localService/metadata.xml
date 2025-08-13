@@ -53,6 +53,16 @@
   <Parameter Name="Password" Type="Edm.String" Mode="In"/>
   <Parameter Name="SU" Type="Edm.String" Mode="In" DefaultValue="false"/>
 </FunctionImport>
+<FunctionImport
+    Name="Register"
+    ReturnType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.RegisterResult"
+    EntitySet="RegisterResultSet"
+    m:HttpMethod="POST"
+    sap:action-for="ZPROJECT_INTERNSHIP2025_ODATA_SRV.RegisterResult">
+  <Parameter Name="Email" Type="Edm.String" Mode="In"/>
+  <Parameter Name="Password" Type="Edm.String" Mode="In"/>
+  <Parameter Name="Password1" Type="Edm.String" Mode="In"/> 
+</FunctionImport>
 </EntityContainer>
 <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
 <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://ITSAPL0411.mymhp.net:50000/sap/opu/odata/sap/ZPROJECT_INTERNSHIP2025_ODATA_SRV/$metadata"/>

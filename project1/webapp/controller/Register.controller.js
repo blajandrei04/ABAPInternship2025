@@ -16,30 +16,27 @@ sap.ui.define([
                     name: "Robert"
                 }
             };
-
             const oModel = new JSONModel(oData);
-            this.getView().setModel(oModel);
-           // sadmklasdnmsalasndasldnsa
-            this.getView().setModel(new JSONModel(), "i18n");
-            this.getView().getModel("i18n").loadData("./i18n/i18n.properties");
+            this.getView().setModel(oModel, "local"); // Giving a name to the local JSON model
             
+            // The i18n model is already configured in the manifest.json
         },
         onSubmit() {
             const oView = this.getView();
+            const sEmail = oView.byId("EmailId").getValue().trim();
+            const sPassword = oView.byId("PasswordId").getValue().trim();
+            const sConfirmationPassword = oView.byId("ConfirmationPasswordId").getValue().trim();
 
-            const sEmail = oView.byId("EmailId").getValue();
-            const sPassword = oView.byId("PasswordId").getValue();
-            const sConfirmationPassword = oView.byId("ConfirmationPasswordId").getValue();
-
-            const oBundle = this.getView().getModel("i18n").getResourceBundle();
+            const oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             const eMsg = oBundle.getText("errorMsg");
 
-            if ( sEmail === "" || sPassword === "" || sConfirmationPassword === "") {
+            if (!sEmail || !sPassword || !sConfirmationPassword) {
                 MessageBox.error(eMsg, {
                     title: "Error",
                 });
                 return;
             }
+
             if (sPassword !== sConfirmationPassword) {
                 MessageBox.error("Passwords do not match.", {
                     title: "Error",
@@ -47,25 +44,43 @@ sap.ui.define([
                 return;
             }
 
-           
-            if (!sEmail.includes("@gmail.com") || !sEmail.includes(".")) {
+            if (!sEmail.includes("@") || !sEmail.includes(".")) {
                 MessageBox.error("Please enter a valid email address.", {
                     title: "Invalid Email",
                 });
                 return;
             }
-            const sMsg = oBundle.getText("showMsg", [sFirstName, sLastName, sEmail]);
-            MessageToast.show(sMsg);
-        }
-        ,
+
+            // Get the OData model, which is the default unnamed model
+            const oODataModel = this.getView().getModel();
+
+            oODataModel.callFunction("/Register", {
+                method: "POST",
+                urlParameters: {
+                    EMAIL: sEmail,
+                    PASSWORD: sPassword,
+                    PASSWORD1: sConfirmationPassword
+                },
+                success: (oData) => {
+                    if (oData) {
+                        MessageToast.show("Registration successful! You can now log in.");
+                        this.getRouter().navTo("RouteView1");
+                    } else {
+                        MessageBox.error("Registration failed. Please try again.");
+                    }
+                },
+                error: (oError) => {
+                    console.error("Registration failed:", oError);
+                    MessageBox.error("Registration failed. Please try again.");
+                }
+            });
+        },
         getRouter() {
             return sap.ui.core.UIComponent.getRouterFor(this);
         },
         onNavBack: function () {
-            var oHistory, sPreviousHash;
-
-            oHistory = History.getInstance();
-            sPreviousHash = oHistory.getPreviousHash();
+            const oHistory = History.getInstance();
+            const sPreviousHash = oHistory.getPreviousHash();
 
             if (sPreviousHash !== undefined) {
                 window.history.go(-1);
