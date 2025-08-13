@@ -6,7 +6,7 @@
     xmlns:core="sap.ui.core"
 >
     <Page
-        title="{i18n>UserTitle} {FirstName} {LastName}"
+        title="{i18n>UserTitle} {user>/USER_NAME}"
         id="employeeResumePage"
         showNavButton="true"
         navButtonPress=".onNavBack"
@@ -35,7 +35,6 @@
                 id="iconTabBar"
                 headerBackgroundDesign="Transparent"
                 class="sapUiResponsiveContentPadding"
-                binding="{Resume}"
                 select=".onTabSelect"
                 selectedKey="{view>/selectedTabKey}"
             >
@@ -50,25 +49,25 @@
                         <VBox class="sapUiSmallMargin">
                             <Table
                                 id="myTeamTable"
-                                items="{/Resume}"
+                                items="{team>/MyTeam}"
                             >
                                 <columns>
                                     <Column>
-                                        <Text text="Name:" />
+                                        <Text text="{i18n>FirstName}" />
                                     </Column>
                                     <Column>
-                                        <Text text="Surname:" />
+                                        <Text text="{i18n>LastName}" />
                                     </Column>
                                     <Column>
-                                        <Text text="Career level:" />
+                                        <Text text="{i18n>careerLevel}" />
                                     </Column>
                                 </columns>
                                 <items>
                                     <ColumnListItem>
                                         <cells>
-                                            <Text text="{Name}" />
-                                            <Text text="{Surname}" />
-                                            <Text text="{CareerLevel}" />
+                                            <Text text="{team>FIRST_NAME}" />
+                                            <Text text="{team>LAST_NAME}" />
+                                            <Text text="{team>CAREER_LEVEL}" />
                                         </cells>
                                     </ColumnListItem>
                                 </items>
@@ -95,12 +94,12 @@
                                     id="combobox3"
                                     placeholder="{i18n>SelectStatus}"
                                     width="170px"
-                                    items="{/FbStatus}"
+                                    items="{localData>/FbStatus}"
                                     selectionChange="onFbStatusFilterChange"
                                 >
                                     <core:Item
-                                        key="{key}"
-                                        text="{text}"
+                                        key="{localData>key}"
+                                        text="{localData>text}"
                                     />
                                 </ComboBox>
                                 <Button
@@ -110,7 +109,7 @@
                             </HBox>
                             <Table
                                 id="FbTable"
-                                items="{/FbData}"
+                                items="{localData>/FbData}"
                             >
                                 <columns>
                                     <Column>
@@ -132,11 +131,11 @@
                                 <items>
                                     <ColumnListItem>
                                         <cells>
-                                            <Text text="{Sender}" />
-                                            <Text text="{Receiver}" />
-                                            <Text text="{Rating}" />
-                                            <Text text="{Date}" />
-                                            <Text text="{Status}" />
+                                            <Text text="{localData>Sender}" />
+                                            <Text text="{localData>Receiver}" />
+                                            <Text text="{localData>Rating}" />
+                                            <Text text="{localData>Date}" />
+                                            <Text text="{localData>Status}" />
                                         </cells>
                                     </ColumnListItem>
                                 </items>
@@ -162,12 +161,12 @@
                                 id="combobox1"
                                 placeholder="{i18n>SelectStatus}"
                                 width="170px"
-                                items="{/PegStatus}"
+                                items="{localData>/PegStatus}"
                                 selectionChange=".onPegStatusFilterChange"
                             >
                                 <core:Item
-                                    key="{key}"
-                                    text="{text}"
+                                    key="{localData>key}"
+                                    text="{localData>text}"
                                 />
                             </ComboBox>
                             <Button
@@ -179,7 +178,7 @@
                         </HBox>
                         <Table
                             id="pegTable"
-                            items="{/PegData}"
+                            items="{localData>/PegData}"
                         >
                             <columns>
                                 <Column>
@@ -201,11 +200,11 @@
                             <items>
                                 <ColumnListItem>
                                     <cells>
-                                        <Text text="{ProjectName}" />
-                                        <Text text="{Username}" />
-                                        <Text text="{Rating}" />
-                                        <Text text="{Date}" />
-                                        <Text text="{Status}" />
+                                        <Text text="{localData>ProjectName}" />
+                                        <Text text="{localData>Username}" />
+                                        <Text text="{localData>Rating}" />
+                                        <Text text="{localData>Date}" />
+                                        <Text text="{localData>Status}" />
                                     </cells>
                                 </ColumnListItem>
                             </items>
@@ -216,7 +215,7 @@
                         text="{i18n>MyProfileTab}"
                         key="MyProfile"
                         icon="sap-icon://person-placeholder"
-                        iconColor="Good"
+                        iconColor="Positive"
                     >
                         <VBox
                             class="sapUiSmallMargin sapUiResponsiveMargin"
@@ -234,37 +233,37 @@
                                     editable="false"
                                     class="sapUiResponsiveMargin"
                                     width="60%"
-                                    items="{/Resume}"
+                                    binding="{user>/}"
                                 >
                                     <Label
                                         text="{i18n>FirstName}"
                                         width="90%"
                                     />
-                                    <Text text="{Name}" />
+                                    <Text text="{user>USER_NAME}" />
 
                                     <Label
                                         text="{i18n>LastName}"
                                         width="90%"
                                     />
-                                    <Text text="{Surname}" />
+                                    <Text text="{user>LAST_NAME}" />
 
                                     <Label
                                         text="{i18n>Email}"
                                         width="90%"
                                     />
-                                    <Text text="{Email}" />
+                                    <Text text="{user>USER_EMAIL}" />
 
                                     <Label
                                         text="{i18n>careerLevel}"
                                         width="90%"
                                     />
-                                    <Text text="{CareerLevel}" />
+                                    <Text text="{user>CAREER_LEVEL}" />
 
                                     <Label
                                         text="{i18n>Department}"
                                         width="90%"
                                     />
-                                    <Text text="{/Department}" />
+                                    <Text text="{user>TEAM_ID}" />
                                 </form:SimpleForm>
                             </Panel>
                         </VBox>

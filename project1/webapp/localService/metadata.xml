@@ -73,6 +73,14 @@
   <Parameter Name="Password" Type="Edm.String" Mode="In"/>
   <Parameter Name="Password1" Type="Edm.String" Mode="In"/>
 </FunctionImport>
+<FunctionImport
+    Name="ViewTeamFI"
+    ReturnType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.ViewTeam"
+    EntitySet="ViewTeamSet"
+    m:HttpMethod="GET"
+    sap:action-for="ZPROJECT_INTERNSHIP2025_ODATA_SRV.ViewTeam">
+  <Parameter Name="Email" Type="Edm.String" Mode="In"/>
+</FunctionImport>
 </EntityContainer>
 <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
 <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://ITSAPL0411.mymhp.net:50000/sap/opu/odata/sap/ZPROJECT_INTERNSHIP2025_ODATA_SRV/$metadata"/>

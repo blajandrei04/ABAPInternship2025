@@ -21,7 +21,7 @@ server:
          path:
            - /resources
            - /test-resources
-         url: http://localhost:8080/
+         url: https://ui5.sap.com
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
