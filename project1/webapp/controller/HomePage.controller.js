@@ -10,10 +10,10 @@ sap.ui.define([
     return Controller.extend("project1.controller.HomePage", {
         onInit() {
             // Get the OData model from the component
-            const oODataModel = this.getOwnerComponent().getModel();
+            const oODataModel = this.getView().getModel();
             
             // Assuming the logged-in user's email is stored in a JSONModel named "user"
-            const oUserModel = this.getOwnerComponent().getModel("user");
+            const oUserModel = this.getView().getModel("user");
             if (oUserModel) {
                 const sLoggedInUserEmail = oUserModel.getProperty("/userEmail");
 
