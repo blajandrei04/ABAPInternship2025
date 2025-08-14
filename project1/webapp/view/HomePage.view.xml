@@ -6,7 +6,7 @@
     xmlns:core="sap.ui.core"
 >
     <Page
-        title="{i18n>UserTitle} {user>/USER_NAME}"
+        title="{i18n>UserTitle} {user>/FULL_NAME}"
         id="employeeResumePage"
         showNavButton="true"
         navButtonPress=".onNavBack"

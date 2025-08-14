@@ -56,17 +56,22 @@ sap.ui.define([
 
         onLoginPress: function () {
             const oView = this.getView();
-            const sEmail = oView.byId("usernameInput").getValue().trim();
-            const sPassword = oView.byId("passwordInput").getValue().trim();
+            let sEmail = oView.byId("usernameInput").getValue().trim();
+            let sPassword = oView.byId("passwordInput").getValue().trim();
 
             if (!sEmail || !sPassword) {
                 MessageBox.error("Please fill in both fields.");
                 return;
             }
+            if (!sEmail.includes("@") || !sEmail.includes(".")) {
+                MessageBox.error("Please enter a valid email address.");
+                return;
+            }
+            sEmail = sEmail.toUpperCase();
+            sPassword = sPassword.toUpperCase();
 
             const oODataModel = this.getOwnerComponent().getModel();
 
-            // 1️⃣ Login
             oODataModel.callFunction("/CheckUserLogin", {
                 method: "GET",
                 urlParameters: {
@@ -76,7 +81,6 @@ sap.ui.define([
                 },
                 success: (oData) => {
                     if (oData && oData.EMAIL) {
-                        // Setam modelul de baza cu datele minime
                         const oUserModel = new JSONModel({
                             USER_EMAIL: oData.EMAIL,
                             PASSWORD: oData.PASSWORD,
@@ -87,7 +91,6 @@ sap.ui.define([
 
                         console.log("User model content after login:", oUserModel.getData());
 
-                        // 2️⃣ Cautam EMP_ID dupa email
                         oODataModel.read("/EMPLOYEESet", {
                             filters: [
                                 new sap.ui.model.Filter("EMAIL", sap.ui.model.FilterOperator.EQ, sEmail)
@@ -97,28 +100,23 @@ sap.ui.define([
                                     const empId = oResult.results[0].EMP_ID;
                                     console.log("EMP_ID gasit:", empId);
 
-                                    // 3️⃣ Citim profilul complet cu cheia compusa
                                     const sPath = `/EMPLOYEESet(EMP_ID='${empId}',EMAIL='${sEmail}')`;
                                     oODataModel.read(sPath, {
                                         success: (oProfileData) => {
                                             console.log("Profil corect gasit:", oProfileData);
 
-                                            // Actualizam modelul cu toate datele
                                             oUserModel.setData({
                                                 ...oUserModel.getData(),
                                                 ...oProfileData
                                             });
 
-                                            // Afisam mesajul cu numele corect
                                             MessageToast.show(
                                                 "Welcome " + oProfileData.FIRST_NAME + " " + oProfileData.LAST_NAME + "!"
                                             );
 
-                                            // Golim campurile login
                                             oView.byId("usernameInput").setValue("");
                                             oView.byId("passwordInput").setValue("");
 
-                                            // Navigam la homepage
                                             this.getRouter().navTo("RouteHomePage");
                                         },
                                         error: (oErr) => {
@@ -149,8 +147,8 @@ sap.ui.define([
         ,
 
         onConfirmForgotPassword: function () {
-            const sEmail = this.byId("forgotEmailInput").getValue().trim();
-            const sPassword = this.byId("forgotEmailInput1").getValue().trim();
+            let sEmail = this.byId("forgotEmailInput").getValue().trim();
+            let sPassword = this.byId("forgotEmailInput1").getValue().trim();
             const sConfirmationPassword = this.byId("forgotEmailInput12").getValue().trim();
 
             if (!sEmail || !sPassword || !sConfirmationPassword) {

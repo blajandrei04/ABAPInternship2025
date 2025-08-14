@@ -3,8 +3,10 @@ sap.ui.define([
     "sap/m/MessageToast",
     "sap/m/MessageBox",
     "sap/ui/core/routing/History",
-    "sap/ui/model/json/JSONModel"
-], (Controller, MessageToast, MessageBox, History, JSONModel) => {
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
+], (Controller, MessageToast, MessageBox, History, JSONModel, Filter, FilterOperator) => {
     "use strict";
 
     return Controller.extend("project1.controller.HomePage", {
@@ -19,17 +21,40 @@ sap.ui.define([
             const oUserModel = this.getOwnerComponent().getModel("user");
 
             if (!oUserModel || !oUserModel.getProperty("/isLoggedIn")) {
-                console.warn("User not logged in yet. Waiting for login...");
+                console.warn("User not logged in yet. Redirecting to login.");
+                this.getRouter().navTo("RouteView1");
                 return;
             }
 
-            console.log("User model content:", oUserModel.getData());
             const sLoggedInUserEmail = oUserModel.getProperty("/USER_EMAIL");
             console.log("Logged-in user email:", sLoggedInUserEmail);
-        }
 
+            const oODataModel = this.getOwnerComponent().getModel();
 
-        ,
+            oODataModel.callFunction("/ViewTeamFI", {
+                method: "GET",
+                urlParameters: {
+                    USER_EMAIL: sLoggedInUserEmail 
+                },
+                success: (oData) => {
+                    if (oData && oData.results) {
+                        const aTeamData = oData.results;
+                        const oTeamModel = new JSONModel({
+                            MyTeam: aTeamData
+                        });
+                        this.getView().setModel(oTeamModel, "team");
+                        console.log("Team data loaded:", oTeamModel.getData());
+                    } else {
+                        console.log("No team data received.");
+                        this.getView().setModel(new JSONModel({ MyTeam: [] }), "team");
+                    }
+                },
+                error: (oError) => {
+                    console.error("Error fetching team data:", oError);
+                    MessageBox.error("Failed to load team data. Please try again.");
+                }
+            });
+        },
         getRouter() {
             return sap.ui.core.UIComponent.getRouterFor(this);
         },
