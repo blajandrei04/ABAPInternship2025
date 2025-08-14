@@ -56,15 +56,21 @@ sap.ui.define([
  
         onLoginPress: function () {
             const oView = this.getView();
-            const sEmail = oView.byId("usernameInput").getValue().trim();
-            const sPassword = oView.byId("passwordInput").getValue().trim();
+            let sEmail = oView.byId("usernameInput").getValue().trim();
+            let sPassword = oView.byId("passwordInput").getValue().trim();
  
             if (!sEmail || !sPassword) {
                 MessageBox.error("Please fill in both fields.");
                 return;
             }
+            if (!sEmail.includes("@") || !sEmail.includes(".")) {
+                MessageBox.error("Please enter a valid email address.");
+                return;
+            }
+            sEmail = sEmail.toUpperCase();
+            sPassword = sPassword.toUpperCase();
  
-            const oODataModel = this.getOwnerComponent().getModel();
+            const oODataModel = this.getView().getModel();
  
             oODataModel.callFunction("/CheckUserLogin", {
                 method: "GET",
@@ -117,8 +123,11 @@ sap.ui.define([
                 MessageBox.error("Please enter a valid email address.");
                 return;
             }
+            sEmail = sEmail.toUpperCase();
+            sPassword = sPassword.toUpperCase();
+            sConfirmationPassword = sConfirmationPassword.toUpperCase();
  
-            const oODataModel = this.getOwnerComponent().getModel();
+            const oODataModel = this.getView().getModel();
  
             oODataModel.callFunction("/ForgotPassword", {
                 method: "POST",
