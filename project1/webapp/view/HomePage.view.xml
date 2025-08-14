@@ -215,7 +215,7 @@
                         text="{i18n>MyProfileTab}"
                         key="MyProfile"
                         icon="sap-icon://person-placeholder"
-                        iconColor="Positive"
+                        iconColor="Default"
                     >
                         <VBox
                             class="sapUiSmallMargin sapUiResponsiveMargin"
@@ -239,7 +239,7 @@
                                         text="{i18n>FirstName}"
                                         width="90%"
                                     />
-                                    <Text text="{user>USER_NAME}" />
+                                    <Text text="{user>FIRST_NAME}" />
 
                                     <Label
                                         text="{i18n>LastName}"
@@ -251,7 +251,7 @@
                                         text="{i18n>Email}"
                                         width="90%"
                                     />
-                                    <Text text="{user>USER_EMAIL}" />
+                                    <Text text="{user>EMAIL}" />
 
                                     <Label
                                         text="{i18n>careerLevel}"
