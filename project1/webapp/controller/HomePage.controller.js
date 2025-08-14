@@ -9,56 +9,27 @@ sap.ui.define([
 
     return Controller.extend("project1.controller.HomePage", {
         onInit() {
-            // Get the OData model from the component
-            const oODataModel = this.getView().getModel();
-            
-            // Assuming the logged-in user's email is stored in a JSONModel named "user"
-            const oUserModel = this.getView().getModel("user");
-            if (oUserModel) {
-                const sLoggedInUserEmail = oUserModel.getProperty("/userEmail");
-
-                if (sLoggedInUserEmail) {
-                    oODataModel.callFunction("/ViewTeamFI", {
-                        method: "GET",
-                        urlParameters: {
-                            Email: sLoggedInUserEmail
-                        },
-                        success: (oData) => {
-                            // The backend returns a list of team members, including the user
-                            const aTeamMembers = oData.results;
-
-                            // Filter out the logged-in user from the team list
-                            const aColleagues = aTeamMembers.filter(member => member.EMAIL !== sLoggedInUserEmail);
-                            
-                            // Create a new JSON Model with the filtered data and set it to the view
-                            const oTeamModel = new JSONModel({ MyTeam: aColleagues });
-                            this.getView().setModel(oTeamModel, "team");
-
-                            // Re-bind the table items to the new model
-                            const oTable = this.byId("myTeamTable");
-                            oTable.bindItems({
-                                path: "team>/MyTeam",
-                                template: new sap.m.ColumnListItem({
-                                    cells: [
-                                        new sap.m.Text({ text: "{team>FIRST_NAME}" }),
-                                        new sap.m.Text({ text: "{team>LAST_NAME}" }),
-                                        new sap.m.Text({ text: "{team>CAREER_LEVEL}" })
-                                    ]
-                                })
-                            });
-                        },
-                        error: (oError) => {
-                            console.error("Error fetching team data:", oError);
-                            MessageBox.error("Failed to load team data. Please try again.");
-                        }
-                    });
-                } else {
-                    console.error("No logged-in user email found.");
-                }
-            } else {
-                console.error("User model not found.");
-            }
+            console.log("HomePage Controller initialized");
+            this.getRouter()
+                .getRoute("RouteHomePage")
+                .attachPatternMatched(this._onObjectMatched, this);
         },
+
+        _onObjectMatched() {
+            const oUserModel = this.getOwnerComponent().getModel("user");
+
+            if (!oUserModel || !oUserModel.getProperty("/isLoggedIn")) {
+                console.warn("User not logged in yet. Waiting for login...");
+                return;
+            }
+
+            console.log("User model content:", oUserModel.getData());
+            const sLoggedInUserEmail = oUserModel.getProperty("/USER_EMAIL");
+            console.log("Logged-in user email:", sLoggedInUserEmail);
+        }
+
+
+        ,
         getRouter() {
             return sap.ui.core.UIComponent.getRouterFor(this);
         },

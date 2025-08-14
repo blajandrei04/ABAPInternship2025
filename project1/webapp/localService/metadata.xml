@@ -27,6 +27,7 @@
 <EntityType Name="EMPLOYEE" sap:content-version="1">
 <Key>
 <PropertyRef Name="EMP_ID"/>
+<PropertyRef Name="EMAIL"/>
 </Key>
 <Property Name="EMP_ID" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="receiver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 <Property Name="FIRST_NAME" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="First name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
@@ -72,6 +73,14 @@
   <Parameter Name="Email" Type="Edm.String" Mode="In"/>
   <Parameter Name="Password" Type="Edm.String" Mode="In"/>
   <Parameter Name="Password1" Type="Edm.String" Mode="In"/>
+</FunctionImport>
+<FunctionImport
+    Name="ViewTeamFI"
+    ReturnType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.ViewTeam"
+    EntitySet="ViewTeamSet"
+    m:HttpMethod="GET"
+    sap:action-for="ZPROJECT_INTERNSHIP2025_ODATA_SRV.ViewTeam">
+  <Parameter Name="Email" Type="Edm.String" Mode="In"/>
 </FunctionImport>
 <FunctionImport
     Name="ViewTeamFI"
