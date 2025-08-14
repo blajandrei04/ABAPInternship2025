@@ -118,7 +118,7 @@ sap.ui.define([
                 return;
             }
  
-            const oODataModel = this.getView().getModel();
+            const oODataModel = this.getOwnerComponent().getModel();
  
             oODataModel.callFunction("/ForgotPassword", {
                 method: "POST",
