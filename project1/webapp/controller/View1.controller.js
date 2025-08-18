@@ -114,14 +114,16 @@ sap.ui.define([
                                                 "Welcome " + oProfileData.FIRST_NAME + " " + oProfileData.LAST_NAME + "!"
                                             );
 
-                                            oView.byId("usernameInput").setValue("");
-                                            oView.byId("passwordInput").setValue("");
+                                            this.getRouter().navTo("RouteHomePage");
 
-                                            if (oProfileData.SU === "TRUE") {
-                                                this.getRouter().navTo("RouteManagerPage");
-                                            } else {
-                                                this.getRouter().navTo("RouteHomePage");
-                                            }
+                                            // oView.byId("usernameInput").setValue("");
+                                            // oView.byId("passwordInput").setValue("");
+
+                                            // if (oProfileData.SU === "TRUE") {
+                                            //     this.getRouter().navTo("RouteManagerPage");
+                                            // } else {
+                                            //     this.getRouter().navTo("RouteHomePage");
+                                            // }
                                         },
                                         error: (oErr) => {
                                             console.error("Nu am putut citi profilul:", oErr);
