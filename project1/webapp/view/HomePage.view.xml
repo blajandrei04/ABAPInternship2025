@@ -80,7 +80,7 @@
                         key="Projects"
                         icon="sap-icon://form"
                         iconColor="Critical"
-                        visible="{= ${user>/SU} === 'false' }"
+                        visible="{= ${user>/SU} === 'FALSE' }"
                     >
                         <content>
                             <HBox justifyContent="End">
@@ -146,7 +146,7 @@
                     <IconTabFilter
                         id="pegTab"
                         text="{i18n>pegTab}"
-                        key="Hobbies"
+                        key="Pegs"
                         icon="sap-icon://form"
                         iconColor="Positive"
                     >
@@ -175,7 +175,6 @@
                                 text="Request PEG"
                                 type="Transparent"
                                 press="onRequestPeg"
-                                visible="{= ${user>/SU} === 'false' }"
                             />
                         </HBox>
                         <Table
@@ -190,9 +189,6 @@
                                     <Text text="{i18n>username}" />
                                 </Column>
                                 <Column>
-                                    <Text text="{i18n>rating}" />
-                                </Column>
-                                <Column>
                                     <Text text="{i18n>date}" />
                                 </Column>
                                 <Column>
@@ -202,11 +198,10 @@
                             <items>
                                 <ColumnListItem>
                                     <cells>
-                                        <Text text="{pegData>ProjectName}" />
-                                        <Text text="{pegData>Username}" />
-                                        <Text text="{pegData>Rating}" />
-                                        <Text text="{pegData>Date}" />
-                                        <Text text="{pegData>Status}" />
+                                        <Text text="{pegData>PROJECT_ID}" />
+                                        <Text text="{pegData>SENDER_ID}" />
+                                        <Text text="{pegData>FB_DATE}" />
+                                        <Text text="{pegData>FB_STATUS}" />
                                     </cells>
                                 </ColumnListItem>
                             </items>
