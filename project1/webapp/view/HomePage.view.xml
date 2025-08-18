@@ -23,6 +23,7 @@
                     id="changePasswordButton"
                     icon="sap-icon://BusinessSuiteInAppSymbols/icon-cell-lock"
                     class="sapUiTinyMarginEnd"
+                    visible="{= ${user>/SU} === 'TRUE' }"
                 />
                 <Button
                     text="{i18n>logoutButton}"
@@ -80,6 +81,7 @@
                         key="Projects"
                         icon="sap-icon://form"
                         iconColor="Critical"
+                        visible="{= ${user>/SU} === 'FALSE' }"
                     >
                         <content>
                             <HBox justifyContent="End">
@@ -174,6 +176,7 @@
                                 text="Request PEG"
                                 type="Transparent"
                                 press="onRequestPeg"
+                                visible="{= ${user>/SU} === 'F ALSE' }"
                             />
                         </HBox>
                         <Table
