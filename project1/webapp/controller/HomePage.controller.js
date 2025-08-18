@@ -211,10 +211,10 @@ sap.ui.define([
                 const sLoggedInUserEmail = oUserModel.getProperty("/EMAIL");
                 const oODataModel = this.getOwnerComponent().getModel();
 
-                oODataModel.callFunction("/GetPEG", {
+                oODataModel.callFunction("/GetPEG_FI", {
                     method: "GET",
                     urlParameters: {
-                        USER_EMAIL: sLoggedInUserEmail
+                        EMAIL: sLoggedInUserEmail
                     },
                     success: (oData) => {
                         if (oData && oData.results) {
