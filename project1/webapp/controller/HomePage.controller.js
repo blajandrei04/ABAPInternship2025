@@ -168,6 +168,41 @@ sap.ui.define([
                 oBinding.filter([]);
             }
         },
+        onTabSelect(oEvent) {
+            const sSelectedKey = oEvent.getParameter("key");
+            
+            if (sSelectedKey === "Pegs") {
+                const oUserModel = this.getOwnerComponent().getModel("user");
+                const sLoggedInUserEmail = oUserModel.getProperty("/EMAIL");
+                const oODataModel = this.getOwnerComponent().getModel();
+
+                oODataModel.callFunction("/GetPEG", { 
+                    method: "GET",
+                    urlParameters: {
+                        USER_EMAIL: sLoggedInUserEmail
+                    },
+                    success: (oData) => {
+                        if (oData && oData.results) {
+                            const aPegData = oData.results;
+                            const oPegsModel = new JSONModel({
+                                Pegs: aPegData
+                            });
+                            this.getView().setModel(oPegsModel, "pegData");
+                            console.log("Peg data loaded from backend:", oPegsModel.getData());
+                        } else {
+                            this.getView().setModel(new JSONModel({ Pegs: [] }), "pegData");
+                            console.log("Backend returned no data for Pegs.");
+                        }
+                    },
+                    error: (oError) => {
+                        console.error("Error fetching peg data from backend:", oError);
+                        MessageBox.error("Failed to load peg data from backend.");
+                        
+                        this.getView().setModel(new JSONModel({ Pegs: [] }), "pegData");
+                    }
+                });
+            }
+        },
         onFbDateChange: function (oEvent) {
             const oDatePicker = oEvent.getSource();
             const oDate = oDatePicker.getDateValue();

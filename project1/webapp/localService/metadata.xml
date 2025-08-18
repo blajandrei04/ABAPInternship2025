@@ -13,6 +13,7 @@
 <Property Name="FB_DATE" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Feedback Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 <Property Name="FB_TYPE" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="fb type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 <Property Name="FB_STATUS" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="status of peg" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="RATING" Type="Edm.Decimal" Nullable="true" Precision="3" Scale="2" sap:unicode="false" sap:label="Rating" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 </EntityType>
 <EntityType Name="USER" sap:content-version="1">
 <Key>
@@ -89,6 +90,19 @@
     m:HttpMethod="GET"
     sap:action-for="ZPROJECT_INTERNSHIP2025_ODATA_SRV.ViewTeam">
   <Parameter Name="Email" Type="Edm.String" Mode="In"/>
+</FunctionImport>
+<FunctionImport
+    Name="GetPEG"
+    ReturnType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.PEG"
+    EntitySet="PEGSet"
+    m:HttpMethod="GET">
+    <Parameter Name="DATE" Type="Edm.DateTime" Mode="In"/>
+    <Parameter Name="EMAIL" Type="Edm.String" Mode="In"/>
+    <Parameter Name="FEEDBACK_ID" Type="Edm.String" Mode="In"/>
+    <Parameter Name="PROJECT_ID" Type="Edm.String" Mode="In"/>
+    <Parameter Name="RECEIVER_ID" Type="Edm.String" Mode="In"/>
+    <Parameter Name="SENDER_ID" Type="Edm.String" Mode="In"/>
+    <Parameter Name="STATUS" Type="Edm.String" Mode="In"/>
 </FunctionImport>
 </EntityContainer>
 <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
