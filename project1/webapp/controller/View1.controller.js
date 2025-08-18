@@ -24,6 +24,13 @@ sap.ui.define([
             });
 
             this.getView().setModel(oModel, "resume");
+            
+            this.getRouter().getRoute("RouteView1").attachPatternMatched(this._onRouteMatched, this);
+        },
+
+        _onRouteMatched: function () {
+            this.byId("usernameInput").setValue("");
+            this.byId("passwordInput").setValue("");
         },
 
         onForgotPasswordPress: function () {
@@ -115,15 +122,6 @@ sap.ui.define([
                                             );
 
                                             this.getRouter().navTo("RouteHomePage");
-
-                                            // oView.byId("usernameInput").setValue("");
-                                            // oView.byId("passwordInput").setValue("");
-
-                                            // if (oProfileData.SU === "TRUE") {
-                                            //     this.getRouter().navTo("RouteManagerPage");
-                                            // } else {
-                                            //     this.getRouter().navTo("RouteHomePage");
-                                            // }
                                         },
                                         error: (oErr) => {
                                             console.error("Nu am putut citi profilul:", oErr);
@@ -149,8 +147,7 @@ sap.ui.define([
                     MessageBox.error("Login failed. Please try again.");
                 }
             });
-        }
-        ,
+        },
 
         onConfirmForgotPassword: function () {
             let sEmail = this.byId("forgotEmailInput").getValue().trim();
