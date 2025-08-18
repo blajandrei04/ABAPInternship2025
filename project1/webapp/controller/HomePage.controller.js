@@ -34,7 +34,7 @@ sap.ui.define([
             oODataModel.callFunction("/ViewTeamFI", {
                 method: "GET",
                 urlParameters: {
-                    USER_EMAIL: sLoggedInUserEmail 
+                    USER_EMAIL: sLoggedInUserEmail
                 },
                 success: (oData) => {
                     if (oData && oData.results) {
@@ -77,38 +77,73 @@ sap.ui.define([
             this.getRouter().navTo("RouteManagerPage");
         },
         async onRequestPeg() {
-            this._oPegDialog ??= await this.loadFragment({
-                name: "project1.view.PegDialog",
-            }),
-                this._oPegDialog.open();
+            if (!this._oPegDialog) {
+                this._oPegDialog = await this.loadFragment({
+                    name: "project1.view.PegDialog",
+                });
+            }
+            this._oPegDialog.open();
         },
+
         async onChangePasswordPress() {
-            this._oChangePassDialog ??= await this.loadFragment({
-                name: "project1.view.ChangePass",
-            }),
-                this._oChangePassDialog.open();
+            if (!this._oChangePassDialog) {
+                this._oChangePassDialog = await this.loadFragment({
+                    name: "project1.view.ChangePass",
+                });
+            }
+            this._oChangePassDialog.open();
         },
 
         onClosePegDialog() {
-            this._oPegDialog.close();
+            if (this._oPegDialog) {
+                this._oPegDialog.close();
+            }
         },
 
-        onConfirmChangePassword() {
+        onConfirmChangePassword: function () {
             const oView = this.getView();
-            const sOldPassword = oView.byId("changeEmailInput1").getValue();
-            const sNewPassword = oView.byId("changeEmailInput12").getValue();
-            if (sOldPassword !== sNewPassword) {
-                MessageBox.error("Passwords do not match.", {
-                    title: "Error",
-                });
+            const sNewPassword = oView.byId("changeEmailInput1").getValue().trim();
+            const sConfirmationPassword = oView.byId("changeEmailInput12").getValue().trim();
+
+            if (!sNewPassword || !sConfirmationPassword) {
+                MessageBox.error("Please fill in all fields.");
                 return;
             }
-            MessageToast.show("Password changed successfully!");
-            this.onCloseDialog();
+            if (sNewPassword !== sConfirmationPassword) {
+                MessageBox.error("Passwords do not match.");
+                return;
+            }
+
+            // Get the logged-in user's email from the "user" model.
+            const oUserModel = this.getOwnerComponent().getModel("user");
+            const sEmail = oUserModel.getProperty("/USER_EMAIL").toUpperCase();
+            const sPassword = sNewPassword.toUpperCase();
+            const sPassword1 = sConfirmationPassword.toUpperCase();
+
+            const oODataModel = this.getOwnerComponent().getModel();
+
+            oODataModel.callFunction("/ForgotPassword", {
+                method: "POST",
+                urlParameters: {
+                    EMAIL: sEmail,
+                    PASSWORD: sPassword,
+                    PASSWORD1: sPassword1
+                },
+                success: (oData) => {
+                    MessageToast.show("Password changed successfully!");
+                    this.onCloseDialog();
+                },
+                error: (oError) => {
+                    console.error("Change Password failed:", oError);
+                    MessageBox.error("Failed to change password. Please try again.");
+                }
+            });
         },
 
         onCloseDialog() {
-            this._oChangePassDialog.close();
+            if (this._oChangePassDialog) {
+                this._oChangePassDialog.close();
+            }
         },
 
         onLogoutPress() {
@@ -170,13 +205,13 @@ sap.ui.define([
         },
         onTabSelect(oEvent) {
             const sSelectedKey = oEvent.getParameter("key");
-            
+
             if (sSelectedKey === "Pegs") {
                 const oUserModel = this.getOwnerComponent().getModel("user");
                 const sLoggedInUserEmail = oUserModel.getProperty("/EMAIL");
                 const oODataModel = this.getOwnerComponent().getModel();
 
-                oODataModel.callFunction("/GetPEG", { 
+                oODataModel.callFunction("/GetPEG", {
                     method: "GET",
                     urlParameters: {
                         USER_EMAIL: sLoggedInUserEmail
@@ -197,7 +232,7 @@ sap.ui.define([
                     error: (oError) => {
                         console.error("Error fetching peg data from backend:", oError);
                         MessageBox.error("Failed to load peg data from backend.");
-                        
+
                         this.getView().setModel(new JSONModel({ Pegs: [] }), "pegData");
                     }
                 });
