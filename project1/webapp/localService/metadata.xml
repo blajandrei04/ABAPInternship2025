@@ -106,6 +106,15 @@
     m:HttpMethod="GET">
     <Parameter Name="EMAIL" Type="Edm.String" Mode="In"/>
 </FunctionImport>
+<FunctionImport
+    Name="RequestPEG_FI"
+    ReturnType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.RequestPEG"
+    EntitySet="RequestPEGSet"
+    m:HttpMethod="POST">
+    <Parameter Name="EMAIL" Type="Edm.String" Mode="In"/>
+    <Parameter Name="PROJECT_NAME" Type="Edm.String" Mode="In"/>
+    <Parameter Name="SENDER_NAME" Type="Edm.String" Mode="In"/>
+</FunctionImport>
 
 </EntityContainer>
 <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
