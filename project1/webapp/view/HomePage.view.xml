@@ -80,7 +80,6 @@
                         key="360FB"
                         icon="sap-icon://form"
                         iconColor="Critical"
-                        visible="{= ${user>/SU} === 'FALSE' }"
                     >
                         <content>
                             <HBox justifyContent="End">
@@ -175,6 +174,7 @@
                                 text="Request PEG"
                                 type="Transparent"
                                 press="onRequestPeg"
+                                visible="{= ${user>/SU} === 'FALSE' }"
                             />
                         </HBox>
                         <Table
@@ -196,7 +196,10 @@
                                 </Column>
                             </columns>
                             <items>
-                                <ColumnListItem>
+                                <ColumnListItem
+                                    type="Active"
+                                    press="onItemPressed"
+                                >
                                     <cells>
                                         <Text text="{pegData>PROJECT_ID}" />
                                         <Text text="{pegData>SENDER_ID}" />
