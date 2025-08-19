@@ -9,30 +9,32 @@
     >
         <VBox>
             <ComboBox
+                id="projectComboBox"
                 placeholder="{i18n>SearchProject}"
                 width="220px"
-                items="{/Users}"
+                items="{projects>/Projects}"
             >
                 <core:Item
-                    key="{ID}"
-                    text="{Name}"
+                    key="{projects>PROJECT_ID}"
+                    text="{projects>PROJECT_ID}"
                 />
             </ComboBox>
             <ComboBox
+                id="managerComboBox"
                 placeholder="{i18n>SelectManager}"
                 width="220px"
-                items="{/Users}"
+                items="{managers>/Managers}"
             >
                 <core:Item
-                    key="{ID}"
-                    text="{Name}"
+                    key="{managers>EMAIL}"
+                    text="{managers>FULL_NAME}"
                 />
             </ComboBox>
             <HBox>
                 <Button
                     icon="sap-icon://request"
                     text="Request PEG"
-                    press="onOpenManager"
+                    press="onSendPegRequest"
                     type="Transparent"
                 />
                 <Button
