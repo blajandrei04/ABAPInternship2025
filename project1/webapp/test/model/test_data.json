@@ -123,6 +123,14 @@
         {
             "key": "PENDING",
             "text": "Pending"
+        },
+        {
+            "key": "SENT",
+            "text": "Sent"
+        },
+        {
+            "key": "RECEIVED",
+            "text": "Received"
         }
     ],
     "FbStatus": [
