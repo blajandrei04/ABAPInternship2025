@@ -4,7 +4,7 @@
 >
     <Dialog
         id="PegDialog"
-        title="{i18n>forgotPasswordTitle}"
+        title="{i18n>pegDialogTitle}"
         class="sapUiResponsiveContentPadding"
     >
         <VBox>
@@ -18,19 +18,8 @@
                     text="{Name}"
                 />
             </ComboBox>
-            <Label text="Project Manager: " />
             <ComboBox
-                placeholder="{i18n>SelectTeammate}"
-                width="220px"
-                items="{/Users}"
-            >
-                <core:Item
-                    key="{ID}"
-                    text="{Name}"
-                />
-            </ComboBox>
-            <ComboBox
-                placeholder="{i18n>SelectNumberOfDays}"
+                placeholder="{i18n>SelectManager}"
                 width="220px"
                 items="{/Users}"
             >
