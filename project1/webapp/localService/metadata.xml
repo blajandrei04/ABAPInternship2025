@@ -99,6 +99,14 @@
     <Parameter Name="EMAIL" Type="Edm.String" Mode="In"/>
 
 </FunctionImport>
+<FunctionImport
+    Name="Get360"
+    ReturnType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.GetPEG_ET"
+    EntitySet="GetPEG_ETSet"
+    m:HttpMethod="GET">
+    <Parameter Name="EMAIL" Type="Edm.String" Mode="In"/>
+</FunctionImport>
+
 </EntityContainer>
 <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
 <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://ITSAPL0411.mymhp.net:50000/sap/opu/odata/sap/ZPROJECT_INTERNSHIP2025_ODATA_SRV/$metadata"/>

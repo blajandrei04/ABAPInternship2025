@@ -77,7 +77,7 @@
                     <IconTabFilter
                         id="360tab"
                         text="{i18n>360tab}"
-                        key="Projects"
+                        key="360FB"
                         icon="sap-icon://form"
                         iconColor="Critical"
                         visible="{= ${user>/SU} === 'FALSE' }"
@@ -110,7 +110,7 @@
                             </HBox>
                             <Table
                                 id="FbTable"
-                                items="{localData>/FbData}"
+                                items="{fbData>/Feedbacks}"
                             >
                                 <columns>
                                     <Column>
@@ -132,11 +132,11 @@
                                 <items>
                                     <ColumnListItem>
                                         <cells>
-                                            <Text text="{localData>Sender}" />
-                                            <Text text="{localData>Receiver}" />
-                                            <Text text="{localData>Rating}" />
-                                            <Text text="{localData>Date}" />
-                                            <Text text="{localData>Status}" />
+                                            <Text text="{fbData>SENDER_ID}" />
+                                            <Text text="{fbData>RECEIVER_ID}" />
+                                            <Text text="{fbData>RATING}" />
+                                            <Text text="{fbData>FB_DATE}" />
+                                            <Text text="{fbData>FB_STATUS}" />
                                         </cells>
                                     </ColumnListItem>
                                 </items>

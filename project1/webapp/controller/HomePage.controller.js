@@ -177,7 +177,9 @@ sap.ui.define([
                 return;
             }
 
-            const oFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "dd.MM.yyyy" });
+            const oFormat = sap.ui.core.format.DateFormat.getDateInstance({
+                pattern: "dd.MM.yyyy"
+            });
             const sFormattedDate = oFormat.format(oDate);
 
             const oFilter = new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, sFormattedDate);
@@ -205,35 +207,51 @@ sap.ui.define([
         },
         onTabSelect(oEvent) {
             const sSelectedKey = oEvent.getParameter("key");
+            const oUserModel = this.getOwnerComponent().getModel("user");
+            const sLoggedInUserEmail = oUserModel.getProperty("/USER_EMAIL");
+            const oODataModel = this.getOwnerComponent().getModel();
 
             if (sSelectedKey === "Pegs") {
-                const oUserModel = this.getOwnerComponent().getModel("user");
-                const sLoggedInUserEmail = oUserModel.getProperty("/EMAIL");
-                const oODataModel = this.getOwnerComponent().getModel();
-
                 oODataModel.callFunction("/GetPEG_FI", {
                     method: "GET",
                     urlParameters: {
                         EMAIL: sLoggedInUserEmail
                     },
                     success: (oData) => {
-                        if (oData && oData.results) {
-                            const aPegData = oData.results;
-                            const oPegsModel = new JSONModel({
-                                Pegs: aPegData
-                            });
-                            this.getView().setModel(oPegsModel, "pegData");
-                            console.log("Peg data loaded from backend:", oPegsModel.getData());
-                        } else {
-                            this.getView().setModel(new JSONModel({ Pegs: [] }), "pegData");
-                            console.log("Backend returned no data for Pegs.");
-                        }
+                        const aPegData = (oData && oData.results) ? oData.results : [];
+                        this.getView().setModel(new JSONModel({
+                            Pegs: aPegData
+                        }), "pegData");
+                        console.log("Peg data loaded from backend:", this.getView().getModel("pegData").getData());
                     },
                     error: (oError) => {
                         console.error("Error fetching peg data from backend:", oError);
                         MessageBox.error("Failed to load peg data from backend.");
-
-                        this.getView().setModel(new JSONModel({ Pegs: [] }), "pegData");
+                        this.getView().setModel(new JSONModel({
+                            Pegs: []
+                        }), "pegData");
+                    }
+                });
+            } else if (sSelectedKey === "360FB") {
+                oODataModel.callFunction("/Get360", {
+                    method: "GET",
+                    urlParameters: {
+                        EMAIL: sLoggedInUserEmail
+                    },
+                    success: (oData) => {
+                        const aFbData = (oData && oData.results) ? oData.results : [];
+                        const oFbModel = new JSONModel({
+                            Feedbacks: aFbData
+                        });
+                        this.getView().setModel(oFbModel, "fbData");
+                        console.log("360 Feedback data loaded:", oFbModel.getData());
+                    },
+                    error: (oError) => {
+                        console.error("Error fetching 360 feedback data:", oError);
+                        MessageBox.error("Failed to load 360 feedback data. Please try again.");
+                        this.getView().setModel(new JSONModel({
+                            Feedbacks: []
+                        }), "fbData");
                     }
                 });
             }
@@ -246,7 +264,9 @@ sap.ui.define([
                 return;
             }
 
-            const oFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "dd.MM.yyyy" });
+            const oFormat = sap.ui.core.format.DateFormat.getDateInstance({
+                pattern: "dd.MM.yyyy"
+            });
             const sFormattedDate = oFormat.format(oDate);
 
             const oFilter = new sap.ui.model.Filter("Date", sap.ui.model.FilterOperator.EQ, sFormattedDate);
