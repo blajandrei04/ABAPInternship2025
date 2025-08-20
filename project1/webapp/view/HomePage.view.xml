@@ -198,7 +198,7 @@
                             <items>
                                 <ColumnListItem
                                     type="Active"
-                                    press="onItemPressed"
+                                    press="onPegPressed"
                                 >
                                     <cells>
                                         <Text text="{pegData>PROJECT_ID}" />
