@@ -18,6 +18,20 @@ sap.ui.define([
             this.getRouter()
                 .getRoute("RouteHomePage")
                 .attachPatternMatched(this._onObjectMatched, this);
+
+            // Set up a local model for filter dropdowns with corrected statuses
+            const oLocalDataModel = new JSONModel({
+                PegStatus: [
+                    { key: "PENDING", text: "Pending" },
+                    { key: "APPROVED", text: "Approved" },
+                    { key: "REJECTED", text: "Rejected" }
+                ],
+                FbStatus: [
+                    { key: "PENDING", text: "Pending" },
+                    { key: "COMPLETED", text: "Completed" } 
+                ]
+            });
+            this.getView().setModel(oLocalDataModel, "localData");
         },
 
         _onObjectMatched() {
@@ -56,9 +70,11 @@ sap.ui.define([
                 }
             });
         },
+
         getRouter() {
             return sap.ui.core.UIComponent.getRouterFor(this);
         },
+
         onNavBack: function () {
             var oHistory, sPreviousHash;
             oHistory = History.getInstance();
@@ -69,12 +85,15 @@ sap.ui.define([
                 this.getRouter().navTo("RouteView1", {}, true);
             }
         },
+
         onGiveFeedback() {
             this.getRouter().navTo("Route360FbPage");
         },
+
         onOpenManager() {
             this.getRouter().navTo("RouteManagerPage");
         },
+
         async onRequestPeg() {
             if (!this._oPegDialog) {
                 this._oPegDialog = await this.loadFragment({
@@ -103,6 +122,7 @@ sap.ui.define([
                 }
             });
         },
+
         onSendPegRequest: function () {
             if (!this._oPegDialog) {
                 MessageBox.error("The PEG request dialog is not available.");
@@ -125,7 +145,7 @@ sap.ui.define([
                 method: "POST",
                 urlParameters: {
                     EMAIL: sLoggedInUserEmail,
-                    PROJECT_NAME: sProjectId, // The corrected parameter name
+                    PROJECT_NAME: sProjectId,
                     SENDER_NAME: sManagerEmail
                 },
                 success: (oData) => {
@@ -139,6 +159,7 @@ sap.ui.define([
                 }
             });
         },
+
         async onChangePasswordPress() {
             if (!this._oChangePassDialog) {
                 this._oChangePassDialog = await this.loadFragment({
@@ -147,11 +168,13 @@ sap.ui.define([
             }
             this._oChangePassDialog.open();
         },
+
         onClosePegDialog() {
             if (this._oPegDialog) {
                 this._oPegDialog.close();
             }
         },
+
         onConfirmChangePassword: function () {
             const oView = this.getView();
             const sNewPassword = oView.byId("changeEmailInput1").getValue().trim();
@@ -186,11 +209,13 @@ sap.ui.define([
                 }
             });
         },
+
         onCloseDialog() {
             if (this._oChangePassDialog) {
                 this._oChangePassDialog.close();
             }
         },
+
         onLogoutPress() {
             MessageBox.confirm("Are you sure you want to log out", {
                 onClose: (oAction) => {
@@ -200,57 +225,89 @@ sap.ui.define([
                 }
             });
         },
-        onPegStatusFilterChange: function (oEvent) {
-            var oComboBox = oEvent.getSource();
-            var sSelectedKey = oComboBox.getSelectedKey();
-            var oTable = this.byId("pegTable");
-            var oBinding = oTable.getBinding("items");
-            if (sSelectedKey) {
-                var oFilter = new sap.ui.model.Filter("FB_STATUS", sap.ui.model.FilterOperator.EQ, sSelectedKey);
-                oBinding.filter([oFilter]);
-            } else {
-                oBinding.filter([]);
-            }
-        },
-        onDateChange: function (oEvent) {
-            const oDatePicker = oEvent.getSource();
+
+        // --- Pegs Table Filter Logic ---
+        _applyPegFilters: function() {
+            const oPegTable = this.byId("pegTable");
+            const oBinding = oPegTable.getBinding("items");
+            const oDatePicker = this.byId("DP1");
+            const oComboBox = this.byId("combobox1");
+
+            const aFilters = [];
+
+            // Get filter from DatePicker
             const oDate = oDatePicker.getDateValue();
-            if (!oDate) {
-                this.byId("pegTable").getBinding("items").filter([]);
-                return;
+            if (oDate) {
+                const oFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "E MMM dd yyyy HH:mm:ss 'GMT'Z (z)" });
+                const sFormattedDate = oFormat.format(oDate);
+                aFilters.push(new Filter("FB_DATE", FilterOperator.EQ, sFormattedDate));
             }
-            const oFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "dd.MM.yyyy" });
-            const sFormattedDate = oFormat.format(oDate);
-            const oFilter = new sap.ui.model.Filter("FB_DATE", sap.ui.model.FilterOperator.EQ, sFormattedDate);
-            const oTable = this.byId("pegTable");
-            const oBinding = oTable.getBinding("items");
-            oBinding.filter([oFilter]);
-            this.byId("combobox1").setSelectedKey("");
+
+            // Get filter from ComboBox
+            const sSelectedKey = oComboBox.getSelectedKey();
+            if (sSelectedKey) {
+                aFilters.push(new Filter("FB_STATUS", FilterOperator.EQ, sSelectedKey));
+            }
+
+            // Apply all filters
+            oBinding.filter(aFilters);
         },
+
+        onPegStatusFilterChange: function() {
+            this._applyPegFilters();
+        },
+
+        onDateChange: function() {
+            this._applyPegFilters();
+        },
+
+        // --- 360 Feedback Table Filter Logic ---
+        _applyFbFilters: function() {
+            const oFbTable = this.byId("FbTable");
+            const oBinding = oFbTable.getBinding("items");
+            const oDatePicker = this.byId("DP2");
+            const oComboBox = this.byId("combobox3");
+
+            const aFilters = [];
+
+            // Get filter from DatePicker
+            const oDate = oDatePicker.getDateValue();
+            if (oDate) {
+                const oFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "E MMM dd yyyy HH:mm:ss 'GMT'Z (z)" });
+                const sFormattedDate = oFormat.format(oDate);
+                aFilters.push(new Filter("FB_DATE", FilterOperator.EQ, sFormattedDate));
+            }
+
+            // Get filter from ComboBox
+            const sSelectedKey = oComboBox.getSelectedKey();
+            if (sSelectedKey) {
+                aFilters.push(new Filter("FB_STATUS", FilterOperator.EQ, sSelectedKey));
+            }
+
+            // Apply all filters
+            oBinding.filter(aFilters);
+        },
+
+        onFbStatusFilterChange: function(oEvent) {
+            this._applyFbFilters();
+        },
+
+        onFbDateChange: function(oEvent) {
+            this._applyFbFilters();
+        },
+
         onNewFeedback: function () {
             this.getRouter().navTo("RouteFeedbackPage");
         },
-        onFbStatusFilterChange: function (oEvent) {
-            var oComboBox = oEvent.getSource();
-            var sSelectedKey = oComboBox.getSelectedKey();
-            var oTable = this.byId("FbTable");
-            var oBinding = oTable.getBinding("items");
-            if (sSelectedKey) {
-                var oFilter = new sap.ui.model.Filter("FB_STATUS", sap.ui.model.FilterOperator.EQ, sSelectedKey);
-                oBinding.filter([oFilter]);
-            } else {
-                oBinding.filter([]);
-            }
-        },
+
         onTabSelect(oEvent) {
             const sSelectedKey = oEvent.getParameter("key");
             const oUserModel = this.getOwnerComponent().getModel("user");
             const sLoggedInUserEmail = oUserModel.getProperty("/USER_EMAIL");
-            const bIsManager = oUserModel.getProperty("/SU"); // verificam flag-ul SU
+            const bIsManager = oUserModel.getProperty("/SU");
             const oODataModel = this.getOwnerComponent().getModel();
 
             if (sSelectedKey === "Pegs") {
-                // alegem functia in functie de SU
                 const sFunctionName = (bIsManager === true || bIsManager === "TRUE" || bIsManager === "X")
                     ? "/GetPEG_MNG"
                     : "/GetPEG_FI";
@@ -269,9 +326,7 @@ sap.ui.define([
                         this.getView().setModel(new sap.ui.model.json.JSONModel({ Pegs: [] }), "pegData");
                     }
                 });
-            }
-
-            else if (sSelectedKey === "360FB") {
+            } else if (sSelectedKey === "360FB") {
                 oODataModel.callFunction("/Get360", {
                     method: "GET",
                     urlParameters: { EMAIL: sLoggedInUserEmail },
@@ -287,27 +342,22 @@ sap.ui.define([
                     }
                 });
             }
-        }
-        ,
-        onFbDateChange: function (oEvent) {
-            const oDatePicker = oEvent.getSource();
-            const oDate = oDatePicker.getDateValue();
-            if (!oDate) {
-                this.byId("FbTable").getBinding("items").filter([]);
-                return;
-            }
-            const oFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "dd.MM.yyyy" });
-            const sFormattedDate = oFormat.format(oDate);
-            const oFilter = new sap.ui.model.Filter("FB_DATE", sap.ui.model.FilterOperator.EQ, sFormattedDate);
-            const oTable = this.byId("FbTable");
-            const oBinding = oTable.getBinding("items");
-            oBinding.filter([oFilter]);
-            this.byId("combobox3").setSelectedKey("");
         },
+
         onItemPressed: function() {
             console.log("Item press triggered");
-
             this.getRouter().navTo("RouteRatePegPage");
+        },
+        onPegPressed: function (oEvent) {
+            const oItem = oEvent.getSource(); // sau oEvent.getParameter("listItem")
+            const oCtx = oItem.getBindingContext("pegData");
+            const sFbId = oCtx.getProperty("FB_ID");
+ 
+            console.log("Navighez catre RatePeg cu FB_ID:", sFbId);
+ 
+            this.getRouter().navTo("RouteRatePeg", {
+                fbId: sFbId
+            });
         }
     });
 });
