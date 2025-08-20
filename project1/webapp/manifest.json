@@ -68,7 +68,6 @@
         },
         "preload": true
       },
-
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
@@ -133,11 +132,9 @@
           ]
         },
         {
-          "name": "RouteRatePegPage",
-          "pattern": "ratePeg",
-          "target": [
-            "RatePeg"
-          ]
+          "pattern": "RatePeg/{fbId}",
+          "name": "RouteRatePeg",
+          "target": "RatePeg"
         },
         {
           "name": "RouteManagerPage",

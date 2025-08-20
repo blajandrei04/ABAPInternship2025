@@ -118,8 +118,23 @@
     <Parameter Name="CATEGORY_RATING" Type="Edm.Decimal" Mode="In"/>
     <Parameter Name="CATEGORY_NAME" Type="Edm.String" Mode="In"/>
     <Parameter Name="RECEIVER_NAME" Type="Edm.String" Mode="In"/>
-
+ 
 </FunctionImport>
+<FunctionImport
+    Name="EditPEG_FI"
+    ReturnType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.EditPEG"
+    EntitySet="EditPEGSet"
+    m:HttpMethod="POST">
+    <Parameter Name="EMAIL" Type="Edm.String" Mode="In"/>
+    <Parameter Name="FB_ID" Type="Edm.String" Mode="In"/>
+    <Parameter Name="FB_COMMENT" Type="Edm.String" Mode="In"/>
+    <Parameter Name="CAT_TECHNICAL" Type="Edm.String" Mode="In"/>
+    <Parameter Name="CAT_SOFT" Type="Edm.String" Mode="In"/>
+    <Parameter Name="CAT_OTHER" Type="Edm.String" Mode="In"/>
+    <Parameter Name="CAT_EXPERTISE" Type="Edm.String" Mode="In"/>
+    <Parameter Name="CAT_NETWORK" Type="Edm.String" Mode="In"/>
+</FunctionImport>
+
 
 </EntityContainer>
 <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
