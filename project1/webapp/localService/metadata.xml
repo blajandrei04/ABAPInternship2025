@@ -107,13 +107,18 @@
     <Parameter Name="EMAIL" Type="Edm.String" Mode="In"/>
 </FunctionImport>
 <FunctionImport
-    Name="RequestPEG_FI"
+    Name="New_360"
     ReturnType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.RequestPEG"
-    EntitySet="RequestPEGSet"
+    EntitySet="RequestPEG"
     m:HttpMethod="POST">
     <Parameter Name="EMAIL" Type="Edm.String" Mode="In"/>
-    <Parameter Name="PROJECT_NAME" Type="Edm.String" Mode="In"/>
-    <Parameter Name="SENDER_NAME" Type="Edm.String" Mode="In"/>
+    <Parameter Name="PROJECT_ID" Type="Edm.String" Mode="In"/>
+    <Parameter Name="ANONYMITY" Type="Edm.String" Mode="In"/>
+    <Parameter Name="CATEGORY_COMMENT" Type="Edm.String" Mode="In"/>
+    <Parameter Name="CATEGORY_RATING" Type="Edm.Decimal" Mode="In"/>
+    <Parameter Name="CATEGORY_NAME" Type="Edm.String" Mode="In"/>
+    <Parameter Name="RECEIVER_NAME" Type="Edm.String" Mode="In"/>
+
 </FunctionImport>
 
 </EntityContainer>
