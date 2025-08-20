@@ -43,54 +43,191 @@
                             <VBox>
                                 <Label
                                     text="{i18n>description}"
-                                    class="sapUiSmallMarginBottom"
                                     design="Bold"
                                 />
-                                <Text text="{i18n>descriptionText}" />
-                            </VBox>
-                            <VBox>
-                                <Label
-                                    text="{i18n>rating}"
-                                    class="sapUiSmallMarginBottom"
-                                    design="Bold"
+                                <Text
+                                    text="{i18n>descriptionText}"
+                                    class="sapUiMediumMarginBottom"
                                 />
-                                <ComboBox
-                                    id="expertiseRating"
-                                    placeholder="Rate this field"
-                                    width="200px"
-                                    selectedKey="{/ExpertiseRating}"
-                                >
-                                    <core:Item
-                                        key="5"
-                                        text="{i18n>excellent}"
-                                        id="rating5"
-                                    />
-                                    <core:Item
-                                        key="4"
-                                        text="{i18n>good}"
-                                        id="rating4"
-                                    />
-                                    <core:Item
-                                        key="3"
-                                        text="{i18n>average}"
-                                        id="rating3"
-                                    />
-                                    <core:Item
-                                        key="2"
-                                        text="{i18n>fair}"
-                                        id="rating2"
-                                    />
-                                    <core:Item
-                                        key="1"
-                                        text="{i18n>poor}"
-                                        id="rating1"
-                                    />
-                                </ComboBox>
                             </VBox>
+                            <HBox
+                                justifyContent="Start"
+                                class="sapUiMediumMarginBottom"
+                            >
+                                <!-- Field 1 -->
+                                <VBox class="sapUiMediumMarginEnd">
+                                    <Label
+                                        text="{i18n>technicalSkills}"
+                                        design="Bold"
+                                    />
+                                    <ComboBox
+                                        id="technicalSkillsRating"
+                                        placeholder="Rate this field"
+                                        width="150px"
+                                    >
+                                        <core:Item
+                                            key="5"
+                                            text="{i18n>excellent}"
+                                        />
+                                        <core:Item
+                                            key="4"
+                                            text="{i18n>good}"
+                                        />
+                                        <core:Item
+                                            key="3"
+                                            text="{i18n>average}"
+                                        />
+                                        <core:Item
+                                            key="2"
+                                            text="{i18n>fair}"
+                                        />
+                                        <core:Item
+                                            key="1"
+                                            text="{i18n>poor}"
+                                        />
+                                    </ComboBox>
+                                </VBox>
+
+                                <!-- Field 2 -->
+                                <VBox class="sapUiMediumMarginEnd">
+                                    <Label
+                                        text="{i18n>softSkills}"
+                                        design="Bold"
+                                    />
+                                    <ComboBox
+                                        id="softSkillsRating"
+                                        placeholder="Rate this field"
+                                        width="150px"
+                                    >
+                                        <core:Item
+                                            key="5"
+                                            text="{i18n>excellent}"
+                                        />
+                                        <core:Item
+                                            key="4"
+                                            text="{i18n>good}"
+                                        />
+                                        <core:Item
+                                            key="3"
+                                            text="{i18n>average}"
+                                        />
+                                        <core:Item
+                                            key="2"
+                                            text="{i18n>fair}"
+                                        />
+                                        <core:Item
+                                            key="1"
+                                            text="{i18n>poor}"
+                                        />
+                                    </ComboBox>
+                                </VBox>
+
+                                <!-- Field 3 -->
+                                <VBox class="sapUiMediumMarginEnd">
+                                    <Label
+                                        text="{i18n>otherSkills}"
+                                        design="Bold"
+                                    />
+                                    <ComboBox
+                                        id="otherSkillsRating"
+                                        placeholder="Rate this field"
+                                        width="150px"
+                                    >
+                                        <core:Item
+                                            key="5"
+                                            text="{i18n>excellent}"
+                                        />
+                                        <core:Item
+                                            key="4"
+                                            text="{i18n>good}"
+                                        />
+                                        <core:Item
+                                            key="3"
+                                            text="{i18n>average}"
+                                        />
+                                        <core:Item
+                                            key="2"
+                                            text="{i18n>fair}"
+                                        />
+                                        <core:Item
+                                            key="1"
+                                            text="{i18n>poor}"
+                                        />
+                                    </ComboBox>
+                                </VBox>
+
+                                <!-- Field 4 -->
+                                <VBox class="sapUiMediumMarginEnd">
+                                    <Label
+                                        text="{i18n>expertise}"
+                                        design="Bold"
+                                    />
+                                    <ComboBox
+                                        id="expertiseRating"
+                                        placeholder="Rate this field"
+                                        width="150px"
+                                    >
+                                        <core:Item
+                                            key="5"
+                                            text="{i18n>excellent}"
+                                        />
+                                        <core:Item
+                                            key="4"
+                                            text="{i18n>good}"
+                                        />
+                                        <core:Item
+                                            key="3"
+                                            text="{i18n>average}"
+                                        />
+                                        <core:Item
+                                            key="2"
+                                            text="{i18n>fair}"
+                                        />
+                                        <core:Item
+                                            key="1"
+                                            text="{i18n>poor}"
+                                        />
+                                    </ComboBox>
+                                </VBox>
+
+                                <!-- Field 5 -->
+                                <VBox  class="sapUiMediumMarginEnd">
+                                    <Label
+                                        text="{i18n>networkingSkills}"
+                                        design="Bold"
+                                    />
+                                    <ComboBox
+                                        id="networkingSkillsRating"
+                                        placeholder="Rate this field"
+                                        width="150px"
+                                    >
+                                        <core:Item
+                                            key="5"
+                                            text="{i18n>excellent}"
+                                        />
+                                        <core:Item
+                                            key="4"
+                                            text="{i18n>good}"
+                                        />
+                                        <core:Item
+                                            key="3"
+                                            text="{i18n>average}"
+                                        />
+                                        <core:Item
+                                            key="2"
+                                            text="{i18n>fair}"
+                                        />
+                                        <core:Item
+                                            key="1"
+                                            text="{i18n>poor}"
+                                        />
+                                    </ComboBox>
+                                </VBox>
+                            </HBox>
+
                             <VBox width="50%">
                                 <Label
                                     text="{i18n>comment}"
-                                    class="sapUiSmallMarginBottom"
                                     design="Bold"
                                 />
                                 <TextArea
@@ -98,7 +235,6 @@
                                     placeholder="{i18n>expertiseComment}"
                                     rows="4"
                                     cols="50"
-                                    value="{/ExpertiseComment}"
                                 />
                             </VBox>
                         </VBox>
