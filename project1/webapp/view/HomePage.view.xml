@@ -82,64 +82,115 @@
                         iconColor="Critical"
                     >
                         <content>
-                            <HBox justifyContent="End">
-                                <DatePicker
-                                    id="DP2"
-                                    placeholder="Enter Date"
-                                    change="onFbDateChange"
-                                    class="sapUiSmallMarginBottom"
-                                    width="140px"
-                                />
-                                <ComboBox
-                                    id="combobox3"
-                                    placeholder="{i18n>SelectStatus}"
-                                    width="170px"
-                                    items="{localData>/FbStatus}"
-                                    selectionChange="onFbStatusFilterChange"
-                                >
-                                    <core:Item
-                                        key="{localData>key}"
-                                        text="{localData>text}"
-                                    />
-                                </ComboBox>
-                                <Button
-                                    text="New feedback"
-                                    press="onNewFeedback"
-                                />
+                            <HBox>
+                                <VBox width="{= ${view>/fbVisible} ? '40%' : '100%'}" class="sapUiSmallMarginEnd">
+                                    <HBox justifyContent="End">
+                                        <DatePicker
+                                            id="DP2"
+                                            placeholder="Enter Date"
+                                            change="onFbDateChange"
+                                            class="sapUiSmallMarginBottom"
+                                            width="140px"
+                                        />
+                                        <ComboBox
+                                            id="combobox3"
+                                            placeholder="{i18n>SelectStatus}"
+                                            width="170px"
+                                            items="{localData>/FbStatus}"
+                                            selectionChange="onFbStatusFilterChange"
+                                        >
+                                            <core:Item
+                                                key="{localData>key}"
+                                                text="{localData>text}"
+                                            />
+                                        </ComboBox>
+                                        <Button
+                                            text="New feedback"
+                                            press="onNewFeedback"
+                                        />
+                                    </HBox>
+                                    <Table
+                                        id="FbTable"
+                                        items="{fbData>/Feedbacks}"
+                                        mode="SingleSelectMaster"
+                                        selectionChange="onFbSelect"
+                                    >
+                                        <columns>
+                                            <Column>
+                                                <Text text="{i18n>senderColumn}" />
+                                            </Column>
+                                            <Column>
+                                                <Text text="{i18n>receiverColumn}" />
+                                            </Column>
+                                            <Column>
+                                                <Text text="{i18n>date}" />
+                                            </Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem type="Active">
+                                                <cells>
+                                                    <Text text="{fbData>SENDER_ID}" />
+                                                    <Text text="{fbData>RECEIVER_ID}" />
+                                                    <Text text="{fbData>FB_DATE}" />
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </VBox>
+
+                                <VBox width="60%" visible="{view>/fbVisible}">
+                                    <Panel headerText="Feedback Details" class="sapUiResponsiveMargin">
+                                        <form:SimpleForm
+                                            id="fbDetailsForm"
+                                            editable="false"
+                                            layout="ResponsiveGridLayout"
+                                            labelSpanL="4"
+                                            labelSpanM="4"
+                                            emptySpanL="0"
+                                            emptySpanM="0"
+                                            columnsL="1"
+                                            columnsM="1"
+                                            class="sapUiNoContentPadding"
+                                        >
+                                            <Label text="{i18n>senderColumn}" />
+                                            <Text text="{view>/selectedFeedback/SENDER_ID}" />
+
+                                            <Label text="{i18n>receiverColumn}" />
+                                            <Text text="{view>/selectedFeedback/RECEIVER_ID}" />
+
+                                            <Label text="{i18n>projectName}" />
+                                            <Text text="{view>/selectedFeedback/PROJECT_ID}" />
+
+                                            <Label text="{i18n>rating}" />
+                                            <Text text="{view>/selectedFeedback/RATING}" />
+
+                                            <Label text="{i18n>date}" />
+                                            <Text text="{view>/selectedFeedback/FB_DATE}" />
+
+                                            <Label text="{i18n>status}" />
+                                            <Text text="{view>/selectedFeedback/FB_STATUS}" />
+                                            
+                                            <Label text="{i18n>expertiseComment}" />
+                                            <Text text="{view>/selectedFeedback/FB_COMMENT}" />
+
+                                            <Label text="{i18n>technicalSkills}" />
+                                            <Text text="{view>/selectedFeedback/CAT_TECHNICAL}" />
+
+                                            <Label text="{i18n>softSkills}" />
+                                            <Text text="{view>/selectedFeedback/CAT_SOFT}" />
+
+                                            <Label text="{i18n>otherSkills}" />
+                                            <Text text="{view>/selectedFeedback/CAT_OTHER}" />
+                                            
+                                            <Label text="{i18n>expertise}" />
+                                            <Text text="{view>/selectedFeedback/CAT_EXPERTISE}" />
+
+                                            <Label text="{i18n>networkingSkills}" />
+                                            <Text text="{view>/selectedFeedback/CAT_NETWORK}" />
+                                        </form:SimpleForm>
+                                    </Panel>
+                                </VBox>
                             </HBox>
-                            <Table
-                                id="FbTable"
-                                items="{fbData>/Feedbacks}"
-                            >
-                                <columns>
-                                    <Column>
-                                        <Text text="{i18n>senderColumn}" />
-                                    </Column>
-                                    <Column>
-                                        <Text text="{i18n>receiverColumn}" />
-                                    </Column>
-                                    <Column>
-                                        <Text text="{i18n>rating}" />
-                                    </Column>
-                                    <Column>
-                                        <Text text="{i18n>date}" />
-                                    </Column>
-                                    <Column>
-                                        <Text text="{i18n>status}" />
-                                    </Column>
-                                </columns>
-                                <items>
-                                    <ColumnListItem>
-                                        <cells>
-                                            <Text text="{fbData>SENDER_ID}" />
-                                            <Text text="{fbData>RECEIVER_ID}" />
-                                            <Text text="{fbData>RATING}" />
-                                            <Text text="{fbData>FB_DATE}" />
-                                            <Text text="{fbData>FB_STATUS}" />
-                                        </cells>
-                                    </ColumnListItem>
-                                </items>
-                            </Table>
                         </content>
                     </IconTabFilter>
                     <IconTabFilter
