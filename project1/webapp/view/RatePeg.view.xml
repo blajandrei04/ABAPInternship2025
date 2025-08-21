@@ -19,14 +19,7 @@
                 icon="sap-icon://save"
                 press=".onSaveChanges"
                 id="saveChangesButton"
-            />
-            <Button
-                text="{i18n>sendPEG}"
-                type="Default"
-                icon="sap-icon://rating-indicator"
-                press=".onRatePEG"
-                id="ratePegButton1"
-                class="sapUiTinyMarginBegin"
+                visible="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
             />
         </Toolbar>
         <content>
@@ -191,7 +184,7 @@
                                 </VBox>
 
                                 <!-- Field 5 -->
-                                <VBox  class="sapUiMediumMarginEnd">
+                                <VBox class="sapUiMediumMarginEnd">
                                     <Label
                                         text="{i18n>networkingSkills}"
                                         design="Bold"
