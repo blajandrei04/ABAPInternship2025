@@ -32,6 +32,14 @@ sap.ui.define([
                 ]
             });
             this.getView().setModel(oLocalDataModel, "localData");
+            
+            // New local model for view state
+            const oViewModel = new JSONModel({
+                selectedTabKey: "Info",
+                fbVisible: false,
+                selectedFeedback: null
+            });
+            this.getView().setModel(oViewModel, "view");
         },
 
         _onObjectMatched() {
@@ -87,7 +95,7 @@ sap.ui.define([
         },
 
         onGiveFeedback() {
-            this.getRouter().navTo("Route360FbPage");
+            this.getRouter().navTo("RouteFeedbackPage");
         },
 
         onOpenManager() {
@@ -145,7 +153,7 @@ sap.ui.define([
                 method: "POST",
                 urlParameters: {
                     EMAIL: sLoggedInUserEmail,
-                    PROJECT_NAME: sProjectId,
+                    PROJECT_ID: sProjectId,
                     SENDER_NAME: sManagerEmail
                 },
                 success: (oData) => {
@@ -306,6 +314,15 @@ sap.ui.define([
             const sLoggedInUserEmail = oUserModel.getProperty("/USER_EMAIL");
             const bIsManager = oUserModel.getProperty("/SU");
             const oODataModel = this.getOwnerComponent().getModel();
+            const oViewModel = this.getView().getModel("view");
+
+            // Reset selected feedback and hide detail view when switching tabs
+            const oFbModel = this.getView().getModel("fbData");
+            if (oFbModel) {
+                oFbModel.setProperty("/selectedFeedback", null);
+            }
+            oViewModel.setProperty("/fbVisible", false);
+
 
             if (sSelectedKey === "Pegs") {
                 const sFunctionName = (bIsManager === true || bIsManager === "TRUE" || bIsManager === "X")
@@ -317,13 +334,13 @@ sap.ui.define([
                     urlParameters: { EMAIL: sLoggedInUserEmail },
                     success: (oData) => {
                         const aPegData = (oData && oData.results) ? oData.results : [];
-                        this.getView().setModel(new sap.ui.model.json.JSONModel({ Pegs: aPegData }), "pegData");
+                        this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({ Pegs: aPegData }), "pegData");
                         console.log(`Peg data loaded (${sFunctionName}):`, aPegData);
                     },
                     error: (oError) => {
                         console.error(`Error fetching peg data (${sFunctionName}):`, oError);
                         MessageBox.error("Failed to load peg data.");
-                        this.getView().setModel(new sap.ui.model.json.JSONModel({ Pegs: [] }), "pegData");
+                        this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({ Pegs: [] }), "pegData");
                     }
                 });
             } else if (sSelectedKey === "360FB") {
@@ -357,6 +374,32 @@ sap.ui.define([
  
             this.getRouter().navTo("RouteRatePeg", {
                 fbId: sFbId
+            });
+        },
+
+        /**
+         * Event handler for selecting an item in the 360 Feedback table.
+         * Updates the selected feedback detail panel.
+         * @param {sap.ui.base.Event} oEvent The event object
+         */
+        onFbSelect: function(oEvent) {
+            const oItem = oEvent.getParameter("listItem");
+            const oContext = oItem.getBindingContext("fbData");
+            const sFbId = oContext.getProperty("FB_ID");
+            const oODataModel = this.getOwnerComponent().getModel();
+            const oViewModel = this.getView().getModel("view");
+
+            // Make a new backend call to fetch detailed feedback information
+            oODataModel.read(`/PEGSet('${sFbId}')`, {
+                success: (oData) => {
+                    oViewModel.setProperty("/selectedFeedback", oData);
+                    oViewModel.setProperty("/fbVisible", true);
+                    console.log("Detailed feedback loaded:", oData);
+                },
+                error: (oError) => {
+                    console.error("Failed to load detailed feedback:", oError);
+                    MessageBox.error("Failed to load detailed feedback. Please try again.");
+                }
             });
         }
     });
