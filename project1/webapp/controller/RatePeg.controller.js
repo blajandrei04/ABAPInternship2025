@@ -27,17 +27,35 @@ sap.ui.define([
       const oModel = this.getView().getModel();
       oModel.setProperty("/FB_ID", sFbId);
 
-      // daca vrei toate datele PEG-ului selectat
+      // luam lista de PEG-uri din modelul global
       const oPegData = this.getOwnerComponent().getModel("pegData");
       if (oPegData) {
         const aPegs = oPegData.getProperty("/Pegs") || [];
-        const oSelectedPeg = aPegs.find(p => p.FB_ID === sFbId);
+        console.log("Lista PEG-uri:", aPegs);
+        console.log("Caut FB_ID:", sFbId);
+
+        const oSelectedPeg = aPegs.find(p => {
+          console.log("Compar", p.FB_ID, "cu", sFbId);
+          return p.FB_ID === sFbId;
+        });
+
+
         if (oSelectedPeg) {
+          // normalizam statusul ca sa fie mereu comparabil
+          oSelectedPeg.FB_STATUS = (oSelectedPeg.FB_STATUS || "")
+            .trim()
+            .toUpperCase();
+
           oModel.setProperty("/SelectedPeg", oSelectedPeg);
-          console.log("PEG selectat:", oSelectedPeg);
+          console.log("Status primit:", oSelectedPeg.FB_STATUS);  // <--- vezi aici
+          console.log("PEG selectat normalizat:", oSelectedPeg);
+
+        } else {
+          console.warn("Nu am gasit niciun PEG cu FB_ID:", sFbId);
         }
       }
     }
+    ///simrobert@gmail.com
 
     ,
     getRouter() {
