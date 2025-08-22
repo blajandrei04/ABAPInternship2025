@@ -253,7 +253,7 @@
                                 >
                                     <cells>
                                         <Text text="{pegData>PROJECT_ID}" />
-                                        <Text text="{pegData>SENDER_ID}" />
+                                        <Text text="{pegData>RECEIVER_ID}" />
                                         <Text text="{pegData>FB_DATE}" />
                                         <Text text="{pegData>FB_STATUS}" />
                                     </cells>

@@ -56,6 +56,7 @@
                                     <ComboBox
                                         id="technicalSkillsRating"
                                         placeholder="Rate this field"
+                                        enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
                                         width="150px"
                                     >
                                         <core:Item
@@ -91,6 +92,7 @@
                                         id="softSkillsRating"
                                         placeholder="Rate this field"
                                         width="150px"
+                                        enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -125,6 +127,7 @@
                                         id="otherSkillsRating"
                                         placeholder="Rate this field"
                                         width="150px"
+                                        enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -159,6 +162,7 @@
                                         id="expertiseRating"
                                         placeholder="Rate this field"
                                         width="150px"
+                                        enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -193,6 +197,7 @@
                                         id="networkingSkillsRating"
                                         placeholder="Rate this field"
                                         width="150px"
+                                        enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -226,6 +231,8 @@
                                 <TextArea
                                     id="expertiseComment"
                                     placeholder="{i18n>expertiseComment}"
+                                    value="{/SelectedPeg/COMMENT}"
+                                    enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
                                     rows="4"
                                     cols="50"
                                 />
