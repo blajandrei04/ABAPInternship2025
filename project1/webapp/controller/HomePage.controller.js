@@ -385,22 +385,20 @@ sap.ui.define([
         onFbSelect: function(oEvent) {
             const oItem = oEvent.getParameter("listItem");
             const oContext = oItem.getBindingContext("fbData");
-            const sFbId = oContext.getProperty("FB_ID");
-            const oODataModel = this.getOwnerComponent().getModel();
-            const oViewModel = this.getView().getModel("view");
 
-            // Make a new backend call to fetch detailed feedback information
-            oODataModel.read(`/PEGSet('${sFbId}')`, {
-                success: (oData) => {
-                    oViewModel.setProperty("/selectedFeedback", oData);
-                    oViewModel.setProperty("/fbVisible", true);
-                    console.log("Detailed feedback loaded:", oData);
-                },
-                error: (oError) => {
-                    console.error("Failed to load detailed feedback:", oError);
-                    MessageBox.error("Failed to load detailed feedback. Please try again.");
-                }
-            });
+            if (!oContext) {
+                console.error("No context found for the selected item.");
+                this.getView().getModel("view").setProperty("/selectedFeedback", null);
+                this.getView().getModel("view").setProperty("/fbVisible", false);
+                return;
+            }
+            
+            const oSelectedItem = oContext.getObject();
+
+            // Set the detailed feedback object from the model directly to the view model
+            this.getView().getModel("view").setProperty("/selectedFeedback", oSelectedItem);
+            this.getView().getModel("view").setProperty("/fbVisible", true);
+            console.log("Detailed feedback loaded from model:", oSelectedItem);
         }
     });
 });
