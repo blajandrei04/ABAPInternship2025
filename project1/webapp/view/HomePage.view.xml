@@ -162,7 +162,7 @@
                                             <Text text="{view>/selectedFeedback/PROJECT_ID}" />
 
                                             <Label text="{i18n>rating}" />
-                                            <Text text="{view>/selectedFeedback/RATING}" />
+                                            <Text text="{view>/selectedFeedback/FB_RATING}" />
 
                                             <Label text="{i18n>date}" />
                                             <Text text="{view>/selectedFeedback/FB_DATE}" />
@@ -171,22 +171,7 @@
                                             <Text text="{view>/selectedFeedback/FB_STATUS}" />
                                             
                                             <Label text="{i18n>expertiseComment}" />
-                                            <Text text="{view>/selectedFeedback/FB_COMMENT}" />
-
-                                            <Label text="{i18n>technicalSkills}" />
-                                            <Text text="{view>/selectedFeedback/CAT_TECHNICAL}" />
-
-                                            <Label text="{i18n>softSkills}" />
-                                            <Text text="{view>/selectedFeedback/CAT_SOFT}" />
-
-                                            <Label text="{i18n>otherSkills}" />
-                                            <Text text="{view>/selectedFeedback/CAT_OTHER}" />
-                                            
-                                            <Label text="{i18n>expertise}" />
-                                            <Text text="{view>/selectedFeedback/CAT_EXPERTISE}" />
-
-                                            <Label text="{i18n>networkingSkills}" />
-                                            <Text text="{view>/selectedFeedback/CAT_NETWORK}" />
+                                            <Text text="{view>/selectedFeedback/COMMENT}" />
                                         </form:SimpleForm>
                                     </Panel>
                                 </VBox>
