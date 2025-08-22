@@ -6,14 +6,15 @@
 >
     <Page
         id="page"
-        title="{i18n>appTitle}"
+        showHeader="false"
         class="appBackground"
     >
         <content>
             <VBox id="loginBox"
                 justifyContent="Center"
                 alignItems="Center"
-                height="90%"
+                height="100%"
+                
             >
                 <form:SimpleForm
                     id="simpleForm"
