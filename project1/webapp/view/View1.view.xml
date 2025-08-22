@@ -2,58 +2,119 @@
     controllerName="project1.controller.View1"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:form="sap.ui.layout.form">
-
-    <Page id="page" title="{i18n>title}">
+    xmlns:form="sap.ui.layout.form"
+>
+    <Page
+        id="page"
+        title="{i18n>appTitle}"
+        class="appBackground"
+    >
         <content>
-
-            <VBox justifyContent="Center" alignItems="Center" class="sapUiResponsiveMargin" height="90%">
+            <VBox id="loginBox"
+                justifyContent="Center"
+                alignItems="Center"
+                height="90%"
+            >
                 <form:SimpleForm
                     id="simpleForm"
                     layout="ResponsiveGridLayout"
-                    width="550px"
+                    width="450px"
                     backgroundDesign="Translucent"
-                    class="sapUiContentPadding sapUiMediumMargin">
-
+                    class="sapUiContentPadding sapUiMediumMargin"
+                >
                     <Panel
                         id="panel1"
                         class="sapUiResponsiveMargin"
                         width="90%"
-                        backgroundDesign="Translucent">
-
-                        <HBox justifyContent="Center" class="sapUiSmallMarginBottom">
-                            <Image src="/img/mhp_logo.png" width="200px" height="160px" id="logoImage"/>
+                        backgroundDesign="Translucent"
+                    >
+                        <HBox
+                            justifyContent="Center"
+                            class="sapUiSmallMarginBottom"
+                        >
+                            <Image
+                                src="/img/mhp_logo.png"
+                                width="120px"
+                                height="60px"
+                                id="logoImage"
+                            />
                         </HBox>
 
-                        <HBox justifyContent="Center" class="sapUiSmallMarginBottom">
-                            <ObjectStatus text="{i18n>fillInCredentials}" state="Information"/>
-                        </HBox>                       
-                        <VBox alignItems="Center" justifyContent="Center" class="sapUiSmallMargin">
-
-                            <VBox width="100%" class="sapUiSmallMarginBottom" alignItems="Stretch">
-                                <Label text="{i18n>usernameLabel}" labelFor="usernameInput"/>
-                                <Input id="usernameInput" placeholder="{i18n>usernamePlaceholder}" width="100%"/>
+                        <HBox
+                            justifyContent="Center"
+                            class="sapUiSmallMarginBottom"
+                        >
+                            <ObjectStatus
+                                text="{i18n>fillInCredentials}"
+                                state="Information"
+                            />
+                        </HBox>
+                        <VBox
+                            alignItems="Center"
+                            justifyContent="Center"
+                            class="sapUiSmallMargin"
+                        >
+                            <VBox
+                                width="100%"
+                                class="sapUiSmallMarginBottom"
+                                alignItems="Stretch"
+                            >
+                                <Label
+                                    text="{i18n>usernameLabel}"
+                                    labelFor="usernameInput"
+                                />
+                                <Input
+                                    id="usernameInput"
+                                    placeholder="{i18n>usernamePlaceholder}"
+                                    width="100%"
+                                />
                             </VBox>
 
-                            <VBox width="100%" class="sapUiSmallMarginBottom" alignItems="Stretch">
-                                <Label text="{i18n>passwordLabel}" labelFor="passwordInput"/>
-                                <Input id="passwordInput" type="Password" placeholder="{i18n>passwordPlaceholder}" width="100%"/>
+                            <VBox
+                                width="100%"
+                                class="sapUiSmallMarginBottom"
+                                alignItems="Stretch"
+                            >
+                                <Label
+                                    text="{i18n>passwordLabel}"
+                                    labelFor="passwordInput"
+                                />
+                                <Input
+                                    id="passwordInput"
+                                    type="Password"
+                                    placeholder="{i18n>passwordPlaceholder}"
+                                    width="100%"
+                                />
                             </VBox>
 
-                            <HBox justifyContent="Center" class="sapUiSmallMarginBottom">
-                                <Button text="Login" press="onLoginPress" id="loginButton"/>
-                                <Button text="Register" press="onRegisterPress" id="registerButton" class="sapUiSmallMarginBegin"/>
+                            <HBox
+                                justifyContent="Center"
+                                class="sapUiSmallMarginBottom"
+                            >
+                                <Button
+                                    text="Login"
+                                    press="onLoginPress"
+                                    id="loginButton"
+                                />
+                                <Button
+                                    text="Register"
+                                    press="onRegisterPress"
+                                    id="registerButton"
+                                    class="sapUiSmallMarginBegin"
+                                />
                             </HBox>
 
                             <HBox justifyContent="Center">
-                                <Button text="{i18n>forgotPassword}" press="onForgotPasswordPress" id="forgotPasswordButton"/>
+                                <Button
+                                    text="{i18n>forgotPassword}"
+                                    press="onForgotPasswordPress"
+                                    id="forgotPasswordButton"
+                                />
                             </HBox>
-
                         </VBox>
                     </Panel>
                 </form:SimpleForm>
             </VBox>
-
         </content>
     </Page>
 </mvc:View>

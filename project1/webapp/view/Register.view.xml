@@ -8,11 +8,12 @@
         id="registerPage"
         title="{i18n>registerTitle}"
         showNavButton="true"
-        navButtonPress="onNavBack">
+        navButtonPress="onNavBack"
+        class="appBackground">
 
         <content>
 
-            <VBox justifyContent="Center" alignItems="Center" class="sapUiResponsiveMargin" height="90%">
+            <VBox justifyContent="Center" alignItems="Center" class="sapUiResponsiveMargin" height="90%" >
 
                 <Panel width="400px" class="sapUiResponsiveMargin sapUiContentPadding" backgroundDesign="Translucent">
                     <VBox alignItems="Stretch" class="sapUiSmallMargin">

@@ -10,7 +10,7 @@ sap.ui.define([
     return Controller.extend("project1.controller.View1", {
 
         onInit: function () {
-            var oModel = new JSONModel();
+            var oModel = new sap.ui.model.json.JSONModel();
             this._oModel = this.getOwnerComponent().getModel();
 
             oModel.loadData("./model/test_data.json", null, true);
@@ -24,9 +24,10 @@ sap.ui.define([
             });
 
             this.getView().setModel(oModel, "resume");
-            
+
             this.getRouter().getRoute("RouteView1").attachPatternMatched(this._onRouteMatched, this);
-        },
+        }
+        ,
 
         _onRouteMatched: function () {
             this.byId("usernameInput").setValue("");
