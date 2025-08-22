@@ -4,124 +4,121 @@
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
->
+    xmlns:l="sap.ui.layout">
     <Page
         title="{i18n>FeedbackTitle}"
         id="FeedbackPage"
         showNavButton="true"
-        navButtonPress=".onNavBack"
-    >
+        navButtonPress=".onNavBack">
         <headerContent>
             <Button
                 id="sendFeedbackButton"
                 text="{i18n>send}"
                 type="Emphasized"
-                press=".onSendFeedback"
-            />
+                press=".onSendFeedback"/>
         </headerContent>
-
         <content>
-            <VBox class="sapUiSmallMargin">
-                <HBox
-                    justifyContent="SpaceBetween"
-                    alignItems="Center"
-                >
-                    <VBox width="50%">
-                        <Label
-                            text="{i18n>sendFeedback}"
-                            class="sapUiSmallMarginBottom"
-                            design="Bold"
-                        />
-                        <TextArea
-                            id="expertiseComment2"
-                            placeholder="{i18n>expertiseFeedback}"
-                            rows="4"
-                            cols="50"
-                            value="{/ExpertiseComment}"
-                        />
-                    </VBox>
-
-                    <HBox>
+            <VBox class="sapUiMediumMargin">
+                <form:SimpleForm
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    title="{i18n>sendFeedback}"
+                    class="sapUiMediumMarginBottom">
+                    <form:content>
+                        <Label text="{i18n>selectUser}"/>
                         <ComboBox
                             placeholder="{i18n>searchUser}"
-                            width="250px"
+                            width="50%"
                             items="{/Users}"
-                            selectedKey="{/ReceiverID}"
-                        >
-                            <core:Item
-                                key="{ID}"
-                                text="{Name}"
-                            />
+                            selectedKey="{/ReceiverID}">
+                            <core:Item key="{ID}" text="{Name}"/>
                         </ComboBox>
+                        <Label text="{i18n>selectProject}"/>
                         <ComboBox
                             placeholder="{i18n>selectProject}"
-                            width="250px"
+                            width="50%"
                             items="{/Projects}"
-                            selectedKey="{/ProjectID}"
-                            class="sapUiSmallMarginBegin"
-                        >
-                            <core:Item
-                                key="{ProjectID}"
-                                text="{ProjectName}"
-                            />
+                            selectedKey="{/ProjectID}">
+                            <core:Item key="{ProjectID}" text="{ProjectName}"/>
                         </ComboBox>
-                        <CheckBox
-                            text="{i18n>anonymous}"
-                            selected="{/anonymous}"
-                            class="sapUiSmallMarginBegin"
-                        />
-                    </HBox>
-                </HBox>
-                <Toolbar design="Transparent" />
+                        <Label text="{i18n>anonymousFeedback}"/>
+                        <CheckBox selected="{/anonymous}"/>
+                    </form:content>
+                </form:SimpleForm>
 
-                <HBox class="sapUiSmallMarginTop" alignItems="Center">
-                    <Label
-                        text="{i18n>ratingLabel}"
-                        design="Bold"
-                        class="sapUiSmallMarginEnd"
-                    />
-                    <ComboBox
-                        id="overallRating"
-                        placeholder="{i18n>rateThis}"
-                        width="200px"
-                        selectedKey="{/OverallRating}"
-                    >
-                        <core:Item key="5" text="{i18n>excellent}" />
-                        <core:Item key="4" text="{i18n>good}" />
-                        <core:Item key="3" text="{i18n>average}" />
-                        <core:Item key="2" text="{i18n>fair}" />
-                        <core:Item key="1" text="{i18n>poor}" />
-                    </ComboBox>
-                </HBox>
+                <form:SimpleForm
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    title="{i18n>feedbackDetails}"
+                    class="sapUiMediumMarginBottom">
+                    <form:content>
+                        <Label text="{i18n>technicalSkills}"/>
+                        <HBox>
+                            <ComboBox
+                                id="technicalSkillsRating"
+                                placeholder="{i18n>rateThis}"
+                                selectedKey="{/technicalSkillsRating}"
+                                width="70%"
+                                class="sapUiTinyMarginEnd">
+                                <core:Item key="5" text="{i18n>excellent}" />
+                                <core:Item key="4" text="{i18n>good}" />
+                                <core:Item key="3" text="{i18n>average}" />
+                                <core:Item key="2" text="{i18n>fair}" />
+                                <core:Item key="1" text="{i18n>poor}" />
+                            </ComboBox>
+                            <TextArea
+                                id="technicalSkillsComment"
+                                placeholder="{i18n>expertiseComment}"
+                                rows="3"
+                                value="{/technicalSkillsComment}"
+                                width="300%"/>
+                        </HBox>
 
-                <Toolbar design="Transparent" />
+                        <Label text="{i18n>softSkills}"/>
+                        <HBox>
+                            <ComboBox
+                                id="softSkillsRating"
+                                placeholder="{i18n>rateThis}"
+                                selectedKey="{/softSkillsRating}"
+                                width="70%"
+                                class="sapUiTinyMarginEnd">
+                                <core:Item key="5" text="{i18n>excellent}" />
+                                <core:Item key="4" text="{i18n>good}" />
+                                <core:Item key="3" text="{i18n>average}" />
+                                <core:Item key="2" text="{i18n>fair}" />
+                                <core:Item key="1" text="{i18n>poor}" />
+                            </ComboBox>
+                            <TextArea
+                                id="softSkillsComment"
+                                placeholder="{i18n>expertiseComment}"
+                                rows="3"
+                                value="{/softSkillsComment}"
+                                width="300%"/>
+                        </HBox>
 
-                <HBox
-                    justifyContent="SpaceAround"
-                    class="sapUiSmallMarginTop"
-                >
-                    <VBox>
-                        <CheckBox text="{i18n>technicalSkills}" selected="{/technicalSkills}"/>
-                        <Button
-                            icon="sap-icon://navigation-right-arrow"
-                            type="Transparent"
-                        />
-                    </VBox>
-                    <VBox>
-                        <CheckBox text="{i18n>softSkills}" selected="{/softSkills}"/>
-                        <Button
-                            icon="sap-icon://navigation-right-arrow"
-                            type="Transparent"
-                        />
-                    </VBox>
-                    <VBox>
-                        <CheckBox text="{i18n>otherSkills}" selected="{/otherSkills}"/>
-                        <Button
-                            icon="sap-icon://navigation-right-arrow"
-                            type="Transparent"
-                        />
-                    </VBox>
-                </HBox>
+                        <Label text="{i18n>otherSkills}"/>
+                        <HBox>
+                            <ComboBox
+                                id="otherSkillsRating"
+                                placeholder="{i18n>rateThis}"
+                                selectedKey="{/otherSkillsRating}"
+                                width="70%"
+                                class="sapUiTinyMarginEnd">
+                                <core:Item key="5" text="{i18n>excellent}" />
+                                <core:Item key="4" text="{i18n>good}" />
+                                <core:Item key="3" text="{i18n>average}" />
+                                <core:Item key="2" text="{i18n>fair}" />
+                                <core:Item key="1" text="{i18n>poor}" />
+                            </ComboBox>
+                            <TextArea
+                                id="otherSkillsComment"
+                                placeholder="{i18n>expertiseComment}"
+                                rows="3"
+                                value="{/otherSkillsComment}"
+                                width="300%"/>
+                        </HBox>
+                    </form:content>
+                </form:SimpleForm>
             </VBox>
         </content>
     </Page>
