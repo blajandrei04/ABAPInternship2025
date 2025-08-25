@@ -28,11 +28,11 @@ sap.ui.define([
                 ],
                 FbStatus: [
                     { key: "PENDING", text: "Pending" },
-                    { key: "COMPLETED", text: "Completed" } 
+                    { key: "COMPLETED", text: "Completed" }
                 ]
             });
             this.getView().setModel(oLocalDataModel, "localData");
-            
+
             // New local model for view state
             const oViewModel = new JSONModel({
                 selectedTabKey: "Info",
@@ -235,7 +235,7 @@ sap.ui.define([
         },
 
         // --- Pegs Table Filter Logic ---
-        _applyPegFilters: function() {
+        _applyPegFilters: function () {
             const oPegTable = this.byId("pegTable");
             const oBinding = oPegTable.getBinding("items");
             const oDatePicker = this.byId("DP1");
@@ -261,16 +261,16 @@ sap.ui.define([
             oBinding.filter(aFilters);
         },
 
-        onPegStatusFilterChange: function() {
+        onPegStatusFilterChange: function () {
             this._applyPegFilters();
         },
 
-        onDateChange: function() {
+        onDateChange: function () {
             this._applyPegFilters();
         },
 
         // --- 360 Feedback Table Filter Logic ---
-        _applyFbFilters: function() {
+        _applyFbFilters: function () {
             const oFbTable = this.byId("FbTable");
             const oBinding = oFbTable.getBinding("items");
             const oDatePicker = this.byId("DP2");
@@ -296,11 +296,11 @@ sap.ui.define([
             oBinding.filter(aFilters);
         },
 
-        onFbStatusFilterChange: function(oEvent) {
+        onFbStatusFilterChange: function (oEvent) {
             this._applyFbFilters();
         },
 
-        onFbDateChange: function(oEvent) {
+        onFbDateChange: function (oEvent) {
             this._applyFbFilters();
         },
 
@@ -361,7 +361,7 @@ sap.ui.define([
             }
         },
 
-        onItemPressed: function() {
+        onItemPressed: function () {
             console.log("Item press triggered");
             this.getRouter().navTo("RouteRatePegPage");
         },
@@ -369,20 +369,39 @@ sap.ui.define([
             const oItem = oEvent.getSource(); // sau oEvent.getParameter("listItem")
             const oCtx = oItem.getBindingContext("pegData");
             const sFbId = oCtx.getProperty("FB_ID");
- 
-            console.log("Navighez catre RatePeg cu FB_ID:", sFbId);
- 
-            this.getRouter().navTo("RouteRatePeg", {
-                fbId: sFbId
-            });
-        },
 
-        /**
-         * Event handler for selecting an item in the 360 Feedback table.
-         * Updates the selected feedback detail panel.
-         * @param {sap.ui.base.Event} oEvent The event object
-         */
-        onFbSelect: function(oEvent) {
+            console.log("Navighez catre RatePeg cu FB_ID:", sFbId);
+
+            const oODataModel = this.getOwnerComponent().getModel(); // OData v2 model
+            oODataModel.read("/FB_CATSet('" + sFbId + "')", {
+                success: function (oData) {
+                    console.log("Detalii FB_CATSet:", oData);
+
+                    console.log("Comment:", oData.CATEGORY_COMMENT);
+                    console.log("Technical:", oData.CAT_TECHNICAL);
+                    console.log("Soft:", oData.CAT_SOFT);
+                    console.log("Other:", oData.CAT_OTHER);
+                    console.log("Expertise:", oData.CAT_EXPERTISE);
+                    console.log("Network:", oData.CAT_NETWORK);
+
+                    // după ce am citit, navigăm
+                    this.getRouter().navTo("RouteRatePeg", {
+                        fbId: sFbId
+                    });
+                }.bind(this),
+                error: function (oError) {
+                    console.error("Eroare la citirea FB_CATSet pentru FB_ID " + sFbId, oError);
+
+                    // navigăm oricum, chiar dacă nu reușim să citim
+                    this.getRouter().navTo("RouteRatePeg", {
+                        fbId: sFbId
+                    });
+                }.bind(this)
+            });
+        }
+        ,
+
+        onFbSelect: function (oEvent) {
             const oItem = oEvent.getParameter("listItem");
             const oContext = oItem.getBindingContext("fbData");
 
@@ -392,7 +411,7 @@ sap.ui.define([
                 this.getView().getModel("view").setProperty("/fbVisible", false);
                 return;
             }
-            
+
             const oSelectedItem = oContext.getObject();
 
             // Set the detailed feedback object from the model directly to the view model

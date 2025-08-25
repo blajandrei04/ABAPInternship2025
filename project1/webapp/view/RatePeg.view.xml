@@ -54,9 +54,9 @@
                                         design="Bold"
                                     />
                                     <ComboBox
-                                        id="technicalSkillsRating"
+                                        id="PegTechnicalSkillsRating"
                                         placeholder="Rate this field"
-                                        enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
+                                        selectedKey="{pegDetails>CAT_TECHNICAL}"
                                         width="150px"
                                     >
                                         <core:Item
@@ -89,10 +89,11 @@
                                         design="Bold"
                                     />
                                     <ComboBox
-                                        id="softSkillsRating"
+                                        id="PegSoftSkillsRating"
+                                        selectedKey="{pegDetails>CAT_SOFT}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
+                                        
                                     >
                                         <core:Item
                                             key="5"
@@ -124,10 +125,11 @@
                                         design="Bold"
                                     />
                                     <ComboBox
-                                        id="otherSkillsRating"
+                                        id="PegOtherSkillsRating"
+                                        selectedKey="{pegDetails>CAT_OTHER}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
+                                        
                                     >
                                         <core:Item
                                             key="5"
@@ -159,10 +161,11 @@
                                         design="Bold"
                                     />
                                     <ComboBox
-                                        id="expertiseRating"
+                                        id="PegExpertiseRating"
+                                        selectedKey="{pegDetails>CAT_EXPERTISE}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
+                                       
                                     >
                                         <core:Item
                                             key="5"
@@ -194,10 +197,11 @@
                                         design="Bold"
                                     />
                                     <ComboBox
-                                        id="networkingSkillsRating"
+                                        id="PegNetworkingSkillsRating"
+                                        selectedKey="{pegDetails>CAT_NETWORK}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
+                                        enabled="{= ${pegDetails>FB_STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -231,7 +235,7 @@
                                 <TextArea
                                     id="expertiseComment"
                                     placeholder="{i18n>expertiseComment}"
-                                    value="{/SelectedPeg/COMMENT}"
+                                    value="{pegDetails>CATEGORY_COMMENT}"
                                     enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
                                     rows="4"
                                     cols="50"
