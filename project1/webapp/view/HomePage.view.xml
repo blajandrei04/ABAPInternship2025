@@ -92,6 +92,13 @@
                                             class="sapUiSmallMarginBottom"
                                             width="140px"
                                         />
+                                        <SearchField 
+                                            id="fbReceiverSearchField"
+                                            placeholder="Filter by Receiver Name" 
+                                            liveChange="onFbReceiverSearch"
+                                            class="sapUiSmallMarginBegin"
+                                            width="200px"
+                                        />
                                         <ComboBox
                                             id="combobox3"
                                             placeholder="{i18n>SelectStatus}"
