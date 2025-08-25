@@ -5,7 +5,7 @@ sap.ui.define([
 ], (BaseController, History, MessageBox) => {
   "use strict";
 
-  return BaseController.extend("project1.controller.360Fb", {
+  return BaseController.extend("project1.controller.RatePeg", {
     onInit: function () {
       // cream un model gol pentru view
       var oModel = new sap.ui.model.json.JSONModel({
@@ -22,40 +22,46 @@ sap.ui.define([
 
     _onObjectMatched: function (oEvent) {
       const sFbId = oEvent.getParameter("arguments").fbId;
-      console.log("Am primit FB_ID:", sFbId);
+      console.log("Am primit FB_ID in RatePeg:", sFbId);
 
       const oModel = this.getView().getModel();
       oModel.setProperty("/FB_ID", sFbId);
 
-      // luam lista de PEG-uri din modelul global
-      const oPegData = this.getOwnerComponent().getModel("pegData");
-      if (oPegData) {
-        const aPegs = oPegData.getProperty("/Pegs") || [];
-        console.log("Lista PEG-uri:", aPegs);
-        console.log("Caut FB_ID:", sFbId);
+      const oODataModel = this.getOwnerComponent().getModel();
+      oODataModel.read("/FB_CATSet('" + sFbId + "')", {
+        success: function (oData) {
+          var d = oData.d || oData;
 
-        const oSelectedPeg = aPegs.find(p => {
-          console.log("Compar", p.FB_ID, "cu", sFbId);
-          return p.FB_ID === sFbId;
-        });
+          // convertim la string pt. selectedKey pe ComboBox-uri
+          ["CAT_TECHNICAL", "CAT_SOFT", "CAT_OTHER", "CAT_EXPERTISE", "CAT_NETWORK"].forEach(function (k) {
+            if (d[k] !== undefined && d[k] !== null) {
+              d[k] = String(d[k]);
+            }
+          });
 
+          const oDetailsModel = new sap.ui.model.json.JSONModel(d);
+          this.getView().setModel(oDetailsModel, "pegDetails");
+          oDetailsModel.refresh(true); // force UI update
 
-        if (oSelectedPeg) {
-          // normalizam statusul ca sa fie mereu comparabil
-          oSelectedPeg.FB_STATUS = (oSelectedPeg.FB_STATUS || "")
-            .trim()
-            .toUpperCase();
-
-          oModel.setProperty("/SelectedPeg", oSelectedPeg);
-          console.log("Status primit:", oSelectedPeg.FB_STATUS);  // <--- vezi aici
-          console.log("PEG selectat normalizat:", oSelectedPeg);
-
-        } else {
-          console.warn("Nu am gasit niciun PEG cu FB_ID:", sFbId);
+          this.getView().byId("PegNetworkingSkillsRating").setSelectedKey(d.CAT_NETWORK);
+          //this.getView().byId("expertiseComment").setValue(d.CATEGORY_COMMENT);
+          this.getView().byId("expertiseComment").setValue("value", d.CATEGORY_COMMENT);
+          
+          console.log("Model setat pe view:", this.getView().getModel("pegDetails").getData());
+          console.log(this.getView().byId("expertiseComment").getValue());
+          console.log("[RatePeg] CATEGORY_COMMENT:", d.CATEGORY_COMMENT);
+          console.log("[RatePeg] TECH:", d.CAT_TECHNICAL,
+            " SOFT:", d.CAT_SOFT,
+            " OTHER:", d.CAT_OTHER,
+            " EXP:", d.CAT_EXPERTISE,
+            " NET:", d.CAT_NETWORK);
+          
+        }.bind(this),
+        error: function (oError) {
+          console.error("Eroare la citirea FB_CATSet in RatePeg:", oError);
         }
-      }
+      });
     }
-    ///simrobert@gmail.com
 
     ,
     getRouter() {
@@ -82,11 +88,11 @@ sap.ui.define([
       const sFbId = oModel.getProperty("/FB_ID");
 
       // ia valorile din UI
-      const sTechRating = oView.byId("technicalSkillsRating").getSelectedKey();
-      const sSoftRating = oView.byId("softSkillsRating").getSelectedKey();
-      const sOtherRating = oView.byId("otherSkillsRating").getSelectedKey();
-      const sExpertiseRating = oView.byId("expertiseRating").getSelectedKey();
-      const sNetworkingRating = oView.byId("networkingSkillsRating").getSelectedKey();
+      const sTechRating = oView.byId("PegTechnicalSkillsRating").getSelectedKey();
+      const sSoftRating = oView.byId("PegSoftSkillsRating").getSelectedKey();
+      const sOtherRating = oView.byId("PegOtherSkillsRating").getSelectedKey();
+      const sExpertiseRating = oView.byId("PegExpertiseRating").getSelectedKey();
+      const sNetworkingRating = oView.byId("PegNetworkingSkillsRating").getSelectedKey();
       const sComment = oView.byId("expertiseComment").getValue();
 
       const oODataModel = this.getOwnerComponent().getModel();
