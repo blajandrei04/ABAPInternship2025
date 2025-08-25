@@ -41,25 +41,25 @@ sap.ui.define([
             this.getView().setModel(oViewModel, "view");
         },
 
-        _getEmployeeNameMap: function () {
-            return new Promise((resolve, reject) => {
-                const oODataModel = this.getOwnerComponent().getModel();
-                oODataModel.read("/EMPLOYEESet", {
-                    success: (oData) => {
-                        const oNameMap = {};
-                        if (oData && oData.results) {
-                            oData.results.forEach(item => {
-                                oNameMap[item.EMP_ID] = item.FULL_NAME;
-                            });
-                        }
-                        resolve(oNameMap);
-                    },
-                    error: (oError) => {
-                        reject(oError);
-                    }
-                });
-            });
-        },
+        _getEmployeeNameMap: function () {
+            return new Promise((resolve, reject) => {
+                const oODataModel = this.getOwnerComponent().getModel();
+                oODataModel.read("/EMPLOYEESet", {
+                    success: (oData) => {
+                        const oNameMap = {};
+                        if (oData && oData.results) {
+                            oData.results.forEach(item => {
+                                oNameMap[item.EMP_ID] = item.FULL_NAME;
+                            });
+                        }
+                        resolve(oNameMap);
+                    },
+                    error: (oError) => {
+                        reject(oError);
+                    }
+                });
+            });
+        },
         
         _onObjectMatched() {
             const oUserModel = this.getOwnerComponent().getModel("user");
@@ -270,15 +270,17 @@ sap.ui.define([
 
             const aFilters = [];
 
-            // Get filter from DatePicker
             const oDate = oDatePicker.getDateValue();
             if (oDate) {
-                const oFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "E MMM dd yyyy HH:mm:ss 'GMT'Z (z)" });
-                const sFormattedDate = oFormat.format(oDate);
-                aFilters.push(new Filter("FB_DATE", FilterOperator.EQ, sFormattedDate));
+                // Create a new Date object for the start of the selected day
+                const oStartDate = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate(), 0, 0, 0);
+                // Create a new Date object for the end of the selected day
+                const oEndDate = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate(), 23, 59, 59);
+
+                // Use the 'Between' filter operator to create a date range
+                aFilters.push(new Filter("FB_DATE", FilterOperator.BT, oStartDate, oEndDate));
             }
 
-            // Get filter from ComboBox
             const sSelectedKey = oComboBox.getSelectedKey();
             if (sSelectedKey) {
                 aFilters.push(new Filter("FB_STATUS", FilterOperator.EQ, sSelectedKey));
@@ -306,21 +308,22 @@ sap.ui.define([
 
             const aFilters = [];
 
-            // Get filter from DatePicker
             const oDate = oDatePicker.getDateValue();
             if (oDate) {
-                const oFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "E MMM dd yyyy HH:mm:ss 'GMT'Z (z)" });
-                const sFormattedDate = oFormat.format(oDate);
-                aFilters.push(new Filter("FB_DATE", FilterOperator.EQ, sFormattedDate));
+                // Create a new Date object for the start of the selected day
+                const oStartDate = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate(), 0, 0, 0);
+                // Create a new Date object for the end of the selected day
+                const oEndDate = new Date(oDate.getFullYear(), oDate.getMonth(), oDate.getDate(), 23, 59, 59);
+
+                // Use the 'Between' filter operator to create a date range
+                aFilters.push(new Filter("FB_DATE", FilterOperator.BT, oStartDate, oEndDate));
             }
 
-            // Get filter from ComboBox
             const sSelectedKey = oComboBox.getSelectedKey();
             if (sSelectedKey) {
                 aFilters.push(new Filter("FB_STATUS", FilterOperator.EQ, sSelectedKey));
             }
 
-            // Get filter from SearchField
             const sReceiverName = oSearchField.getValue().trim();
             if (sReceiverName) {
                 aFilters.push(new Filter("RECEIVER_NAME", FilterOperator.Contains, sReceiverName));
