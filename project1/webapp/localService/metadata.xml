@@ -9,6 +9,7 @@
 <Property Name="SENDER_ID" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="receiver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 <Property Name="RECEIVER_ID" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="receiver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 <Property Name="PROJECT_ID" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Project ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="PROJECT_NAME" Type="Edm.String" Nullable="true" MaxLength="255" sap:unicode="false" sap:label="Feedback Comment" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 <Property Name="FB_ANOYMITY" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Anonymity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 <Property Name="FB_DATE" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Feedback Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 <Property Name="FB_TYPE" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="fb type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
@@ -113,6 +114,7 @@
     m:HttpMethod="POST">
     <Parameter Name="EMAIL" Type="Edm.String" Mode="In"/>
     <Parameter Name="PROJECT_ID" Type="Edm.String" Mode="In"/>
+    <Parameter Name="PROJECT_NAME" Type="Edm.String" Mode="In"/>
     <Parameter Name="ANONYMITY" Type="Edm.String" Mode="In"/>
     <Parameter Name="CATEGORY_COMMENT" Type="Edm.String" Mode="In"/>
     <Parameter Name="CATEGORY_RATING" Type="Edm.Decimal" Mode="In"/>
