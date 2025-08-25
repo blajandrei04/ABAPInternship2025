@@ -39,23 +39,9 @@ sap.ui.define([
             }
           });
 
-          const oDetailsModel = new sap.ui.model.json.JSONModel(d);
-          this.getView().setModel(oDetailsModel, "pegDetails");
-          oDetailsModel.refresh(true); // force UI update
-
-          this.getView().byId("PegNetworkingSkillsRating").setSelectedKey(d.CAT_NETWORK);
-          //this.getView().byId("expertiseComment").setValue(d.CATEGORY_COMMENT);
-          this.getView().byId("expertiseComment").setValue("value", d.CATEGORY_COMMENT);
-          
-          console.log("Model setat pe view:", this.getView().getModel("pegDetails").getData());
-          console.log(this.getView().byId("expertiseComment").getValue());
-          console.log("[RatePeg] CATEGORY_COMMENT:", d.CATEGORY_COMMENT);
-          console.log("[RatePeg] TECH:", d.CAT_TECHNICAL,
-            " SOFT:", d.CAT_SOFT,
-            " OTHER:", d.CAT_OTHER,
-            " EXP:", d.CAT_EXPERTISE,
-            " NET:", d.CAT_NETWORK);
-          
+          // punem datele in model si atat
+          this.getView().setModel(new sap.ui.model.json.JSONModel(d), "pegDetails");
+          console.log("Model setat pe view:", d);
         }.bind(this),
         error: function (oError) {
           console.error("Eroare la citirea FB_CATSet in RatePeg:", oError);
