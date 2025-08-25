@@ -13,11 +13,15 @@ sap.ui.define([
             const oViewModel = new JSONModel({
                 ReceiverID: "",
                 ProjectID: "",
-                ExpertiseComment: "",
-                OverallRating: "3",
                 anonymous: false,
                 Users: [],
-                Projects: []
+                Projects: [],
+                technicalSkillsRating: null,
+                technicalSkillsComment: "",
+                softSkillsRating: null,
+                softSkillsComment: "",
+                otherSkillsRating: null,
+                otherSkillsComment: ""
             });
             this.getView().setModel(oViewModel);
             this._loadUserAndProjectData();
@@ -70,10 +74,9 @@ sap.ui.define([
 
         onSendFeedback: function () {
             const oODataModel = this.getOwnerComponent().getModel();
-            const oViewModelData = this.getView().getModel().getData();
+            const oViewModel = this.getView().getModel();
             const oUserModel = this.getOwnerComponent().getModel("user");
             
-            // Get a reference to the button that was pressed
             const oSendButton = this.getView().byId("sendFeedbackButton");
 
             if (!oUserModel || !oUserModel.getProperty("/isLoggedIn")) {
@@ -82,38 +85,63 @@ sap.ui.define([
             }
 
             const sLoggedInUserEmail = oUserModel.getProperty("/USER_EMAIL");
+            const sReceiverID = oViewModel.getProperty("/ReceiverID");
+            const sProjectID = oViewModel.getProperty("/ProjectID");
+            const bAnonymous = oViewModel.getProperty("/anonymous");
 
-            const oParameters = {
-                EMAIL: sLoggedInUserEmail,
-                RECEIVER_NAME: oViewModelData.ReceiverID,
-                PROJECT_NAME: oViewModelData.ProjectID,
-                ANONYMITY: oViewModelData.anonymous ? "X" : " ",
-                CATEGORY_COMMENT: oViewModelData.ExpertiseComment,
-                CATEGORY_RATING: parseInt(oViewModelData.OverallRating, 10),
-                CATEGORY_NAME: "Overall"
-            };
+            if (!sReceiverID || !sProjectID) {
+                MessageBox.warning("Please select a User and a Project.");
+                return;
+            }
 
-            if (!oParameters.RECEIVER_NAME || !oParameters.PROJECT_NAME || !oParameters.CATEGORY_RATING) {
-                MessageBox.warning("Please fill in all required fields (User, Project, and Rating).");
+            const aCategories = [
+                { name: "Technical", rating: oViewModel.getProperty("/technicalSkillsRating"), comment: oViewModel.getProperty("/technicalSkillsComment") },
+                { name: "Soft", rating: oViewModel.getProperty("/softSkillsRating"), comment: oViewModel.getProperty("/softSkillsComment") },
+                { name: "Other", rating: oViewModel.getProperty("/otherSkillsRating"), comment: oViewModel.getProperty("/otherSkillsComment") }
+            ];
+
+            let aRatingsFound = [];
+
+            aCategories.forEach(category => {
+                if (category.rating) {
+                    aRatingsFound.push(category);
+                }
+            });
+
+            if (aRatingsFound.length > 1) {
+                MessageBox.warning("Please provide a rating for only one category at a time.");
+                return;
+            }
+
+            if (aRatingsFound.length === 0) {
+                MessageBox.warning("Please provide a rating for at least one category.");
                 return;
             }
             
+            const oCategory = aRatingsFound[0];
+            const oParameters = {
+                EMAIL: sLoggedInUserEmail,
+                RECEIVER_NAME: sReceiverID,
+                PROJECT_NAME: sProjectID, // Corrected parameter name to match metadata
+                ANONYMITY: bAnonymous ? "X" : " ",
+                CATEGORY_COMMENT: oCategory.comment,
+                CATEGORY_RATING: parseInt(oCategory.rating, 10),
+                CATEGORY_NAME: oCategory.name
+            };
+
             oODataModel.callFunction("/New_360", {
                 method: "POST",
                 urlParameters: oParameters,
-                success: (oData) => {
-                    MessageBox.success("Feedback sent successfully!");
-                    
-                    // Blur the button to prevent the aria-hidden warning
+                success: () => {
+                    MessageToast.show(`Feedback for ${oCategory.name} sent successfully!`);
                     if (oSendButton) {
                         oSendButton.blur();
                     }
-
                     this.onNavBack();
                 },
                 error: (oError) => {
-                    MessageBox.error("An error occurred while sending feedback. Please try again.");
-                    console.error("Function Import failed:", oError);
+                    console.error(`Failed to send feedback for ${oCategory.name}:`, oError);
+                    MessageBox.error(`An error occurred while sending feedback for ${oCategory.name}. Please try again.`);
                 }
             });
         }
