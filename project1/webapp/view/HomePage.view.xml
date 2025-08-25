@@ -130,14 +130,18 @@
                                                 <Text text="{i18n>receiverColumn}" />
                                             </Column>
                                             <Column>
+                                                <Text text="{i18n>projectName}" />
+                                            </Column>
+                                            <Column>
                                                 <Text text="{i18n>date}" />
                                             </Column>
                                         </columns>
                                         <items>
                                             <ColumnListItem type="Active">
                                                 <cells>
-                                                    <Text text="{fbData>SENDER_ID}" />
-                                                    <Text text="{fbData>RECEIVER_ID}" />
+                                                    <Text text="{fbData>SENDER_NAME}" />
+                                                    <Text text="{fbData>RECEIVER_NAME}" />
+                                                    <Text text="{fbData>PROJECT_NAME}" />
                                                     <Text text="{fbData>FB_DATE}" />
                                                 </cells>
                                             </ColumnListItem>
@@ -160,13 +164,13 @@
                                             class="sapUiNoContentPadding"
                                         >
                                             <Label text="{i18n>senderColumn}" />
-                                            <Text text="{view>/selectedFeedback/SENDER_ID}" />
+                                            <Text text="{view>/selectedFeedback/SENDER_NAME}" />
 
                                             <Label text="{i18n>receiverColumn}" />
-                                            <Text text="{view>/selectedFeedback/RECEIVER_ID}" />
+                                            <Text text="{view>/selectedFeedback/RECEIVER_NAME}" />
 
                                             <Label text="{i18n>projectName}" />
-                                            <Text text="{view>/selectedFeedback/PROJECT_ID}" />
+                                            <Text text="{view>/selectedFeedback/PROJECT_NAME}" />
 
                                             <Label text="{i18n>rating}" />
                                             <Text text="{view>/selectedFeedback/FB_RATING}" />
@@ -244,8 +248,8 @@
                                     press="onPegPressed"
                                 >
                                     <cells>
-                                        <Text text="{pegData>PROJECT_ID}" />
-                                        <Text text="{pegData>RECEIVER_ID}" />
+                                        <Text text="{pegData>PROJECT_NAME}" />
+                                        <Text text="{pegData>RECEIVER_NAME}" />
                                         <Text text="{pegData>FB_DATE}" />
                                         <Text text="{pegData>FB_STATUS}" />
                                     </cells>

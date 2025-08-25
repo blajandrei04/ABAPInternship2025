@@ -23,8 +23,7 @@ sap.ui.define([
             const oLocalDataModel = new JSONModel({
                 PegStatus: [
                     { key: "PENDING", text: "Pending" },
-                    { key: "APPROVED", text: "Approved" },
-                    { key: "REJECTED", text: "Rejected" }
+                    { key: "COMPLETED", text: "Completed" },
                 ],
                 FbStatus: [
                     { key: "PENDING", text: "Pending" },
@@ -42,6 +41,26 @@ sap.ui.define([
             this.getView().setModel(oViewModel, "view");
         },
 
+        _getEmployeeNameMap: function () {
+            return new Promise((resolve, reject) => {
+                const oODataModel = this.getOwnerComponent().getModel();
+                oODataModel.read("/EMPLOYEESet", {
+                    success: (oData) => {
+                        const oNameMap = {};
+                        if (oData && oData.results) {
+                            oData.results.forEach(item => {
+                                oNameMap[item.EMP_ID] = item.FULL_NAME;
+                            });
+                        }
+                        resolve(oNameMap);
+                    },
+                    error: (oError) => {
+                        reject(oError);
+                    }
+                });
+            });
+        },
+        
         _onObjectMatched() {
             const oUserModel = this.getOwnerComponent().getModel("user");
 
@@ -52,30 +71,39 @@ sap.ui.define([
             }
 
             const sLoggedInUserEmail = oUserModel.getProperty("/USER_EMAIL");
-            console.log("Logged-in user email:", sLoggedInUserEmail);
+            console.log("[DEBUG] Logged-in user email:", sLoggedInUserEmail);
 
             const oODataModel = this.getOwnerComponent().getModel();
-
-            oODataModel.callFunction("/ViewTeamFI", {
-                method: "GET",
-                urlParameters: {
-                    USER_EMAIL: sLoggedInUserEmail
-                },
-                success: (oData) => {
-                    if (oData && oData.results) {
-                        const aTeamData = oData.results;
-                        const oTeamModel = new JSONModel({ MyTeam: aTeamData });
-                        this.getView().setModel(oTeamModel, "team");
-                        console.log("Team data loaded:", oTeamModel.getData());
-                    } else {
-                        console.log("No team data received.");
-                        this.getView().setModel(new JSONModel({ MyTeam: [] }), "team");
+            
+            this._getEmployeeNameMap().then(oNameMap => {
+                console.log("[DEBUG] Fetching team data for user:", sLoggedInUserEmail);
+                oODataModel.callFunction("/ViewTeamFI", {
+                    method: "GET",
+                    urlParameters: {
+                        USER_EMAIL: sLoggedInUserEmail
+                    },
+                    success: (oData) => {
+                        console.log("[DEBUG] Team data fetched successfully:", oData);
+                        if (oData && oData.results) {
+                            const aTeamData = oData.results.map(item => ({
+                                ...item,
+                                FULL_NAME: oNameMap[item.EMP_ID] || item.EMP_ID
+                            }));
+                            const oTeamModel = new JSONModel({ MyTeam: aTeamData });
+                            this.getView().setModel(oTeamModel, "team");
+                            console.log("[DEBUG] Team model populated:", oTeamModel.getData());
+                        } else {
+                            console.warn("[DEBUG] No team data received.");
+                            this.getView().setModel(new JSONModel({ MyTeam: [] }), "team");
+                        }
+                    },
+                    error: (oError) => {
+                        console.error("[DEBUG] Error fetching team data:", oError);
+                        MessageBox.error("Failed to load team data. Please try again.");
                     }
-                },
-                error: (oError) => {
-                    console.error("Error fetching team data:", oError);
-                    MessageBox.error("Failed to load team data. Please try again.");
-                }
+                });
+            }).catch(() => {
+                MessageBox.error("Failed to load employee names.");
             });
         },
 
@@ -125,7 +153,6 @@ sap.ui.define([
                     this._oPegDialog.open();
                 },
                 error: (oError) => {
-                    console.error("Failed to load project and manager lists:", oError);
                     MessageBox.error("Failed to load project and manager lists.");
                 }
             });
@@ -162,7 +189,7 @@ sap.ui.define([
                     this.onTabSelect({ getParameter: () => "Pegs" });
                 },
                 error: (oError) => {
-                    console.error("Failed to send PEG request:", oError);
+                    console.error("[DEBUG] Failed to send PEG request:", oError);
                     MessageBox.error("Failed to send PEG request. Please try again.");
                 }
             });
@@ -212,7 +239,7 @@ sap.ui.define([
                     this.onCloseDialog();
                 },
                 error: (oError) => {
-                    console.error("Change Password failed:", oError);
+                    console.error("[DEBUG] Change Password failed:", oError);
                     MessageBox.error("Failed to change password. Please try again.");
                 }
             });
@@ -275,10 +302,9 @@ sap.ui.define([
             const oBinding = oFbTable.getBinding("items");
             const oDatePicker = this.byId("DP2");
             const oComboBox = this.byId("combobox3");
-            const oSearchField = this.byId("fbReceiverSearchField");
+            const oSearchField = this.byId("fbReceiverSearchField");
 
             const aFilters = [];
-            const aCombinedFilters = [];
 
             // Get filter from DatePicker
             const oDate = oDatePicker.getDateValue();
@@ -294,16 +320,13 @@ sap.ui.define([
                 aFilters.push(new Filter("FB_STATUS", FilterOperator.EQ, sSelectedKey));
             }
 
-            // Get filter from SearchField
-            const sReceiverName = oSearchField.getValue().trim();
-            if (sReceiverName) {
-                // The OData service requires the filter on RECEIVER_ID, but your data shows RECEIVER_NAME
-                // If RECEIVER_NAME is what is used for filtering on the backend, use that.
-                // Based on your controller code, the data has RECEIVER_ID, so we'll filter on that.
-                aFilters.push(new Filter("RECEIVER_ID", FilterOperator.Contains, sReceiverName));
-            }
+            // Get filter from SearchField
+            const sReceiverName = oSearchField.getValue().trim();
+            if (sReceiverName) {
+                aFilters.push(new Filter("RECEIVER_NAME", FilterOperator.Contains, sReceiverName));
+            }
             
-            // Apply all filters
+            // Apply all filters
             oBinding.filter(aFilters);
         },
 
@@ -315,9 +338,9 @@ sap.ui.define([
             this._applyFbFilters();
         },
 
-        onFbReceiverSearch: function(oEvent) {
-            this._applyFbFilters();
-        },
+        onFbReceiverSearch: function(oEvent) {
+            this._applyFbFilters();
+        },
 
         onNewFeedback: function () {
             this.getRouter().navTo("RouteFeedbackPage");
@@ -331,7 +354,6 @@ sap.ui.define([
             const oODataModel = this.getOwnerComponent().getModel();
             const oViewModel = this.getView().getModel("view");
 
-            // Reset selected feedback and hide detail view when switching tabs
             const oFbModel = this.getView().getModel("fbData");
             if (oFbModel) {
                 oFbModel.setProperty("/selectedFeedback", null);
@@ -340,44 +362,54 @@ sap.ui.define([
 
 
             if (sSelectedKey === "Pegs") {
-                const sFunctionName = (bIsManager === true || bIsManager === "TRUE" || bIsManager === "X")
-                    ? "/GetPEG_MNG"
-                    : "/GetPEG_FI";
-
-                oODataModel.callFunction(sFunctionName, {
-                    method: "GET",
-                    urlParameters: { EMAIL: sLoggedInUserEmail },
-                    success: (oData) => {
-                        const aPegData = (oData && oData.results) ? oData.results : [];
-                        this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({ Pegs: aPegData }), "pegData");
-                        console.log(`Peg data loaded (${sFunctionName}):`, aPegData);
-                    },
-                    error: (oError) => {
-                        console.error(`Error fetching peg data (${sFunctionName}):`, oError);
-                        MessageBox.error("Failed to load peg data.");
-                        this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({ Pegs: [] }), "pegData");
-                    }
+                this._getEmployeeNameMap().then(oNameMap => {
+                    const sFunctionName = (bIsManager === true || bIsManager === "TRUE" || bIsManager === "X") ? "/GetPEG_MNG" : "/GetPEG_FI";
+                    oODataModel.callFunction(sFunctionName, {
+                        method: "GET",
+                        urlParameters: { EMAIL: sLoggedInUserEmail },
+                        success: (oData) => {
+                            const aPegData = (oData && oData.results) ? oData.results.map(item => ({
+                                ...item,
+                                RECEIVER_NAME: oNameMap[item.RECEIVER_ID] || item.RECEIVER_ID,
+                                PROJECT_NAME: item.PROJECT_NAME || item.PROJECT_ID
+                            })) : [];
+                            this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({ Pegs: aPegData }), "pegData");
+                        },
+                        error: (oError) => {
+                            MessageBox.error("Failed to load peg data.");
+                            this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({ Pegs: [] }), "pegData");
+                        }
+                    });
+                }).catch(() => {
+                    MessageBox.error("Failed to load employee names for Pegs.");
                 });
             } else if (sSelectedKey === "360FB") {
-                oODataModel.callFunction("/Get360", {
-                    method: "GET",
-                    urlParameters: { EMAIL: sLoggedInUserEmail },
-                    success: (oData) => {
-                        const aFbData = (oData && oData.results) ? oData.results : [];
-                        this.getView().setModel(new sap.ui.model.json.JSONModel({ Feedbacks: aFbData }), "fbData");
-                        console.log("360 Feedback data loaded:", aFbData);
-                    },
-                    error: (oError) => {
-                        console.error("Error fetching 360 feedback data:", oError);
-                        MessageBox.error("Failed to load 360 feedback data.");
-                        this.getView().setModel(new sap.ui.model.json.JSONModel({ Feedbacks: [] }), "fbData");
-                    }
+                this._getEmployeeNameMap().then(oNameMap => {
+                    oODataModel.callFunction("/Get360", {
+                        method: "GET",
+                        urlParameters: { EMAIL: sLoggedInUserEmail },
+                        success: (oData) => {
+                            console.log("[DEBUG] OData call to /Get360 successful. Raw data:", oData);
+                            const aFbData = (oData && oData.results) ? oData.results.map(item => ({
+                                ...item,
+                                SENDER_NAME: oNameMap[item.SENDER_ID] || item.SENDER_ID,
+                                RECEIVER_NAME: oNameMap[item.RECEIVER_ID] || item.RECEIVER_ID,
+                                PROJECT_NAME: item.PROJECT_NAME || item.PROJECT_ID
+                            })) : [];
+                            this.getView().setModel(new sap.ui.model.json.JSONModel({ Feedbacks: aFbData }), "fbData");
+                        },
+                        error: (oError) => {
+                            MessageBox.error("Failed to load 360 feedback data.");
+                            this.getView().setModel(new sap.ui.model.json.JSONModel({ Feedbacks: [] }), "fbData");
+                        }
+                    });
+                }).catch(() => {
+                    MessageBox.error("Failed to load employee names for 360 Feedback.");
                 });
             }
         },
 
         onItemPressed: function () {
-            console.log("Item press triggered");
             this.getRouter().navTo("RouteRatePegPage");
         },
         onPegPressed: function (oEvent) {
@@ -385,29 +417,17 @@ sap.ui.define([
             const oCtx = oItem.getBindingContext("pegData");
             const sFbId = oCtx.getProperty("FB_ID");
 
-            console.log("Navighez catre RatePeg cu FB_ID:", sFbId);
 
             const oODataModel = this.getOwnerComponent().getModel(); // OData v2 model
             oODataModel.read("/FB_CATSet('" + sFbId + "')", {
                 success: function (oData) {
-                    console.log("Detalii FB_CATSet:", oData);
-
-                    console.log("Comment:", oData.CATEGORY_COMMENT);
-                    console.log("Technical:", oData.CAT_TECHNICAL);
-                    console.log("Soft:", oData.CAT_SOFT);
-                    console.log("Other:", oData.CAT_OTHER);
-                    console.log("Expertise:", oData.CAT_EXPERTISE);
-                    console.log("Network:", oData.CAT_NETWORK);
-
                     // după ce am citit, navigăm
                     this.getRouter().navTo("RouteRatePeg", {
                         fbId: sFbId
                     });
                 }.bind(this),
                 error: function (oError) {
-                    console.error("Eroare la citirea FB_CATSet pentru FB_ID " + sFbId, oError);
 
-                    // navigăm oricum, chiar dacă nu reușim să citim
                     this.getRouter().navTo("RouteRatePeg", {
                         fbId: sFbId
                     });
@@ -421,7 +441,7 @@ sap.ui.define([
             const oContext = oItem.getBindingContext("fbData");
 
             if (!oContext) {
-                console.error("No context found for the selected item.");
+                console.error("[DEBUG] No context found for the selected item.");
                 this.getView().getModel("view").setProperty("/selectedFeedback", null);
                 this.getView().getModel("view").setProperty("/fbVisible", false);
                 return;
@@ -429,10 +449,8 @@ sap.ui.define([
 
             const oSelectedItem = oContext.getObject();
 
-            // Set the detailed feedback object from the model directly to the view model
             this.getView().getModel("view").setProperty("/selectedFeedback", oSelectedItem);
             this.getView().getModel("view").setProperty("/fbVisible", true);
-            console.log("Detailed feedback loaded from model:", oSelectedItem);
         }
     });
 });
