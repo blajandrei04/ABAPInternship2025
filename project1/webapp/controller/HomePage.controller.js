@@ -1,423 +1,438 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast",
-    "sap/m/MessageBox",
-    "sap/ui/core/routing/History",
-    "sap/ui/model/json/JSONModel",
-    "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
+    "sap/ui/core/mvc/Controller",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox",
+    "sap/ui/core/routing/History",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
 ], (Controller, MessageToast, MessageBox, History, JSONModel, Filter, FilterOperator) => {
-    "use strict";
+    "use strict";
 
-    return Controller.extend("project1.controller.HomePage", {
-        _oPegDialog: null,
-        _oChangePassDialog: null,
+    return Controller.extend("project1.controller.HomePage", {
+        _oPegDialog: null,
+        _oChangePassDialog: null,
 
-        onInit() {
-            console.log("HomePage Controller initialized");
-            this.getRouter()
-                .getRoute("RouteHomePage")
-                .attachPatternMatched(this._onObjectMatched, this);
+        onInit() {
+            console.log("HomePage Controller initialized");
+            this.getRouter()
+                .getRoute("RouteHomePage")
+                .attachPatternMatched(this._onObjectMatched, this);
 
-            // Set up a local model for filter dropdowns with corrected statuses
-            const oLocalDataModel = new JSONModel({
-                PegStatus: [
-                    { key: "PENDING", text: "Pending" },
-                    { key: "APPROVED", text: "Approved" },
-                    { key: "REJECTED", text: "Rejected" }
-                ],
-                FbStatus: [
-                    { key: "PENDING", text: "Pending" },
-                    { key: "COMPLETED", text: "Completed" }
-                ]
-            });
-            this.getView().setModel(oLocalDataModel, "localData");
+            // Set up a local model for filter dropdowns with corrected statuses
+            const oLocalDataModel = new JSONModel({
+                PegStatus: [
+                    { key: "PENDING", text: "Pending" },
+                    { key: "APPROVED", text: "Approved" },
+                    { key: "REJECTED", text: "Rejected" }
+                ],
+                FbStatus: [
+                    { key: "PENDING", text: "Pending" },
+                    { key: "COMPLETED", text: "Completed" }
+                ]
+            });
+            this.getView().setModel(oLocalDataModel, "localData");
 
-            // New local model for view state
-            const oViewModel = new JSONModel({
-                selectedTabKey: "Info",
-                fbVisible: false,
-                selectedFeedback: null
-            });
-            this.getView().setModel(oViewModel, "view");
-        },
+            // New local model for view state
+            const oViewModel = new JSONModel({
+                selectedTabKey: "Info",
+                fbVisible: false,
+                selectedFeedback: null
+            });
+            this.getView().setModel(oViewModel, "view");
+        },
 
-        _onObjectMatched() {
-            const oUserModel = this.getOwnerComponent().getModel("user");
+        _onObjectMatched() {
+            const oUserModel = this.getOwnerComponent().getModel("user");
 
-            if (!oUserModel || !oUserModel.getProperty("/isLoggedIn")) {
-                console.warn("User not logged in yet. Redirecting to login.");
-                this.getRouter().navTo("RouteView1");
-                return;
+            if (!oUserModel || !oUserModel.getProperty("/isLoggedIn")) {
+                console.warn("User not logged in yet. Redirecting to login.");
+                this.getRouter().navTo("RouteView1");
+                return;
+            }
+
+            const sLoggedInUserEmail = oUserModel.getProperty("/USER_EMAIL");
+            console.log("Logged-in user email:", sLoggedInUserEmail);
+
+            const oODataModel = this.getOwnerComponent().getModel();
+
+            oODataModel.callFunction("/ViewTeamFI", {
+                method: "GET",
+                urlParameters: {
+                    USER_EMAIL: sLoggedInUserEmail
+                },
+                success: (oData) => {
+                    if (oData && oData.results) {
+                        const aTeamData = oData.results;
+                        const oTeamModel = new JSONModel({ MyTeam: aTeamData });
+                        this.getView().setModel(oTeamModel, "team");
+                        console.log("Team data loaded:", oTeamModel.getData());
+                    } else {
+                        console.log("No team data received.");
+                        this.getView().setModel(new JSONModel({ MyTeam: [] }), "team");
+                    }
+                },
+                error: (oError) => {
+                    console.error("Error fetching team data:", oError);
+                    MessageBox.error("Failed to load team data. Please try again.");
+                }
+            });
+        },
+
+        getRouter() {
+            return sap.ui.core.UIComponent.getRouterFor(this);
+        },
+
+        onNavBack: function () {
+            var oHistory, sPreviousHash;
+            oHistory = History.getInstance();
+            sPreviousHash = oHistory.getPreviousHash();
+            if (sPreviousHash !== undefined) {
+                window.history.go(-1);
+            } else {
+                this.getRouter().navTo("RouteView1", {}, true);
+            }
+        },
+
+        onGiveFeedback() {
+            this.getRouter().navTo("RouteFeedbackPage");
+        },
+
+        onOpenManager() {
+            this.getRouter().navTo("RouteManagerPage");
+        },
+
+        async onRequestPeg() {
+            if (!this._oPegDialog) {
+                this._oPegDialog = await this.loadFragment({
+                    name: "project1.view.PegDialog",
+                    controller: this
+                });
+                this.getView().addDependent(this._oPegDialog);
+            }
+
+            const oODataModel = this.getOwnerComponent().getModel();
+            oODataModel.read("/EMPLOYEESet", {
+                success: (oData) => {
+                    const aProjectData = [...new Set(oData.results.map(item => item.TEAM_ID))]
+                        .filter(id => id)
+                        .map(id => ({ PROJECT_ID: id }));
+                    this.getView().setModel(new JSONModel({ Projects: aProjectData }), "projects");
+
+                    const aManagers = oData.results.filter(item => item.SU && String(item.SU).toUpperCase() === 'TRUE');
+                    this.getView().setModel(new JSONModel({ Managers: aManagers }), "managers");
+
+                    this._oPegDialog.open();
+                },
+                error: (oError) => {
+                    console.error("Failed to load project and manager lists:", oError);
+                    MessageBox.error("Failed to load project and manager lists.");
+                }
+            });
+        },
+
+        onSendPegRequest: function () {
+            if (!this._oPegDialog) {
+                MessageBox.error("The PEG request dialog is not available.");
+                return;
+            }
+            const oProjectComboBox = this.getView().byId("projectComboBox");
+            const oManagerComboBox = this.getView().byId("managerComboBox");
+            const sProjectId = oProjectComboBox.getSelectedKey();
+            const sManagerEmail = oManagerComboBox.getSelectedKey();
+            const oUserModel = this.getOwnerComponent().getModel("user");
+            const sLoggedInUserEmail = oUserModel.getProperty("/USER_EMAIL");
+
+            if (!sProjectId || !sManagerEmail) {
+                MessageBox.error("Please select a project and a manager.");
+                return;
+            }
+
+            const oODataModel = this.getOwnerComponent().getModel();
+            oODataModel.callFunction("/RequestPEG_FI", {
+                method: "POST",
+                urlParameters: {
+                    EMAIL: sLoggedInUserEmail,
+                    PROJECT_ID: sProjectId,
+                    SENDER_NAME: sManagerEmail
+                },
+                success: (oData) => {
+                    MessageToast.show("PEG request sent successfully!");
+                    this.onClosePegDialog();
+                    this.onTabSelect({ getParameter: () => "Pegs" });
+                },
+                error: (oError) => {
+                    console.error("Failed to send PEG request:", oError);
+                    MessageBox.error("Failed to send PEG request. Please try again.");
+                }
+            });
+        },
+
+        async onChangePasswordPress() {
+            if (!this._oChangePassDialog) {
+                this._oChangePassDialog = await this.loadFragment({
+                    name: "project1.view.ChangePass",
+                });
+            }
+            this._oChangePassDialog.open();
+        },
+
+        onClosePegDialog() {
+            if (this._oPegDialog) {
+                this._oPegDialog.close();
+            }
+        },
+
+        onConfirmChangePassword: function () {
+            const oView = this.getView();
+            const sNewPassword = oView.byId("changeEmailInput1").getValue().trim();
+            const sConfirmationPassword = oView.byId("changeEmailInput12").getValue().trim();
+            if (!sNewPassword || !sConfirmationPassword) {
+                MessageBox.error("Please fill in all fields.");
+                return;
+            }
+            if (sNewPassword !== sConfirmationPassword) {
+                MessageBox.error("Passwords do not match.");
+                return;
+            }
+            const oUserModel = this.getOwnerComponent().getModel("user");
+            const sEmail = oUserModel.getProperty("/USER_EMAIL").toUpperCase();
+            const sPassword = sNewPassword.toUpperCase();
+            const sPassword1 = sConfirmationPassword.toUpperCase();
+            const oODataModel = this.getOwnerComponent().getModel();
+            oODataModel.callFunction("/ForgotPassword", {
+                method: "POST",
+                urlParameters: {
+                    EMAIL: sEmail,
+                    PASSWORD: sPassword,
+                    PASSWORD1: sPassword1
+                },
+                success: (oData) => {
+                    MessageToast.show("Password changed successfully!");
+                    this.onCloseDialog();
+                },
+                error: (oError) => {
+                    console.error("Change Password failed:", oError);
+                    MessageBox.error("Failed to change password. Please try again.");
+                }
+            });
+        },
+
+        onCloseDialog() {
+            if (this._oChangePassDialog) {
+                this._oChangePassDialog.close();
+            }
+        },
+
+        onLogoutPress() {
+            MessageBox.confirm("Are you sure you want to log out", {
+                onClose: (oAction) => {
+                    if (oAction === MessageBox.Action.OK) {
+                        this.getRouter().navTo("RouteView1");
+                    }
+                }
+            });
+        },
+
+        // --- Pegs Table Filter Logic ---
+        _applyPegFilters: function () {
+            const oPegTable = this.byId("pegTable");
+            const oBinding = oPegTable.getBinding("items");
+            const oDatePicker = this.byId("DP1");
+            const oComboBox = this.byId("combobox1");
+
+            const aFilters = [];
+
+            // Get filter from DatePicker
+            const oDate = oDatePicker.getDateValue();
+            if (oDate) {
+                const oFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "E MMM dd yyyy HH:mm:ss 'GMT'Z (z)" });
+                const sFormattedDate = oFormat.format(oDate);
+                aFilters.push(new Filter("FB_DATE", FilterOperator.EQ, sFormattedDate));
+            }
+
+            // Get filter from ComboBox
+            const sSelectedKey = oComboBox.getSelectedKey();
+            if (sSelectedKey) {
+                aFilters.push(new Filter("FB_STATUS", FilterOperator.EQ, sSelectedKey));
+            }
+
+            // Apply all filters
+            oBinding.filter(aFilters);
+        },
+
+        onPegStatusFilterChange: function () {
+            this._applyPegFilters();
+        },
+
+        onDateChange: function () {
+            this._applyPegFilters();
+        },
+
+        // --- 360 Feedback Table Filter Logic ---
+        _applyFbFilters: function () {
+            const oFbTable = this.byId("FbTable");
+            const oBinding = oFbTable.getBinding("items");
+            const oDatePicker = this.byId("DP2");
+            const oComboBox = this.byId("combobox3");
+            const oSearchField = this.byId("fbReceiverSearchField");
+
+            const aFilters = [];
+            const aCombinedFilters = [];
+
+            // Get filter from DatePicker
+            const oDate = oDatePicker.getDateValue();
+            if (oDate) {
+                const oFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "E MMM dd yyyy HH:mm:ss 'GMT'Z (z)" });
+                const sFormattedDate = oFormat.format(oDate);
+                aFilters.push(new Filter("FB_DATE", FilterOperator.EQ, sFormattedDate));
+            }
+
+            // Get filter from ComboBox
+            const sSelectedKey = oComboBox.getSelectedKey();
+            if (sSelectedKey) {
+                aFilters.push(new Filter("FB_STATUS", FilterOperator.EQ, sSelectedKey));
+            }
+
+            // Get filter from SearchField
+            const sReceiverName = oSearchField.getValue().trim();
+            if (sReceiverName) {
+                // The OData service requires the filter on RECEIVER_ID, but your data shows RECEIVER_NAME
+                // If RECEIVER_NAME is what is used for filtering on the backend, use that.
+                // Based on your controller code, the data has RECEIVER_ID, so we'll filter on that.
+                aFilters.push(new Filter("RECEIVER_ID", FilterOperator.Contains, sReceiverName));
             }
-
-            const sLoggedInUserEmail = oUserModel.getProperty("/USER_EMAIL");
-            console.log("Logged-in user email:", sLoggedInUserEmail);
-
-            const oODataModel = this.getOwnerComponent().getModel();
-
-            oODataModel.callFunction("/ViewTeamFI", {
-                method: "GET",
-                urlParameters: {
-                    USER_EMAIL: sLoggedInUserEmail
-                },
-                success: (oData) => {
-                    if (oData && oData.results) {
-                        const aTeamData = oData.results;
-                        const oTeamModel = new JSONModel({ MyTeam: aTeamData });
-                        this.getView().setModel(oTeamModel, "team");
-                        console.log("Team data loaded:", oTeamModel.getData());
-                    } else {
-                        console.log("No team data received.");
-                        this.getView().setModel(new JSONModel({ MyTeam: [] }), "team");
-                    }
-                },
-                error: (oError) => {
-                    console.error("Error fetching team data:", oError);
-                    MessageBox.error("Failed to load team data. Please try again.");
-                }
-            });
-        },
-
-        getRouter() {
-            return sap.ui.core.UIComponent.getRouterFor(this);
-        },
-
-        onNavBack: function () {
-            var oHistory, sPreviousHash;
-            oHistory = History.getInstance();
-            sPreviousHash = oHistory.getPreviousHash();
-            if (sPreviousHash !== undefined) {
-                window.history.go(-1);
-            } else {
-                this.getRouter().navTo("RouteView1", {}, true);
-            }
-        },
-
-        onGiveFeedback() {
-            this.getRouter().navTo("RouteFeedbackPage");
-        },
-
-        onOpenManager() {
-            this.getRouter().navTo("RouteManagerPage");
-        },
-
-        async onRequestPeg() {
-            if (!this._oPegDialog) {
-                this._oPegDialog = await this.loadFragment({
-                    name: "project1.view.PegDialog",
-                    controller: this
-                });
-                this.getView().addDependent(this._oPegDialog);
-            }
-
-            const oODataModel = this.getOwnerComponent().getModel();
-            oODataModel.read("/EMPLOYEESet", {
-                success: (oData) => {
-                    const aProjectData = [...new Set(oData.results.map(item => item.TEAM_ID))]
-                        .filter(id => id)
-                        .map(id => ({ PROJECT_ID: id }));
-                    this.getView().setModel(new JSONModel({ Projects: aProjectData }), "projects");
-
-                    const aManagers = oData.results.filter(item => item.SU && String(item.SU).toUpperCase() === 'TRUE');
-                    this.getView().setModel(new JSONModel({ Managers: aManagers }), "managers");
-
-                    this._oPegDialog.open();
-                },
-                error: (oError) => {
-                    console.error("Failed to load project and manager lists:", oError);
-                    MessageBox.error("Failed to load project and manager lists.");
-                }
-            });
-        },
-
-        onSendPegRequest: function () {
-            if (!this._oPegDialog) {
-                MessageBox.error("The PEG request dialog is not available.");
-                return;
-            }
-            const oProjectComboBox = this.getView().byId("projectComboBox");
-            const oManagerComboBox = this.getView().byId("managerComboBox");
-            const sProjectId = oProjectComboBox.getSelectedKey();
-            const sManagerEmail = oManagerComboBox.getSelectedKey();
-            const oUserModel = this.getOwnerComponent().getModel("user");
-            const sLoggedInUserEmail = oUserModel.getProperty("/USER_EMAIL");
-
-            if (!sProjectId || !sManagerEmail) {
-                MessageBox.error("Please select a project and a manager.");
-                return;
-            }
-
-            const oODataModel = this.getOwnerComponent().getModel();
-            oODataModel.callFunction("/RequestPEG_FI", {
-                method: "POST",
-                urlParameters: {
-                    EMAIL: sLoggedInUserEmail,
-                    PROJECT_ID: sProjectId,
-                    SENDER_NAME: sManagerEmail
-                },
-                success: (oData) => {
-                    MessageToast.show("PEG request sent successfully!");
-                    this.onClosePegDialog();
-                    this.onTabSelect({ getParameter: () => "Pegs" });
-                },
-                error: (oError) => {
-                    console.error("Failed to send PEG request:", oError);
-                    MessageBox.error("Failed to send PEG request. Please try again.");
-                }
-            });
-        },
-
-        async onChangePasswordPress() {
-            if (!this._oChangePassDialog) {
-                this._oChangePassDialog = await this.loadFragment({
-                    name: "project1.view.ChangePass",
-                });
-            }
-            this._oChangePassDialog.open();
-        },
-
-        onClosePegDialog() {
-            if (this._oPegDialog) {
-                this._oPegDialog.close();
-            }
-        },
-
-        onConfirmChangePassword: function () {
-            const oView = this.getView();
-            const sNewPassword = oView.byId("changeEmailInput1").getValue().trim();
-            const sConfirmationPassword = oView.byId("changeEmailInput12").getValue().trim();
-            if (!sNewPassword || !sConfirmationPassword) {
-                MessageBox.error("Please fill in all fields.");
-                return;
-            }
-            if (sNewPassword !== sConfirmationPassword) {
-                MessageBox.error("Passwords do not match.");
-                return;
-            }
-            const oUserModel = this.getOwnerComponent().getModel("user");
-            const sEmail = oUserModel.getProperty("/USER_EMAIL").toUpperCase();
-            const sPassword = sNewPassword.toUpperCase();
-            const sPassword1 = sConfirmationPassword.toUpperCase();
-            const oODataModel = this.getOwnerComponent().getModel();
-            oODataModel.callFunction("/ForgotPassword", {
-                method: "POST",
-                urlParameters: {
-                    EMAIL: sEmail,
-                    PASSWORD: sPassword,
-                    PASSWORD1: sPassword1
-                },
-                success: (oData) => {
-                    MessageToast.show("Password changed successfully!");
-                    this.onCloseDialog();
-                },
-                error: (oError) => {
-                    console.error("Change Password failed:", oError);
-                    MessageBox.error("Failed to change password. Please try again.");
-                }
-            });
-        },
-
-        onCloseDialog() {
-            if (this._oChangePassDialog) {
-                this._oChangePassDialog.close();
-            }
-        },
-
-        onLogoutPress() {
-            MessageBox.confirm("Are you sure you want to log out", {
-                onClose: (oAction) => {
-                    if (oAction === MessageBox.Action.OK) {
-                        this.getRouter().navTo("RouteView1");
-                    }
-                }
-            });
-        },
-
-        // --- Pegs Table Filter Logic ---
-        _applyPegFilters: function () {
-            const oPegTable = this.byId("pegTable");
-            const oBinding = oPegTable.getBinding("items");
-            const oDatePicker = this.byId("DP1");
-            const oComboBox = this.byId("combobox1");
-
-            const aFilters = [];
-
-            // Get filter from DatePicker
-            const oDate = oDatePicker.getDateValue();
-            if (oDate) {
-                const oFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "E MMM dd yyyy HH:mm:ss 'GMT'Z (z)" });
-                const sFormattedDate = oFormat.format(oDate);
-                aFilters.push(new Filter("FB_DATE", FilterOperator.EQ, sFormattedDate));
-            }
-
-            // Get filter from ComboBox
-            const sSelectedKey = oComboBox.getSelectedKey();
-            if (sSelectedKey) {
-                aFilters.push(new Filter("FB_STATUS", FilterOperator.EQ, sSelectedKey));
-            }
-
+            
             // Apply all filters
-            oBinding.filter(aFilters);
-        },
+            oBinding.filter(aFilters);
+        },
 
-        onPegStatusFilterChange: function () {
-            this._applyPegFilters();
-        },
+        onFbStatusFilterChange: function (oEvent) {
+            this._applyFbFilters();
+        },
 
-        onDateChange: function () {
-            this._applyPegFilters();
-        },
+        onFbDateChange: function (oEvent) {
+            this._applyFbFilters();
+        },
 
-        // --- 360 Feedback Table Filter Logic ---
-        _applyFbFilters: function () {
-            const oFbTable = this.byId("FbTable");
-            const oBinding = oFbTable.getBinding("items");
-            const oDatePicker = this.byId("DP2");
-            const oComboBox = this.byId("combobox3");
-
-            const aFilters = [];
-
-            // Get filter from DatePicker
-            const oDate = oDatePicker.getDateValue();
-            if (oDate) {
-                const oFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({ pattern: "E MMM dd yyyy HH:mm:ss 'GMT'Z (z)" });
-                const sFormattedDate = oFormat.format(oDate);
-                aFilters.push(new Filter("FB_DATE", FilterOperator.EQ, sFormattedDate));
-            }
-
-            // Get filter from ComboBox
-            const sSelectedKey = oComboBox.getSelectedKey();
-            if (sSelectedKey) {
-                aFilters.push(new Filter("FB_STATUS", FilterOperator.EQ, sSelectedKey));
-            }
-
-            // Apply all filters
-            oBinding.filter(aFilters);
-        },
-
-        onFbStatusFilterChange: function (oEvent) {
+        onFbReceiverSearch: function(oEvent) {
             this._applyFbFilters();
         },
 
-        onFbDateChange: function (oEvent) {
-            this._applyFbFilters();
-        },
+        onNewFeedback: function () {
+            this.getRouter().navTo("RouteFeedbackPage");
+        },
 
-        onNewFeedback: function () {
-            this.getRouter().navTo("RouteFeedbackPage");
-        },
+        onTabSelect(oEvent) {
+            const sSelectedKey = oEvent.getParameter("key");
+            const oUserModel = this.getOwnerComponent().getModel("user");
+            const sLoggedInUserEmail = oUserModel.getProperty("/USER_EMAIL");
+            const bIsManager = oUserModel.getProperty("/SU");
+            const oODataModel = this.getOwnerComponent().getModel();
+            const oViewModel = this.getView().getModel("view");
 
-        onTabSelect(oEvent) {
-            const sSelectedKey = oEvent.getParameter("key");
-            const oUserModel = this.getOwnerComponent().getModel("user");
-            const sLoggedInUserEmail = oUserModel.getProperty("/USER_EMAIL");
-            const bIsManager = oUserModel.getProperty("/SU");
-            const oODataModel = this.getOwnerComponent().getModel();
-            const oViewModel = this.getView().getModel("view");
-
-            // Reset selected feedback and hide detail view when switching tabs
-            const oFbModel = this.getView().getModel("fbData");
-            if (oFbModel) {
-                oFbModel.setProperty("/selectedFeedback", null);
-            }
-            oViewModel.setProperty("/fbVisible", false);
+            // Reset selected feedback and hide detail view when switching tabs
+            const oFbModel = this.getView().getModel("fbData");
+            if (oFbModel) {
+                oFbModel.setProperty("/selectedFeedback", null);
+            }
+            oViewModel.setProperty("/fbVisible", false);
 
 
-            if (sSelectedKey === "Pegs") {
-                const sFunctionName = (bIsManager === true || bIsManager === "TRUE" || bIsManager === "X")
-                    ? "/GetPEG_MNG"
-                    : "/GetPEG_FI";
+            if (sSelectedKey === "Pegs") {
+                const sFunctionName = (bIsManager === true || bIsManager === "TRUE" || bIsManager === "X")
+                    ? "/GetPEG_MNG"
+                    : "/GetPEG_FI";
 
-                oODataModel.callFunction(sFunctionName, {
-                    method: "GET",
-                    urlParameters: { EMAIL: sLoggedInUserEmail },
-                    success: (oData) => {
-                        const aPegData = (oData && oData.results) ? oData.results : [];
-                        this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({ Pegs: aPegData }), "pegData");
-                        console.log(`Peg data loaded (${sFunctionName}):`, aPegData);
-                    },
-                    error: (oError) => {
-                        console.error(`Error fetching peg data (${sFunctionName}):`, oError);
-                        MessageBox.error("Failed to load peg data.");
-                        this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({ Pegs: [] }), "pegData");
-                    }
-                });
-            } else if (sSelectedKey === "360FB") {
-                oODataModel.callFunction("/Get360", {
-                    method: "GET",
-                    urlParameters: { EMAIL: sLoggedInUserEmail },
-                    success: (oData) => {
-                        const aFbData = (oData && oData.results) ? oData.results : [];
-                        this.getView().setModel(new sap.ui.model.json.JSONModel({ Feedbacks: aFbData }), "fbData");
-                        console.log("360 Feedback data loaded:", aFbData);
-                    },
-                    error: (oError) => {
-                        console.error("Error fetching 360 feedback data:", oError);
-                        MessageBox.error("Failed to load 360 feedback data.");
-                        this.getView().setModel(new sap.ui.model.json.JSONModel({ Feedbacks: [] }), "fbData");
-                    }
-                });
-            }
-        },
+                oODataModel.callFunction(sFunctionName, {
+                    method: "GET",
+                    urlParameters: { EMAIL: sLoggedInUserEmail },
+                    success: (oData) => {
+                        const aPegData = (oData && oData.results) ? oData.results : [];
+                        this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({ Pegs: aPegData }), "pegData");
+                        console.log(`Peg data loaded (${sFunctionName}):`, aPegData);
+                    },
+                    error: (oError) => {
+                        console.error(`Error fetching peg data (${sFunctionName}):`, oError);
+                        MessageBox.error("Failed to load peg data.");
+                        this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({ Pegs: [] }), "pegData");
+                    }
+                });
+            } else if (sSelectedKey === "360FB") {
+                oODataModel.callFunction("/Get360", {
+                    method: "GET",
+                    urlParameters: { EMAIL: sLoggedInUserEmail },
+                    success: (oData) => {
+                        const aFbData = (oData && oData.results) ? oData.results : [];
+                        this.getView().setModel(new sap.ui.model.json.JSONModel({ Feedbacks: aFbData }), "fbData");
+                        console.log("360 Feedback data loaded:", aFbData);
+                    },
+                    error: (oError) => {
+                        console.error("Error fetching 360 feedback data:", oError);
+                        MessageBox.error("Failed to load 360 feedback data.");
+                        this.getView().setModel(new sap.ui.model.json.JSONModel({ Feedbacks: [] }), "fbData");
+                    }
+                });
+            }
+        },
 
-        onItemPressed: function () {
-            console.log("Item press triggered");
-            this.getRouter().navTo("RouteRatePegPage");
-        },
-        onPegPressed: function (oEvent) {
-            const oItem = oEvent.getSource(); // sau oEvent.getParameter("listItem")
-            const oCtx = oItem.getBindingContext("pegData");
-            const sFbId = oCtx.getProperty("FB_ID");
+        onItemPressed: function () {
+            console.log("Item press triggered");
+            this.getRouter().navTo("RouteRatePegPage");
+        },
+        onPegPressed: function (oEvent) {
+            const oItem = oEvent.getSource(); // sau oEvent.getParameter("listItem")
+            const oCtx = oItem.getBindingContext("pegData");
+            const sFbId = oCtx.getProperty("FB_ID");
 
-            console.log("Navighez catre RatePeg cu FB_ID:", sFbId);
+            console.log("Navighez catre RatePeg cu FB_ID:", sFbId);
 
-            const oODataModel = this.getOwnerComponent().getModel(); // OData v2 model
-            oODataModel.read("/FB_CATSet('" + sFbId + "')", {
-                success: function (oData) {
-                    console.log("Detalii FB_CATSet:", oData);
+            const oODataModel = this.getOwnerComponent().getModel(); // OData v2 model
+            oODataModel.read("/FB_CATSet('" + sFbId + "')", {
+                success: function (oData) {
+                    console.log("Detalii FB_CATSet:", oData);
 
-                    console.log("Comment:", oData.CATEGORY_COMMENT);
-                    console.log("Technical:", oData.CAT_TECHNICAL);
-                    console.log("Soft:", oData.CAT_SOFT);
-                    console.log("Other:", oData.CAT_OTHER);
-                    console.log("Expertise:", oData.CAT_EXPERTISE);
-                    console.log("Network:", oData.CAT_NETWORK);
+                    console.log("Comment:", oData.CATEGORY_COMMENT);
+                    console.log("Technical:", oData.CAT_TECHNICAL);
+                    console.log("Soft:", oData.CAT_SOFT);
+                    console.log("Other:", oData.CAT_OTHER);
+                    console.log("Expertise:", oData.CAT_EXPERTISE);
+                    console.log("Network:", oData.CAT_NETWORK);
 
-                    // după ce am citit, navigăm
-                    this.getRouter().navTo("RouteRatePeg", {
-                        fbId: sFbId
-                    });
-                }.bind(this),
-                error: function (oError) {
-                    console.error("Eroare la citirea FB_CATSet pentru FB_ID " + sFbId, oError);
+                    // după ce am citit, navigăm
+                    this.getRouter().navTo("RouteRatePeg", {
+                        fbId: sFbId
+                    });
+                }.bind(this),
+                error: function (oError) {
+                    console.error("Eroare la citirea FB_CATSet pentru FB_ID " + sFbId, oError);
 
-                    // navigăm oricum, chiar dacă nu reușim să citim
-                    this.getRouter().navTo("RouteRatePeg", {
-                        fbId: sFbId
-                    });
-                }.bind(this)
-            });
-        }
-        ,
+                    // navigăm oricum, chiar dacă nu reușim să citim
+                    this.getRouter().navTo("RouteRatePeg", {
+                        fbId: sFbId
+                    });
+                }.bind(this)
+            });
+        }
+        ,
 
-        onFbSelect: function (oEvent) {
-            const oItem = oEvent.getParameter("listItem");
-            const oContext = oItem.getBindingContext("fbData");
+        onFbSelect: function (oEvent) {
+            const oItem = oEvent.getParameter("listItem");
+            const oContext = oItem.getBindingContext("fbData");
 
-            if (!oContext) {
-                console.error("No context found for the selected item.");
-                this.getView().getModel("view").setProperty("/selectedFeedback", null);
-                this.getView().getModel("view").setProperty("/fbVisible", false);
-                return;
-            }
+            if (!oContext) {
+                console.error("No context found for the selected item.");
+                this.getView().getModel("view").setProperty("/selectedFeedback", null);
+                this.getView().getModel("view").setProperty("/fbVisible", false);
+                return;
+            }
 
-            const oSelectedItem = oContext.getObject();
+            const oSelectedItem = oContext.getObject();
 
-            // Set the detailed feedback object from the model directly to the view model
-            this.getView().getModel("view").setProperty("/selectedFeedback", oSelectedItem);
-            this.getView().getModel("view").setProperty("/fbVisible", true);
-            console.log("Detailed feedback loaded from model:", oSelectedItem);
-        }
-    });
+            // Set the detailed feedback object from the model directly to the view model
+            this.getView().getModel("view").setProperty("/selectedFeedback", oSelectedItem);
+            this.getView().getModel("view").setProperty("/fbVisible", true);
+            console.log("Detailed feedback loaded from model:", oSelectedItem);
+        }
+    });
 });
