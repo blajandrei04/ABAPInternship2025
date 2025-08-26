@@ -19,7 +19,7 @@
                 icon="sap-icon://save"
                 press=".onSaveChanges"
                 id="saveChangesButton"
-                visible="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
+                visible="{= ${/STATUS} === 'PENDING' }"
             />
         </Toolbar>
         <content>
@@ -58,6 +58,7 @@
                                         placeholder="Rate this field"
                                         selectedKey="{pegDetails>/CAT_TECHNICAL}"
                                         width="150px"
+                                        editable="{= ${/STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -93,7 +94,7 @@
                                         selectedKey="{pegDetails>/CAT_SOFT}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        
+                                        editable="{= ${/STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -129,7 +130,7 @@
                                         selectedKey="{pegDetails>/CAT_OTHER}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        
+                                        editable="{= ${/STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -165,7 +166,7 @@
                                         selectedKey="{pegDetails>/CAT_EXPERTISE}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                       
+                                        editable="{= ${/STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -201,7 +202,7 @@
                                         selectedKey="{pegDetails>/CAT_NETWORK}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        enabled="{= ${pegDetails>FB_STATUS} === 'PENDING' }"
+                                        editable="{= ${/STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -236,7 +237,7 @@
                                     id="expertiseComment"
                                     placeholder="{i18n>expertiseComment}"
                                     value="{pegDetails>/CATEGORY_COMMENT}"
-                                    enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
+                                    editable="{= ${/STATUS} === 'PENDING' }"
                                     rows="4"
                                     cols="50"
                                 />

@@ -1,5 +1,4 @@
-sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
     "sap/m/MessageBox",
     "sap/ui/core/routing/History",
@@ -429,14 +428,18 @@ sap.ui.define([
             this.getRouter().navTo("RouteRatePegPage");
         },
         onPegPressed: function (oEvent) {
-            const oItem = oEvent.getSource();
-            const oCtx = oItem.getBindingContext("pegData");
-            const sFbId = oCtx.getProperty("FB_ID");
+            const oItem = oEvent.getSource();
+            const oCtx = oItem.getBindingContext("pegData");
+            const sFbId = oCtx.getProperty("FB_ID");
+            const sStatus = oCtx.getProperty("FB_STATUS");
 
-            this.getRouter().navTo("RouteRatePeg", {
-                fbId: sFbId
-            });
-        }
+            console.log("[HomePage] Am apasat pe PEG:", sFbId, "cu STATUS:", sStatus);
+
+            this.getRouter().navTo("RouteRatePeg", {
+                fbId: sFbId,
+                status: sStatus
+            });
+        }
         ,
 
         onFbSelect: function (oEvent) {

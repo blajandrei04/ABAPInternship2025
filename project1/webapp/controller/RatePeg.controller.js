@@ -22,32 +22,60 @@ sap.ui.define([
 
     _onObjectMatched: function (oEvent) {
       const sFbId = oEvent.getParameter("arguments").fbId;
-      console.log("Am primit FB_ID in RatePeg:", sFbId);
+      const sStatus = oEvent.getParameter("arguments").status; // vine din navTo()
 
+      console.log("[RatePeg] Am primit FB_ID:", sFbId, "STATUS:", sStatus);
+
+      // salvam in modelul default pentru buton + binding la editable
       const oModel = this.getView().getModel();
       oModel.setProperty("/FB_ID", sFbId);
+      oModel.setProperty("/STATUS", sStatus);
 
-      const oODataModel = this.getOwnerComponent().getModel();
-      oODataModel.read("/FB_CATSet('" + sFbId + "')", {
-        success: function (oData) {
-          var d = oData.d || oData;
+      if (sStatus === "COMPLETED") {
+        // citim din backend doar daca e COMPLETED
+        const oODataModel = this.getOwnerComponent().getModel();
+        oODataModel.read("/FB_CATSet('" + sFbId + "')", {
+          success: function (oData) {
+            var d = oData.d || oData;
 
-          // convertim la string pt. selectedKey pe ComboBox-uri
-          ["CAT_TECHNICAL", "CAT_SOFT", "CAT_OTHER", "CAT_EXPERTISE", "CAT_NETWORK"].forEach(function (k) {
-            if (d[k] !== undefined && d[k] !== null) {
-              d[k] = String(d[k]);
-            }
-          });
+            // convertim la string pt. selectedKey pe ComboBox-uri
+            ["CAT_TECHNICAL", "CAT_SOFT", "CAT_OTHER", "CAT_EXPERTISE", "CAT_NETWORK"].forEach(function (k) {
+              if (d[k] !== undefined && d[k] !== null) {
+                d[k] = String(d[k]);
+              }
+            });
 
-          // punem datele in model si atat
-          this.getView().setModel(new sap.ui.model.json.JSONModel(d), "pegDetails");
-          console.log("Model setat pe view:", d);
-        }.bind(this),
-        error: function (oError) {
-          console.error("Eroare la citirea FB_CATSet in RatePeg:", oError);
-        }
-      });
+            // setam datele in model separat pentru UI
+            this.getView().setModel(new sap.ui.model.json.JSONModel(d), "pegDetails");
+            console.log("[RatePeg] COMPLETED → date incarcate din backend:", d);
+          }.bind(this),
+          error: function (oError) {
+            console.error("Eroare la citirea FB_CATSet in RatePeg:", oError);
+            // fallback → setam campuri goale
+            this.getView().setModel(new sap.ui.model.json.JSONModel({
+              CATEGORY_COMMENT: "",
+              CAT_TECHNICAL: "",
+              CAT_SOFT: "",
+              CAT_OTHER: "",
+              CAT_EXPERTISE: "",
+              CAT_NETWORK: ""
+            }), "pegDetails");
+          }.bind(this)
+        });
+      } else {
+        // daca e PENDING → punem model gol
+        this.getView().setModel(new sap.ui.model.json.JSONModel({
+          CATEGORY_COMMENT: "",
+          CAT_TECHNICAL: "",
+          CAT_SOFT: "",
+          CAT_OTHER: "",
+          CAT_EXPERTISE: "",
+          CAT_NETWORK: ""
+        }), "pegDetails");
+        console.log("[RatePeg] PENDING → campuri goale setate in model");
+      }
     }
+
 
     ,
     getRouter() {

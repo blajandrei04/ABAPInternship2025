@@ -133,7 +133,7 @@
         },
         {
           "name": "RouteRatePeg",
-          "pattern": "RatePeg/{fbId}",
+          "pattern": "RatePeg/{fbId}/{status}",
           "target": "RatePeg"
         },
         {
