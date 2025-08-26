@@ -101,7 +101,7 @@ sap.ui.define([
 
             if (!oUserModel || !oUserModel.getProperty("/isLoggedIn")) {
                 console.warn("User not logged in yet. Redirecting to login.");
-                this.getRouter().navTo("RouteView1");
+                this.getRouter().navTo("RouteView1", {}, true);
                 return;
             }
 

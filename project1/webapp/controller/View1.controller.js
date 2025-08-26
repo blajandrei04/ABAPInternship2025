@@ -32,6 +32,13 @@ sap.ui.define([
         _onRouteMatched: function () {
             this.byId("usernameInput").setValue("");
             this.byId("passwordInput").setValue("");
+
+            const oUserModel = this.getOwnerComponent().getModel("user");
+            if (oUserModel) {
+                oUserModel.setData({});
+                oUserModel.setProperty("/isLoggedIn", false);
+                console.log("User logged out due to navigation to login page.");
+            }
         },
 
         onForgotPasswordPress: function () {
