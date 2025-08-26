@@ -436,6 +436,7 @@ sap.ui.define([
             const sStatus = oCtx.getProperty("FB_STATUS");
 
             console.log("[HomePage] Am apasat pe PEG:", sFbId, "cu STATUS:", sStatus);
+            console.log("[HomePage] Am apasatt pe PEG:", sFbId, "cu STATUS:", sStatus);
 
             this.getRouter().navTo("RouteRatePeg", {
                 fbId: sFbId,
