@@ -142,7 +142,7 @@
                                                     <Text text="{fbData>SENDER_NAME}" />
                                                     <Text text="{fbData>RECEIVER_NAME}" />
                                                     <Text text="{fbData>PROJECT_NAME}" />
-                                                    <Text text="{fbData>FB_DATE}" />
+                                                    <Text text="{path:'fbData>FB_DATE', formatter:'.formatter.formatDate'}" />
                                                 </cells>
                                             </ColumnListItem>
                                         </items>
@@ -176,7 +176,7 @@
                                             <Text text="{view>/selectedFeedback/FB_RATING}" />
 
                                             <Label text="{i18n>date}" />
-                                            <Text text="{view>/selectedFeedback/FB_DATE}" />
+                                            <Text text="{path:'view>/selectedFeedback/FB_DATE', formatter:'.formatter.formatDate'}" />
 
                                             <Label text="{i18n>status}" />
                                             <Text text="{view>/selectedFeedback/FB_STATUS}" />
@@ -250,7 +250,7 @@
                                     <cells>
                                         <Text text="{pegData>PROJECT_NAME}" />
                                         <Text text="{pegData>RECEIVER_NAME}" />
-                                        <Text text="{pegData>FB_DATE}" />
+                                        <Text text="{path:'pegData>FB_DATE', formatter:'.formatter.formatDate'}" />
                                         <Text text="{pegData>FB_STATUS}" />
                                     </cells>
                                 </ColumnListItem>
