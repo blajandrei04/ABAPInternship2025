@@ -15,8 +15,8 @@
                 items="{projects>/Projects}"
             >
                 <core:Item
-                    key="{projects>PROJECT_ID}"
-                    text="{projects>PROJECT_ID}"
+                    key="{projects>PROJECT_NAME}"
+                    text="{projects>PROJECT_NAME}"
                 />
             </ComboBox>
             <ComboBox
