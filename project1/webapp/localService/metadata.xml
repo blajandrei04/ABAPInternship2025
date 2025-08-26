@@ -41,11 +41,20 @@
 <Property Name="TEAM_ID" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Team ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 <Property Name="FISCAL_YEAR" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Fiscal Year" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 <Property Name="FULL_NAME" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Full Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<EntityType Name="Project" sap:content-version="1">
+    <Key>
+        <PropertyRef Name="PROJECT_ID"/>
+    </Key>
+    <Property Name="PROJECT_ID" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Project ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+    <Property Name="PROJECT_NAME" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Project Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+</EntityType>
+
 </EntityType>
 <EntityContainer Name="ZPROJECT_INTERNSHIP2025_ODATA_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
 <EntitySet Name="PEGSet" EntityType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.PEG" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
 <EntitySet Name="UserSet" EntityType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.USER" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
 <EntitySet Name="EMPLOYEESet" EntityType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.EMPLOYEE" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+<EntitySet Name="ProjectSet" EntityType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.Project" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
 <FunctionImport
     Name="CheckUserLogin"
     ReturnType="ZPROJECT_INTERNSHIP2025_ODATA_SRV.LoginResult"
