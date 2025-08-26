@@ -305,12 +305,6 @@
                                         width="90%"
                                     />
                                     <Text text="{user>CAREER_LEVEL}" />
-
-                                    <Label
-                                        text="{i18n>Department}"
-                                        width="90%"
-                                    />
-                                    <Text text="{user>TEAM_ID}" />
                                 </form:SimpleForm>
                             </Panel>
                         </VBox>
