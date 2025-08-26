@@ -5,8 +5,9 @@ sap.ui.define([
     "sap/ui/core/routing/History",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], (Controller, MessageToast, MessageBox, History, JSONModel, Filter, FilterOperator) => {
+    "sap/ui/model/FilterOperator",
+    "sap/ui/core/format/DateFormat"
+], (Controller, MessageToast, MessageBox, History, JSONModel, Filter, FilterOperator, DateFormat) => {
     "use strict";
 
     return Controller.extend("project1.controller.HomePage", {
@@ -39,6 +40,18 @@ sap.ui.define([
                 selectedFeedback: null
             });
             this.getView().setModel(oViewModel, "view");
+        },
+
+        formatter: {
+            formatDate: function (oDate) {
+                if (oDate) {
+                    const oDateFormat = DateFormat.getDateTimeInstance({
+                        pattern: "dd.MM.yyyy HH:mm"
+                    });
+                    return oDateFormat.format(new Date(oDate));
+                }
+                return "";
+            }
         },
 
         _getEmployeeNameMap: function () {
@@ -424,7 +437,6 @@ sap.ui.define([
                 fbId: sFbId
             });
         }
-
         ,
 
         onFbSelect: function (oEvent) {
