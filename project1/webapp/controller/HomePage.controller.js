@@ -457,6 +457,19 @@ sap.ui.define([
         onItemPressed: function () {
             this.getRouter().navTo("RouteRatePegPage");
         },
+        onPegPressed: function (oEvent) {
+            const oItem = oEvent.getSource();
+            const oCtx = oItem.getBindingContext("pegData");
+            const sFbId = oCtx.getProperty("FB_ID");
+            const sStatus = oCtx.getProperty("FB_STATUS");
+ 
+            console.log("[HomePage] Am apasat pe PEG:", sFbId, "cu STATUS:", sStatus);
+ 
+            this.getRouter().navTo("RouteRatePeg", {
+                fbId: sFbId,
+                status: sStatus
+            });
+        },
         onFbSelect: function (oEvent) {
             const oItem = oEvent.getParameter("listItem");
             const oContext = oItem.getBindingContext("fbData");

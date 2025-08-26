@@ -19,7 +19,7 @@
                 icon="sap-icon://save"
                 press=".onSaveChanges"
                 id="saveChangesButton"
-                visible="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
+                visible="{= ${/STATUS} === 'PENDING' }"
             />
         </Toolbar>
         <content>
@@ -58,6 +58,7 @@
                                         placeholder="Rate this field"
                                         selectedKey="{pegDetails>/CAT_TECHNICAL}"
                                         width="150px"
+                                        editable="{= ${/STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -81,7 +82,7 @@
                                         />
                                     </ComboBox>
                                 </VBox>
-
+ 
                                 <!-- Field 2 -->
                                 <VBox class="sapUiMediumMarginEnd">
                                     <Label
@@ -93,7 +94,7 @@
                                         selectedKey="{pegDetails>/CAT_SOFT}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        
+                                        editable="{= ${/STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -117,7 +118,7 @@
                                         />
                                     </ComboBox>
                                 </VBox>
-
+ 
                                 <!-- Field 3 -->
                                 <VBox class="sapUiMediumMarginEnd">
                                     <Label
@@ -129,7 +130,7 @@
                                         selectedKey="{pegDetails>/CAT_OTHER}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        
+                                        editable="{= ${/STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -153,7 +154,7 @@
                                         />
                                     </ComboBox>
                                 </VBox>
-
+ 
                                 <!-- Field 4 -->
                                 <VBox class="sapUiMediumMarginEnd">
                                     <Label
@@ -165,7 +166,7 @@
                                         selectedKey="{pegDetails>/CAT_EXPERTISE}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                       
+                                        editable="{= ${/STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -189,7 +190,7 @@
                                         />
                                     </ComboBox>
                                 </VBox>
-
+ 
                                 <!-- Field 5 -->
                                 <VBox class="sapUiMediumMarginEnd">
                                     <Label
@@ -201,7 +202,7 @@
                                         selectedKey="{pegDetails>/CAT_NETWORK}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        enabled="{= ${pegDetails>FB_STATUS} === 'PENDING' }"
+                                        editable="{= ${/STATUS} === 'PENDING' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -226,7 +227,7 @@
                                     </ComboBox>
                                 </VBox>
                             </HBox>
-
+ 
                             <VBox width="50%">
                                 <Label
                                     text="{i18n>comment}"
@@ -236,7 +237,7 @@
                                     id="expertiseComment"
                                     placeholder="{i18n>expertiseComment}"
                                     value="{pegDetails>/CATEGORY_COMMENT}"
-                                    enabled="{= ${/SelectedPeg/FB_STATUS} === 'PENDING' }"
+                                    editable="{= ${/STATUS} === 'PENDING' }"
                                     rows="4"
                                     cols="50"
                                 />
@@ -248,3 +249,5 @@
         </content>
     </Page>
 </mvc:View>
+ 
+ 
