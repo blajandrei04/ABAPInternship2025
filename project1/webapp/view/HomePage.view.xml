@@ -166,6 +166,13 @@
                                 class="sapUiSmallMarginBottom"
                                 width="140px"
                             />
+                            <SearchField
+                                id="pegSenderSearchField"
+                                placeholder="Filter by Sender Name"
+                                liveChange="onPegSenderSearch"
+                                class="sapUiSmallMarginBegin"
+                                width="200px"
+                            />
                             <ComboBox
                                 id="combobox1"
                                 placeholder="{i18n>SelectStatus}"
@@ -195,7 +202,7 @@
                                     <Text text="{i18n>projectName}" />
                                 </Column>
                                 <Column>
-                                    <Text text="{i18n>username}" />
+                                    <Text text="{i18n>senderColumn}" />
                                 </Column>
                                 <Column>
                                     <Text text="{i18n>date}" />
@@ -211,7 +218,7 @@
                                 >
                                     <cells>
                                         <Text text="{pegData>PROJECT_NAME}" />
-                                        <Text text="{pegData>RECEIVER_NAME}" />
+                                        <Text text="{pegData>SENDER_NAME}" />
                                         <Text text="{path:'pegData>FB_DATE', formatter:'.formatter.formatDate'}" />
                                         <Text text="{pegData>FB_STATUS}" />
                                     </cells>

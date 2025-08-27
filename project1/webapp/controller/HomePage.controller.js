@@ -147,13 +147,19 @@ sap.ui.define([
         },
 
         onNavBack: function () {
-            var oHistory, sPreviousHash;
-            oHistory = History.getInstance();
-            sPreviousHash = oHistory.getPreviousHash();
-            if (sPreviousHash !== undefined) {
-                window.history.go(-1);
-            } else {
+            const oUserModel = this.getOwnerComponent().getModel("user");
+
+            if (!oUserModel || !oUserModel.getProperty("/isLoggedIn")) {
                 this.getRouter().navTo("RouteView1", {}, true);
+            } else {
+                var oHistory, sPreviousHash;
+                oHistory = History.getInstance();
+                sPreviousHash = oHistory.getPreviousHash();
+                if (sPreviousHash !== undefined) {
+                    window.history.go(-1);
+                } else {
+                    this.getRouter().navTo("RouteView1", {}, true);
+                }
             }
         },
 
@@ -313,6 +319,8 @@ sap.ui.define([
             MessageBox.confirm("Are you sure you want to log out", {
                 onClose: (oAction) => {
                     if (oAction === MessageBox.Action.OK) {
+                        const oUserModel = this.getOwnerComponent().getModel("user");
+                        oUserModel.setProperty("/isLoggedIn", false);
                         this.getRouter().navTo("RouteView1");
                     }
                 }
@@ -324,6 +332,7 @@ sap.ui.define([
             const oBinding = oPegTable.getBinding("items");
             const oDatePicker = this.byId("DP1");
             const oComboBox = this.byId("combobox1");
+            const oSearchField = this.byId("pegSenderSearchField");
 
             const aFilters = [];
 
@@ -338,6 +347,12 @@ sap.ui.define([
             if (sSelectedKey) {
                 aFilters.push(new Filter("FB_STATUS", FilterOperator.EQ, sSelectedKey));
             }
+
+            const sSenderName = oSearchField.getValue().trim();
+            if (sSenderName) {
+                aFilters.push(new Filter("SENDER_NAME", FilterOperator.Contains, sSenderName));
+            }
+
             oBinding.filter(aFilters);
         },
 
@@ -346,6 +361,10 @@ sap.ui.define([
         },
 
         onDateChange: function () {
+            this._applyPegFilters();
+        },
+
+        onPegSenderSearch: function (oEvent) {
             this._applyPegFilters();
         },
 
@@ -420,6 +439,7 @@ sap.ui.define([
                             const aPegData = (oData && oData.results) ? oData.results.map(item => ({
                                 ...item,
                                 RECEIVER_NAME: oNameMap[item.RECEIVER_ID] || item.RECEIVER_ID,
+                                SENDER_NAME: oNameMap[item.SENDER_ID] || item.SENDER_ID,
                                 PROJECT_NAME: item.PROJECT_NAME || oProjectMap[item.PROJECT_ID] || "Unknown Project"
                             })) : [];
                             this.getOwnerComponent().setModel(new JSONModel({ Pegs: aPegData }), "pegData");
