@@ -19,7 +19,7 @@
                 icon="sap-icon://save"
                 press=".onSaveChanges"
                 id="saveChangesButton"
-                visible="{= ${/STATUS} === 'PENDING' }"
+                visible="{ parts:[ {path:'/STATUS'}, {path:'user>/SU'} ], formatter:'.fmtShowSave' }"
             />
         </Toolbar>
         <content>
@@ -58,7 +58,7 @@
                                         placeholder="Rate this field"
                                         selectedKey="{pegDetails>/CAT_TECHNICAL}"
                                         width="150px"
-                                        editable="{= ${/STATUS} === 'PENDING' }"
+                                        editable="{ parts:[ {path:'/STATUS'}, {path:'user>/SU'} ], formatter:'.fmtEditable' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -94,7 +94,7 @@
                                         selectedKey="{pegDetails>/CAT_SOFT}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        editable="{= ${/STATUS} === 'PENDING' }"
+                                        editable="{ parts:[ {path:'/STATUS'}, {path:'user>/SU'} ], formatter:'.fmtEditable' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -130,7 +130,7 @@
                                         selectedKey="{pegDetails>/CAT_OTHER}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        editable="{= ${/STATUS} === 'PENDING' }"
+                                        editable="{ parts:[ {path:'/STATUS'}, {path:'user>/SU'} ], formatter:'.fmtEditable' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -166,7 +166,7 @@
                                         selectedKey="{pegDetails>/CAT_EXPERTISE}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        editable="{= ${/STATUS} === 'PENDING' }"
+                                        editable="{ parts:[ {path:'/STATUS'}, {path:'user>/SU'} ], formatter:'.fmtEditable' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -202,7 +202,7 @@
                                         selectedKey="{pegDetails>/CAT_NETWORK}"
                                         placeholder="Rate this field"
                                         width="150px"
-                                        editable="{= ${/STATUS} === 'PENDING' }"
+                                        editable="{ parts:[ {path:'/STATUS'}, {path:'user>/SU'} ], formatter:'.fmtEditable' }"
                                     >
                                         <core:Item
                                             key="5"
@@ -237,7 +237,7 @@
                                     id="expertiseComment"
                                     placeholder="{i18n>expertiseComment}"
                                     value="{pegDetails>/CATEGORY_COMMENT}"
-                                    editable="{= ${/STATUS} === 'PENDING' }"
+                                    editable="{ parts:[ {path:'/STATUS'}, {path:'user>/SU'} ], formatter:'.fmtEditable' }"
                                     rows="4"
                                     cols="50"
                                 />
@@ -249,5 +249,3 @@
         </content>
     </Page>
 </mvc:View>
- 
- 
