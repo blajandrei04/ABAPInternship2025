@@ -27,26 +27,26 @@
                         class="sapUiNoContentPadding">
 
                         <Label text="{i18n>senderColumn}" />
-                        <Text text="{view>/selectedFeedback/SENDER_NAME}" />
+                        <Text text="{view>SENDER_NAME}" />
 
                         <Label text="{i18n>receiverColumn}" />
-                        <Text text="{view>/selectedFeedback/RECEIVER_NAME}" />
+                        <Text text="{view>RECEIVER_NAME}" />
 
                         <Label text="{i18n>projectName}" />
-                        <Text text="{view>/selectedFeedback/PROJECT_NAME}" />
-
-                        <Label text="{i18n>rating}" />
-                        <Text text="{view>/selectedFeedback/FB_RATING}" />
+                        <Text text="{view>PROJECT_NAME}" />
 
                         <Label text="{i18n>date}" />
-                        <Text text="{path:'view>/selectedFeedback/FB_DATE', formatter:'.formatter.formatDate'}" />
+                        <Text text="{path:'view>FB_DATE', formatter:'.formatter.formatDate'}" />
 
                         <Label text="{i18n>status}" />
-                        <Text text="{view>/selectedFeedback/FB_STATUS}" />
+                        <Text text="{view>FB_STATUS}" />
+
+                        <Label text="{i18n>rating}" />
+                        <Text text="{view>FB_RATING}" />
 
                         <Label text="{i18n>expertiseComment}" />
-                        <Text text="{view>/selectedFeedback/COMMENT}" />
-
+                        <Text text="{view>COMMENT}" />
+                        
                     </form:SimpleForm>
                 </Panel>
             </VBox>
