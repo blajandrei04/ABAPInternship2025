@@ -12,7 +12,7 @@
         class="sapUiResponsiveMargin">
 
         <content>
-            <VBox width="100%" class="sapUiSmallMargin">
+            <VBox width="90%" class="sapUiSmallMargin">
                 <Panel headerText="{i18n>feedbackDetailsPanel}" class="sapUiResponsiveMargin">
                     <form:SimpleForm
                         id="fbDetailsForm"
