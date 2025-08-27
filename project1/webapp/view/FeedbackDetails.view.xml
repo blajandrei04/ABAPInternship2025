@@ -1,0 +1,55 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    controllerName="project1.controller.FeedbackDetails">
+
+    <Page
+        id="FeedbackDetailsPage"
+        title="{i18n>feedbackDetailsTitle}"
+        showNavButton="true"
+        navButtonPress="onNavBack"
+        class="sapUiResponsiveMargin">
+
+        <content>
+            <VBox width="100%" class="sapUiSmallMargin">
+                <Panel headerText="{i18n>feedbackDetailsPanel}" class="sapUiResponsiveMargin">
+                    <form:SimpleForm
+                        id="fbDetailsForm"
+                        editable="false"
+                        layout="ResponsiveGridLayout"
+                        labelSpanL="4"
+                        labelSpanM="4"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        columnsL="1"
+                        columnsM="1"
+                        class="sapUiNoContentPadding">
+
+                        <Label text="{i18n>senderColumn}" />
+                        <Text text="{view>/selectedFeedback/SENDER_NAME}" />
+
+                        <Label text="{i18n>receiverColumn}" />
+                        <Text text="{view>/selectedFeedback/RECEIVER_NAME}" />
+
+                        <Label text="{i18n>projectName}" />
+                        <Text text="{view>/selectedFeedback/PROJECT_NAME}" />
+
+                        <Label text="{i18n>rating}" />
+                        <Text text="{view>/selectedFeedback/FB_RATING}" />
+
+                        <Label text="{i18n>date}" />
+                        <Text text="{path:'view>/selectedFeedback/FB_DATE', formatter:'.formatter.formatDate'}" />
+
+                        <Label text="{i18n>status}" />
+                        <Text text="{view>/selectedFeedback/FB_STATUS}" />
+
+                        <Label text="{i18n>expertiseComment}" />
+                        <Text text="{view>/selectedFeedback/COMMENT}" />
+
+                    </form:SimpleForm>
+                </Panel>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

@@ -44,7 +44,7 @@ sap.ui.define([
             formatDate: function (oDate) {
                 if (oDate) {
                     const oDateFormat = DateFormat.getDateTimeInstance({
-                        pattern: "dd.MM.yyyy HH:mm"
+                        pattern: "dd.MM.yyyy"
                     });
                     return oDateFormat.format(new Date(oDate));
                 }
@@ -175,7 +175,7 @@ sap.ui.define([
             }
 
             const oODataModel = this.getOwnerComponent().getModel();
-            
+
             // Get managers and projects from their respective entity sets
             Promise.all([
                 new Promise((resolve, reject) => {
@@ -462,9 +462,9 @@ sap.ui.define([
             const oCtx = oItem.getBindingContext("pegData");
             const sFbId = oCtx.getProperty("FB_ID");
             const sStatus = oCtx.getProperty("FB_STATUS");
- 
+
             console.log("[HomePage] Am apasat pe PEG:", sFbId, "cu STATUS:", sStatus);
- 
+
             this.getRouter().navTo("RouteRatePeg", {
                 fbId: sFbId,
                 status: sStatus
@@ -485,6 +485,10 @@ sap.ui.define([
 
             this.getView().getModel("view").setProperty("/selectedFeedback", oSelectedItem);
             this.getView().getModel("view").setProperty("/fbVisible", true);
+
+            // Navigare catre view-ul de detalii (fara parametri momentan)
+            this.getRouter().navTo("RouteFeedbackDetails");
         }
+
     });
 });

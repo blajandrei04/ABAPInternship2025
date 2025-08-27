@@ -137,6 +137,11 @@
           "target": "RatePeg"
         },
         {
+          "name": "RouteFeedbackDetails",
+          "pattern": "FeedbackDetails",
+          "target": "FeedbackDetails"
+        },
+        {
           "name": "RouteManagerPage",
           "pattern": "Manager",
           "target": [
@@ -174,7 +179,13 @@
         },
         "RatePeg": {
           "id": "RatePeg",
-          "name": "RatePeg"
+          "name": "RatePeg",
+          "transition": "fade"
+        },
+        "FeedbackDetails": {
+          "id": "FeedbackDetails",
+          "name": "FeedbackDetails",
+          "transition": "slide"
         },
         "Manager": {
           "id": "Manager",
