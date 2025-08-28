@@ -18,9 +18,8 @@ sap.ui.define([
                 }
             };
             const oModel = new JSONModel(oData);
-            this.getView().setModel(oModel, "local"); // Giving a name to the local JSON model
+            this.getView().setModel(oModel, "local"); 
             
-            // The i18n model is already configured in the manifest.json
         },
         onSubmit() {
             const oView = this.getView();
