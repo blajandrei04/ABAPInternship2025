@@ -194,8 +194,9 @@
                             />
                         </HBox>
                         <Table
-                            id="pegTable"
+                            id="pegUserTable"
                             items="{pegData>/Pegs}"
+                            visible="{= ${user>/SU} === 'FALSE' }"
                         >
                             <columns>
                                 <Column>
@@ -219,6 +220,39 @@
                                     <cells>
                                         <Text text="{pegData>PROJECT_NAME}" />
                                         <Text text="{pegData>SENDER_NAME}" />
+                                        <Text text="{path:'pegData>FB_DATE', formatter:'.formatter.formatDate'}" />
+                                        <Text text="{pegData>FB_STATUS}" />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                        <Table
+                            id="pegManagerTable"
+                            items="{pegData>/Pegs}"
+                            visible="{= ${user>/SU} === 'TRUE' }"
+                        >
+                            <columns>
+                                <Column>
+                                    <Text text="{i18n>projectName}" />
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>receiverColumn}" />
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>date}" />
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>status}" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem
+                                    type="Active"
+                                    press="onPegPressed"
+                                >
+                                    <cells>
+                                        <Text text="{pegData>PROJECT_NAME}" />
+                                        <Text text="{pegData>RECEIVER_NAME}" />
                                         <Text text="{path:'pegData>FB_DATE', formatter:'.formatter.formatDate'}" />
                                         <Text text="{pegData>FB_STATUS}" />
                                     </cells>
