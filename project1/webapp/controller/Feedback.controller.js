@@ -39,20 +39,33 @@ sap.ui.define([
                             Name: item.FULL_NAME
                         }));
                         oViewModel.setProperty("/Users", aUsers);
-
-                        const aProjects = [...new Set(oData.results.map(item => item.TEAM_ID))]
-                            .filter(id => id)
-                            .map(id => ({ ProjectID: id, ProjectName: id }));
-                        oViewModel.setProperty("/Projects", aProjects);
-
-                        console.log("Users and Projects loaded successfully.");
+                        console.log("Users loaded successfully.");
                     } else {
-                        console.log("No data received for users and projects.");
+                        console.log("No user data received.");
                     }
                 },
                 error: (oError) => {
-                    console.error("Failed to load user and project data:", oError);
-                    MessageBox.error("Failed to load user and project lists. Please try again.");
+                    console.error("Failed to load user data:", oError);
+                    MessageBox.error("Failed to load user list. Please try again.");
+                }
+            });
+
+            oODataModel.read("/ProjectSet", {
+                success: (oData) => {
+                    if (oData && oData.results) {
+                        const aProjects = oData.results.map(item => ({
+                            ProjectID: item.PROJECT_ID,
+                            ProjectName: item.PROJECT_NAME
+                        }));
+                       oViewModel.setProperty("/Projects", aProjects);
+                        console.log("Projects loaded successfully.");
+                    } else {
+                        console.log("No project data received.");
+                    }
+                },
+                error: (oError) => {
+                    console.error("Failed to load project data:", oError);
+                    MessageBox.error("Failed to load project list. Please try again.");
                 }
             });
         },
@@ -119,16 +132,21 @@ sap.ui.define([
             }
             
             const oCategory = aRatingsFound[0];
+
+            const aProjects = oViewModel.getProperty("/Projects");
+            const sProjectName = aProjects.find(p => p.ProjectID === sProjectID)?.ProjectName;
+
             const oParameters = {
                 EMAIL: sLoggedInUserEmail,
                 RECEIVER_NAME: sReceiverID,
-                PROJECT_NAME: sProjectID, // Corrected parameter name to match metadata
+                PROJECT_ID: sProjectID, 
+                PROJECT_NAME: sProjectName,
                 ANONYMITY: bAnonymous ? "X" : " ",
                 CATEGORY_COMMENT: oCategory.comment,
                 CATEGORY_RATING: parseInt(oCategory.rating, 10),
                 CATEGORY_NAME: oCategory.name
             };
-
+            
             oODataModel.callFunction("/New_360", {
                 method: "POST",
                 urlParameters: oParameters,

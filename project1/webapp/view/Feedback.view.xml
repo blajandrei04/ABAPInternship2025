@@ -35,12 +35,12 @@
                         </ComboBox>
                         <Label text="{i18n>selectProject}"/>
                         <ComboBox
-                            placeholder="{i18n>selectProject}"
-                            width="50%"
-                            items="{/Projects}"
-                            selectedKey="{/ProjectID}">
-                            <core:Item key="{ProjectID}" text="{ProjectName}"/>
-                        </ComboBox>
+                                    placeholder="{i18n>selectProject}"
+                                    width="50%"
+                                    items="{/Projects}"
+                                    selectedKey="{/ProjectID}">
+                                    <core:Item key="{ProjectID}" text="{ProjectName}"/>
+                                </ComboBox>
                         <Label text="{i18n>anonymousFeedback}"/>
                         <CheckBox selected="{/anonymous}"/>
                     </form:content>
