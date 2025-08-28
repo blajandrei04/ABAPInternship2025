@@ -35,12 +35,12 @@
                         </ComboBox>
                         <Label text="{i18n>selectProject}"/>
                         <ComboBox
-                                    placeholder="{i18n>selectProject}"
-                                    width="50%"
-                                    items="{/Projects}"
-                                    selectedKey="{/ProjectID}">
-                                    <core:Item key="{ProjectID}" text="{ProjectName}"/>
-                                </ComboBox>
+                            placeholder="{i18n>selectProject}"
+                            width="50%"
+                            items="{/Projects}"
+                            selectedKey="{/ProjectID}">
+                            <core:Item key="{ProjectID}" text="{ProjectName}"/>
+                        </ComboBox>
                         <Label text="{i18n>anonymousFeedback}"/>
                         <CheckBox selected="{/anonymous}"/>
                     </form:content>
@@ -52,71 +52,39 @@
                     title="{i18n>feedbackDetails}"
                     class="sapUiMediumMarginBottom">
                     <form:content>
-                        <Label text="{i18n>technicalSkills}"/>
-                        <HBox>
-                            <ComboBox
-                                id="technicalSkillsRating"
-                                placeholder="{i18n>rateThis}"
-                                selectedKey="{/technicalSkillsRating}"
-                                width="70%"
-                                class="sapUiTinyMarginEnd">
-                                <core:Item key="5" text="{i18n>excellent}" />
-                                <core:Item key="4" text="{i18n>good}" />
-                                <core:Item key="3" text="{i18n>average}" />
-                                <core:Item key="2" text="{i18n>fair}" />
-                                <core:Item key="1" text="{i18n>poor}" />
-                            </ComboBox>
-                            <TextArea
-                                id="technicalSkillsComment"
-                                placeholder="{i18n>expertiseComment}"
-                                rows="3"
-                                value="{/technicalSkillsComment}"
-                                width="300%"/>
-                        </HBox>
+                        <Label text="Category"/>
+                        <ComboBox
+                            id="categoryComboBox"
+                            placeholder="Select Category"
+                            width="50%"
+                            selectedKey="{/selectedCategory}">
+                            <core:Item key="Technical" text="{i18n>technicalSkills}"/>
+                            <core:Item key="Soft" text="{i18n>softSkills}"/>
+                            <core:Item key="Other" text="{i18n>otherSkills}"/>
+                            <core:Item key="Overall" text="{i18n>expertiseandworkingresults}"/>
+                            <core:Item key="Communication" text="{i18n>networkingSkills}"/>
 
-                        <Label text="{i18n>softSkills}"/>
-                        <HBox>
-                            <ComboBox
-                                id="softSkillsRating"
-                                placeholder="{i18n>rateThis}"
-                                selectedKey="{/softSkillsRating}"
-                                width="70%"
-                                class="sapUiTinyMarginEnd">
-                                <core:Item key="5" text="{i18n>excellent}" />
-                                <core:Item key="4" text="{i18n>good}" />
-                                <core:Item key="3" text="{i18n>average}" />
-                                <core:Item key="2" text="{i18n>fair}" />
-                                <core:Item key="1" text="{i18n>poor}" />
-                            </ComboBox>
-                            <TextArea
-                                id="softSkillsComment"
-                                placeholder="{i18n>expertiseComment}"
-                                rows="3"
-                                value="{/softSkillsComment}"
-                                width="300%"/>
-                        </HBox>
-
-                        <Label text="{i18n>otherSkills}"/>
-                        <HBox>
-                            <ComboBox
-                                id="otherSkillsRating"
-                                placeholder="{i18n>rateThis}"
-                                selectedKey="{/otherSkillsRating}"
-                                width="70%"
-                                class="sapUiTinyMarginEnd">
-                                <core:Item key="5" text="{i18n>excellent}" />
-                                <core:Item key="4" text="{i18n>good}" />
-                                <core:Item key="3" text="{i18n>average}" />
-                                <core:Item key="2" text="{i18n>fair}" />
-                                <core:Item key="1" text="{i18n>poor}" />
-                            </ComboBox>
-                            <TextArea
-                                id="otherSkillsComment"
-                                placeholder="{i18n>expertiseComment}"
-                                rows="3"
-                                value="{/otherSkillsComment}"
-                                width="300%"/>
-                        </HBox>
+                        </ComboBox>
+                        <Label text="{i18n>rating}"/>
+                        <ComboBox
+                            id="categoryRating"
+                            placeholder="{i18n>rateThis}"
+                            selectedKey="{/categoryRating}"
+                            width="70%"
+                            class="sapUiTinyMarginEnd">
+                            <core:Item key="5" text="{i18n>excellent}" />
+                            <core:Item key="4" text="{i18n>good}" />
+                            <core:Item key="3" text="{i18n>average}" />
+                            <core:Item key="2" text="{i18n>fair}" />
+                            <core:Item key="1" text="{i18n>poor}" />
+                        </ComboBox>
+                        <Label text="{i18n>comment}"/>
+                        <TextArea
+                            id="categoryComment"
+                            placeholder="{i18n>expertiseComment}"
+                            rows="3"
+                            value="{/categoryComment}"
+                            width="100%"/>
                     </form:content>
                 </form:SimpleForm>
             </VBox>

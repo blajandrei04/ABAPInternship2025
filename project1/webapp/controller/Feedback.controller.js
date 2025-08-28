@@ -16,12 +16,9 @@ sap.ui.define([
                 anonymous: false,
                 Users: [],
                 Projects: [],
-                technicalSkillsRating: null,
-                technicalSkillsComment: "",
-                softSkillsRating: null,
-                softSkillsComment: "",
-                otherSkillsRating: null,
-                otherSkillsComment: ""
+                selectedCategory: null,
+                categoryRating: null,
+                categoryComment: ""
             });
             this.getView().setModel(oViewModel);
             this._loadUserAndProjectData();
@@ -57,7 +54,7 @@ sap.ui.define([
                             ProjectID: item.PROJECT_ID,
                             ProjectName: item.PROJECT_NAME
                         }));
-                       oViewModel.setProperty("/Projects", aProjects);
+                        oViewModel.setProperty("/Projects", aProjects);
                         console.log("Projects loaded successfully.");
                     } else {
                         console.log("No project data received.");
@@ -101,65 +98,42 @@ sap.ui.define([
             const sReceiverID = oViewModel.getProperty("/ReceiverID");
             const sProjectID = oViewModel.getProperty("/ProjectID");
             const bAnonymous = oViewModel.getProperty("/anonymous");
+            const sCategory = oViewModel.getProperty("/selectedCategory");
+            const sRating = oViewModel.getProperty("/categoryRating");
+            const sComment = oViewModel.getProperty("/categoryComment");
 
-            if (!sReceiverID || !sProjectID) {
-                MessageBox.warning("Please select a User and a Project.");
-                return;
-            }
-
-            const aCategories = [
-                { name: "Technical", rating: oViewModel.getProperty("/technicalSkillsRating"), comment: oViewModel.getProperty("/technicalSkillsComment") },
-                { name: "Soft", rating: oViewModel.getProperty("/softSkillsRating"), comment: oViewModel.getProperty("/softSkillsComment") },
-                { name: "Other", rating: oViewModel.getProperty("/otherSkillsRating"), comment: oViewModel.getProperty("/otherSkillsComment") }
-            ];
-
-            let aRatingsFound = [];
-
-            aCategories.forEach(category => {
-                if (category.rating) {
-                    aRatingsFound.push(category);
-                }
-            });
-
-            if (aRatingsFound.length > 1) {
-                MessageBox.warning("Please provide a rating for only one category at a time.");
-                return;
-            }
-
-            if (aRatingsFound.length === 0) {
-                MessageBox.warning("Please provide a rating for at least one category.");
+            if (!sReceiverID || !sProjectID || !sCategory || !sRating) {
+                MessageBox.warning("Please select a User, a Project, a Category, and a Rating.");
                 return;
             }
             
-            const oCategory = aRatingsFound[0];
-
             const aProjects = oViewModel.getProperty("/Projects");
             const sProjectName = aProjects.find(p => p.ProjectID === sProjectID)?.ProjectName;
 
             const oParameters = {
                 EMAIL: sLoggedInUserEmail,
                 RECEIVER_NAME: sReceiverID,
-                PROJECT_ID: sProjectID, 
+                PROJECT_ID: sProjectID,
                 PROJECT_NAME: sProjectName,
                 ANONYMITY: bAnonymous ? "X" : " ",
-                CATEGORY_COMMENT: oCategory.comment,
-                CATEGORY_RATING: parseInt(oCategory.rating, 10),
-                CATEGORY_NAME: oCategory.name
+                CATEGORY_COMMENT: sComment,
+                CATEGORY_RATING: parseInt(sRating, 10),
+                CATEGORY_NAME: sCategory
             };
-            
+
             oODataModel.callFunction("/New_360", {
                 method: "POST",
                 urlParameters: oParameters,
                 success: () => {
-                    MessageToast.show(`Feedback for ${oCategory.name} sent successfully!`);
+                    MessageToast.show(`Feedback for ${sCategory} sent successfully!`);
                     if (oSendButton) {
                         oSendButton.blur();
                     }
                     this.onNavBack();
                 },
                 error: (oError) => {
-                    console.error(`Failed to send feedback for ${oCategory.name}:`, oError);
-                    MessageBox.error(`An error occurred while sending feedback for ${oCategory.name}. Please try again.`);
+                    console.error(`Failed to send feedback for ${sCategory}:`, oError);
+                    MessageBox.error(`An error occurred while sending feedback for ${sCategory}. Please try again.`);
                 }
             });
         }
